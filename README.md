@@ -4,6 +4,10 @@
 ```
 npm install
 ```
+You may also need to run 
+```
+vue add electron-builder
+```
 
 ### Compiles and hot-reloads for development
 ```
