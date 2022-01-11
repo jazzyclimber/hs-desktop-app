@@ -6,7 +6,7 @@
     <main>
       <UploadFile />
       <div class="field-container">
-        <DisplayFile />
+        <NewDisplay />
         <FieldEditor />
       </div>
     </main>
@@ -17,14 +17,15 @@
 // @ is an alias to /src
 import UploadFile from '@/components/UploadFile.vue'
 import MenuTree from "@/components/MenuTree"
-import DisplayFile from "@/components/displayFile/DisplayFile"
+// import DisplayFile from "@/components/displayFile/DisplayFile"
+import NewDisplay from "@/components/displayFile/NewDisplay"
 import FieldEditor from "@/components/editFields/FieldEditor"
 export default {
   name: 'Home',
   components: {
     UploadFile,
     MenuTree,
-    DisplayFile,
+    NewDisplay,
     FieldEditor
   },
    computed: {
@@ -36,6 +37,9 @@ export default {
 </script>
 
 <style>
+  *,*:before,*:after {
+    box-sizing: border-box;
+  }
   .sidebar {
     background-color: #f2f2f2;
     padding-right: 10px;
@@ -46,7 +50,7 @@ export default {
   }
   main {
     max-height: 100vh;
-    overflow: hidden;
+    overflow: auto;
     flex: 1 1 auto;
   }
   .home {

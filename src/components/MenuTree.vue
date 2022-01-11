@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style >
   ul {
     list-style-type: none;
     text-align: left;

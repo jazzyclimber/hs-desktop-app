@@ -1,11 +1,11 @@
 <template>
-    <Container @drop="onDrop"  >
-      <Draggable v-for="(item) in tempTree" :key="item.name">
-        <div class="field dragable-item" @click="updateCurrentField(item)">
+    <Container @drop="onDrop" :group-name="'test'" >
+      <Draggable v-for="(item)  in tempTree" :key="item.name" >
+        <li class="field dragable-item" @click="updateCurrentField(item)">
           <p>Label: {{item.label}}</p>
           <p>Type: {{item.type}}</p>
-        </div>
         <FieldVisualizer :tree="item.children" v-if="item.children" />
+        </li>
       </Draggable>
     </Container>
 </template>
@@ -69,16 +69,5 @@ import FieldVisualizer from "./FieldVisualizer"
 }
 .field p {
   margin: 0 0 5px;
-}
-.smooth-dnd-draggable-wrapper {
-  padding: 10px 20px;
-  background-color: #e3f7fc;
-  border: 1px solid #88b6c2;
-  transition: background-color .2s ease, border .2s ease;
-}
-.smooth-dnd-draggable-wrapper:hover {
-  padding: 10px 20px;
-  background-color: #d9fced;
-  border: 1px solid #88c2a1;
 }
 </style>
