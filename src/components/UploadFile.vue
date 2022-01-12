@@ -1,6 +1,6 @@
 
 <template>
-  <div :class="'wrapper'">
+  <div class="nav-bar">
     <div :class="'upload'">
       <button @click="addFile()">Open Dialog</button>
     </div>

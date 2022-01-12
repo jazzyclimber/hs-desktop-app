@@ -94,7 +94,7 @@ import ThirdVisualizer from "./ThirdVisualizer"
   min-height: 20px;
 }
 .field-item {
-  cursor: move;
+  cursor: pointer;
   margin: 0;
 }
 .list-group-item i {

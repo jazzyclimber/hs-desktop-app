@@ -64,15 +64,16 @@ export default {
   .field-container {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: flex-start;
   }
   .field-container > .field-editor {
     flex: 0 1 300px;
-    max-width: 450px;
+    max-width: 500px;
     background-color: #f7f7f7;
     max-height: 100vh;
     padding: 100px 30px;
     overflow: auto;
+    min-height: 100%;
   }
 </style>
