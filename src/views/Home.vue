@@ -7,7 +7,7 @@
       <UploadFile />
       <div class="field-container">
         <NewDisplay />
-        <FieldEditor />
+        <FieldEditor  />
       </div>
     </main>
   </div>

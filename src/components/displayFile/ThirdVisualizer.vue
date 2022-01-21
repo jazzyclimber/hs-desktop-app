@@ -14,9 +14,13 @@
         v-bind:class="{'has-children': item.children}"
         :key="item.name + '-' + level"
       >
-        <span>Label: {{item.label}}</span>
-        <span>Type: {{item.type}}</span>
-        <span v-if="item.children">Has Children</span>
+        <div class="card-content">
+          <span>Label: {{item.label}}</span>
+          <span>Type: {{item.type}}</span>
+          <div class="action-bar">
+            <button @click="updateCurrentField(item)">Edit</button>
+          </div>
+        </div>
         <ThirdVisualizer :level="level + 1" v-if="item.children" :list="item.children"  />
       </div>
       </transition-group>
@@ -47,6 +51,11 @@ import ThirdVisualizer from "./ThirdVisualizer"
         };
       }
     },
+    methods: {
+      updateCurrentField (currentField) {
+        this.$store.commit('updateCurrentField', currentField);
+      }
+    },
     components: {
       draggable,
       ThirdVisualizer
@@ -59,6 +68,7 @@ import ThirdVisualizer from "./ThirdVisualizer"
     width: 100%;
     padding: 20px;
     border: 1px solid black;
+    text-align: left;
   }
   .field-item.has-children {
     padding-bottom: 0;
@@ -68,6 +78,21 @@ import ThirdVisualizer from "./ThirdVisualizer"
   }
   .field-item span{
     display: block;
+  }
+  .field-item .card-content {
+    position: relative;
+  }
+  .field-item .action-bar {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    padding: 10px 20px;
+    opacity: 0;
+  }
+  .field-item .card-content:hover .action-bar {
+    opacity: 1;
   }
   .smooth-dnd-draggable-wrapper {
   padding: 10px 20px;

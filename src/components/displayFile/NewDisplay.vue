@@ -29,6 +29,9 @@ export default {
   computed: {
     openFile: function () {
       return this.$store.getters.openFile
+    },
+    currentField: function () {
+      return this.$store.getters.currentField
     }
   },
   mounted () {
@@ -37,6 +40,9 @@ export default {
   watch: {
     openFile: function () {
       this.file = this.openFile
+    },
+    currentField: function () {
+      console.log('watching')
     }
   },
    components: {
