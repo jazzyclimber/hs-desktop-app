@@ -7,10 +7,12 @@
         @start="drag = true"
         @end="drag = false"
         v-bind="dragOptions"
+        @input="emitter"
+        :value="value"
       >
     <transition-group type="transition" :name="!drag ? 'flip-list' : null">
       <div class="field-item"
-        v-for="item in list"
+        v-for="item in realValue"
         v-bind:class="{'has-children': item.children}"
         :key="item.name + '-' + level"
       >
@@ -34,12 +36,16 @@ import ThirdVisualizer from "./ThirdVisualizer"
     name: "ThirdVisualizer",
     data () {
       return {
-        drag: false
+        drag: false,
       }
     },
     props: {
       level: Number,
-      list: Array
+      list: Array,
+      value: Array
+    },
+    updated() {
+      console.log('visualizer has been updated')
     },
     computed: {
       dragOptions () {
@@ -49,11 +55,18 @@ import ThirdVisualizer from "./ThirdVisualizer"
           disabled: false,
           ghostClass: "ghost"
         };
-      }
+      },
+      realValue() {
+        return this.value ? this.value : this.list;
+      },
     },
     methods: {
       updateCurrentField (currentField) {
         this.$store.commit('updateCurrentField', currentField);
+      },
+      emitter (value) {
+        console.log('emitting value from visualizer')
+        this.$emit('input', value)
       }
     },
     components: {

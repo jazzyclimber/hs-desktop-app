@@ -6,14 +6,14 @@
         v-if="item.type == 'boolean'"
         :keyName="item.field.key"
         :index="i"
-        v-model="item.field.value"
+        v-model="currentField[i].field.value"
         v-on:toggle-change="toggleEmitter"
       />
       <input
         v-if="item.type == 'text'"
         type="text"
-        v-model="item.field.value"
-        @input="emitter"
+        v-model="currentField[i].field.value"
+        @input="textEmitter"
       />
     </label>
   </div>
@@ -26,30 +26,24 @@ export default {
   data () {
     return {
       booleans: ["required", "locked", "allow_new_line", "show_emoji_picker"],
-      currentField: null
     }
   },
   props: {
     value: Object
   },
-  watch: {
-    modelField: {
-      immediate: true,
-      handler () {
-      console.log('modelField Watch')
-       var temp = this.modelField
+  computed: {
+   currentField: {
+      get() {
+        var temp = this.value
         var newTemp = []
         for (const [key, value] of Object.entries(temp)) {
           newTemp.push({ type: this.setFieldType(key), key: key, field: { key: key, value: value } })
         }
-        this.currentField = newTemp;
-    }
-    }
-  },
-  computed: {
-    modelField: {
-       get () {
-        return this.value;
+        this.currentField = newTemp
+        return newTemp
+      },
+      set(value) {
+        console.log('set')
       }
     }
   },
@@ -62,13 +56,11 @@ export default {
       }
     },
     toggleEmitter (value) {
-      console.log("toggle", value)
       this.currentField[value.index].field = value.field
       this.emitter();
     },
-    emitter (value) {
+    textEmitter (value) {
       var old = this.currentField
-      console.log(value)
       var newObj = {}
       old.map(item => {
         newObj[item.field.key] = item.field.value

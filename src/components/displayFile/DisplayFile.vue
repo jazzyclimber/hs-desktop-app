@@ -1,7 +1,7 @@
 
 <template>
   <div class="field-display-container">
-    <NewVisualizer :level="1" v-model="file" :v-on:input="emittedFileUpdate" v-if="file != null"/>
+    <NewVisualizer :level="1" v-model="openFile" v-if="file != null"/>
   </div>
 </template>
 
@@ -10,14 +10,14 @@
 import NewVisualizer from "./NewVisualizer"
 export default {
   name: "DisplayFile",
-  data () {
-    return {
-      file: null
-    }
-  },
-  mounted () {
-    this.updateFile()
-  },
+  // data () {
+  //   return {
+  //     file: null
+  //   }
+  // },
+  // mounted () {
+  //   this.updateFile()
+  // },
   computed: {
     openFile: {
       get () {
@@ -30,20 +30,20 @@ export default {
       }
     }
   },
-  methods: {
-    updateFile () {
-      this.file = this.openFile
-    },
-    emittedFileUpdate (value) {
-      console.log("emitted value", value)
-      this.file = value
-    }
-  },
-  watch: {
-    openFile: function () {
-      this.updateFile()
-    }
-  },
+  // methods: {
+    // updateFile () {
+    //   this.file = this.openFile
+    // },
+  //   emittedFileUpdate (value) {
+  //     console.log("emitted value", value)
+  //     this.file = value
+  //   }
+  // },
+  // watch: {
+  //   openFile: function () {
+  //     this.updateFile()
+  //   }
+  // },
   components: {
    NewVisualizer
   // FieldVisualizer

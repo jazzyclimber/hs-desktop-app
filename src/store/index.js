@@ -20,6 +20,7 @@ export default new Vuex.Store({
       state.tree = payload
     },
     updateCurrentField (state, payload) {
+      console.log('UPDATE CURRENT FIELD')
       state.currentField = payload
     },
     updateOpenFile (state, payload) {

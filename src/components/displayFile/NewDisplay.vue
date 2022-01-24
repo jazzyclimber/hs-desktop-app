@@ -4,7 +4,7 @@
     :style="'max-height: calc(100vh - ' + navHeight + 'px);'"
   >
     <div class="field-display-container">
-      <ThirdVisualizer :level="1" :list="file"  v-if="file != null"/>
+      <ThirdVisualizer :level="1" v-model="openFile" v-if="openFile"  />
     </div>
   </div>
 </template>
@@ -15,7 +15,6 @@ export default {
   name: "NewDisplay",
   data () {
     return {
-      file: null,
       navHeight: null
     }
   },
@@ -26,9 +25,25 @@ export default {
       return navBar.offsetHeight;
     }
   },
+  updated() {
+    console.log('newDisplay has been updated' )
+  },
+  watch: {
+    openFile: function() {
+      console.log('openFile Changed')
+
+      this.$forceUpdate()
+    }
+  },
   computed: {
-    openFile: function () {
-      return this.$store.getters.openFile
+    openFile: {
+      get () {
+        return this.$store.getters.openFile
+      },
+      set(value) {
+        console.log('setting')
+        this.$store.commit('updateOpenFile', { openFile: value })
+      }
     },
     currentField: function () {
       return this.$store.getters.currentField
@@ -36,14 +51,6 @@ export default {
   },
   mounted () {
     this.navHeight = this.calcHeight();
-  },
-  watch: {
-    openFile: function () {
-      this.file = this.openFile
-    },
-    currentField: function () {
-      console.log('watching')
-    }
   },
    components: {
     ThirdVisualizer
