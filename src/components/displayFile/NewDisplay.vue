@@ -2,6 +2,7 @@
   <div
     class="field-display-wrapper"
     :style="'max-height: calc(100vh - ' + navHeight + 'px);'"
+    v-if="openFile"
   >
     <div class="field-display-container">
       <ThirdVisualizer :level="1" v-model="openFile" v-if="openFile"  />
@@ -29,15 +30,13 @@ export default {
     console.log('newDisplay has been updated' )
   },
   watch: {
-    openFile: function() {
-      console.log('openFile Changed')
-
-      this.$forceUpdate()
+    openFile: function(newDat, oldData) {
+      console.log('WATCHING OPEN FILE')
     }
   },
   computed: {
     openFile: {
-      get () {
+      get() {
         return this.$store.getters.openFile
       },
       set(value) {

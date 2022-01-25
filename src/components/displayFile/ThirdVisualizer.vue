@@ -47,6 +47,11 @@ import ThirdVisualizer from "./ThirdVisualizer"
     updated() {
       console.log('visualizer has been updated')
     },
+    watch: {
+      value: function() {
+        console.log('watching Real value')
+      }
+    },
     computed: {
       dragOptions () {
         return {

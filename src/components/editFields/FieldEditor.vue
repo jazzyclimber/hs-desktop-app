@@ -41,7 +41,6 @@ export default {
       findField(openFile);
       this.currentField = val
       this.file = openFile
-
     },
     calcHeight: function () {
       var navBar = document.querySelector('.nav-bar');
@@ -51,10 +50,11 @@ export default {
    },
   computed: {
    file: {
-      get () {
+      get: function () {
         return this.$store.getters.openFile
       },
-      set(value) {
+      set: function(value) {
+        console.log('SETTER CALLED FROM EDITOR')
         this.$store.commit('updateOpenFile', { openFile: value })
       }
     },
