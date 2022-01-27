@@ -44,14 +44,6 @@ import ThirdVisualizer from "./ThirdVisualizer"
       list: Array,
       value: Array
     },
-    updated() {
-      console.log('visualizer has been updated')
-    },
-    watch: {
-      value: function() {
-        console.log('watching Real value')
-      }
-    },
     computed: {
       dragOptions () {
         return {
@@ -70,7 +62,6 @@ import ThirdVisualizer from "./ThirdVisualizer"
         this.$store.commit('updateCurrentField', currentField);
       },
       emitter (value) {
-        console.log('emitting value from visualizer')
         this.$emit('input', value)
       }
     },

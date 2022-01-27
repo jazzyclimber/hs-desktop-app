@@ -41,9 +41,6 @@ export default {
         }
         this.currentField = newTemp
         return newTemp
-      },
-      set(value) {
-        console.log('set')
       }
     }
   },

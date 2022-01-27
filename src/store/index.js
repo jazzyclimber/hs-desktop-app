@@ -12,7 +12,6 @@ export default new Vuex.Store({
   },
   mutations: {
     changeCurrentDirectory (state, payload) {
-      console.log(payload)
       state.cwd = payload.cwd;
       state.tree = payload.tree;
     },

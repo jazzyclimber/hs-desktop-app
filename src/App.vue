@@ -14,7 +14,6 @@ export default {
       })
     })
     window.ipc.receive("openFile", (payload) => {
-      console.log('recieving openFile')
       this.$store.commit("updateOpenFile", {
         openFile: payload.file
       })

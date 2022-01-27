@@ -21,8 +21,6 @@ export default {
   computed: {
     openFile: {
       get () {
-        console.log('getOpen File from display')
-        console.log(this.$store.getters.openFile);
         return this.$store.getters.openFile
     },
       set (value) {

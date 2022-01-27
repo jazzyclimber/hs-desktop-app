@@ -25,7 +25,6 @@ export default {
     emitter: function (value) {
       var payload = { index: this.index, field: { } }
       var key = this.keyName;
-      console.log(value);
       payload.field.key = key
       payload.field.value = this.toggleValue
       this.$emit("toggle-change", payload)

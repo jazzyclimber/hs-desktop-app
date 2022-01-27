@@ -5,7 +5,7 @@
     v-if="openFile"
   >
     <div class="field-display-container">
-      <ThirdVisualizer :level="1" v-model="openFile" v-if="openFile"  />
+      <ThirdVisualizer :level="1" v-model="workingFile"  v-if="workingFile" :key="componentKey" />
     </div>
   </div>
 </template>
@@ -14,35 +14,35 @@
 import ThirdVisualizer from "./ThirdVisualizer"
 export default {
   name: "NewDisplay",
+  props: {
+    componentKey: Number
+  },
   data () {
     return {
-      navHeight: null
+      navHeight: null,
+      workingFile: null
     }
   },
   methods: {
     calcHeight: function () {
       var navBar = document.querySelector('.nav-bar');
-      console.log(navBar.offsetHeight)
       return navBar.offsetHeight;
     }
   },
-  updated() {
-    console.log('newDisplay has been updated' )
-  },
   watch: {
-    openFile: function(newDat, oldData) {
-      console.log('WATCHING OPEN FILE')
+    openFile: function(newData, oldData) {
+      this.workingFile = newData;
+    },
+    workingFile:{
+      deep:true,
+      handler: function(newData, oldData) {
+        this.$store.commit('updateOpenFile', { openFile: newData })
+      }
     }
   },
   computed: {
-    openFile: {
-      get() {
+    openFile: function() {
         return this.$store.getters.openFile
-      },
-      set(value) {
-        console.log('setting')
-        this.$store.commit('updateOpenFile', { openFile: value })
-      }
     },
     currentField: function () {
       return this.$store.getters.currentField
@@ -50,6 +50,7 @@ export default {
   },
   mounted () {
     this.navHeight = this.calcHeight();
+    this.workingFile = this.$store.getters.openFile
   },
    components: {
     ThirdVisualizer

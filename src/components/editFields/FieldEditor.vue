@@ -20,7 +20,6 @@ export default {
     }
   },
   updated() {
-    console.log('field-editor has been updated')
   },
    methods: {
     handleEmit(val) {
@@ -39,12 +38,12 @@ export default {
       }
 
       findField(openFile);
-      this.currentField = val
-      this.file = openFile
+      this.$store.commit('updateCurrentField', val)
+      this.$store.commit('updateOpenFile', { openFile: openFile })
+      this.$emit('update-component-key', null)
     },
     calcHeight: function () {
       var navBar = document.querySelector('.nav-bar');
-      console.log(navBar.offsetHeight)
       return navBar.offsetHeight;
     }
    },
@@ -53,18 +52,18 @@ export default {
       get: function () {
         return this.$store.getters.openFile
       },
-      set: function(value) {
-        console.log('SETTER CALLED FROM EDITOR')
-        this.$store.commit('updateOpenFile', { openFile: value })
-      }
+      // set: function(value) {
+      //   console.log('SETTER CALLED FROM EDITOR')
+      //   this.$store.commit('updateOpenFile', { openFile: value })
+      // }
     },
     currentField: {
       get () {
        return this.$store.getters.currentField;
       },
-      set (value) {
-        this.$store.commit('updateCurrentField', value);
-      }
+      // set (value) {
+      //   this.$store.commit('updateCurrentField', value);
+      // }
     }
   },
   watch: {

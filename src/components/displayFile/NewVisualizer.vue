@@ -35,7 +35,6 @@ import NewVisualizer from "./NewVisualizer"
         };
       },
       realValue () {
-        this.value ? console.log('value') : console.log("list");
         return this.value ? this.value : this.list;
       }
     },
@@ -73,7 +72,6 @@ import NewVisualizer from "./NewVisualizer"
     },
     applyDrag (arr, dragResult) {
         const { removedIndex, addedIndex, payload } = dragResult
-        console.log(removedIndex, addedIndex, payload)
         if (removedIndex === null && addedIndex === null) return arr
         const result = [...arr]
         let itemToAdd = payload
@@ -86,7 +84,6 @@ import NewVisualizer from "./NewVisualizer"
         return result
     },
     emitter (value) {
-      console.log('emitting')
       this.$emit("input", value);
     }
 

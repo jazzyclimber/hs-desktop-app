@@ -6,8 +6,8 @@
     <main>
       <UploadFile />
       <div class="field-container">
-        <NewDisplay />
-        <FieldEditor  />
+        <NewDisplay v-if="openFile" :componentKey="componentKey"/>
+        <FieldEditor v-on:update-component-key="componentKey++"  />
       </div>
     </main>
   </div>
@@ -22,6 +22,11 @@ import NewDisplay from "@/components/displayFile/NewDisplay"
 import FieldEditor from "@/components/editFields/FieldEditor"
 export default {
   name: 'Home',
+  data() {
+    return {
+      componentKey:0
+    }
+  },
   components: {
     UploadFile,
     MenuTree,
@@ -31,6 +36,9 @@ export default {
    computed: {
     tree: function () {
       return [this.$store.getters.tree];
+    },
+    openFile: function () {
+      return this.$store.getters.openFile
     }
   }
 }
