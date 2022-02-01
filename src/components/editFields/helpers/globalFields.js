@@ -53,4 +53,34 @@ const globalFields = {
   }
 }
 
-module.exports = {globalFields}
+const customGlobalFields = {
+  name: {
+    type: 'text',
+    key: "name",
+    field: {
+      key: "name",
+      value: ""
+    }
+  },
+  id: {
+    type: 'text',
+    key: "id",
+    field: {
+      key: "id",
+      value: ""
+    }
+  },
+  label: {
+    type: 'text',
+    key: "label",
+    field: {
+      key: "label",
+      value: ""
+    }
+  },
+}
+
+module.exports = {
+  globalFields,
+  customGlobalFields
+}

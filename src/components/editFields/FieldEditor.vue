@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { globalFields } from "./helpers/globalFields"
+import { globalFields, customGlobalFields } from "./helpers/globalFields"
 import TextField from "./fields/newText.vue"
 import {mapGetters} from "vuex"
 export default {
@@ -81,6 +81,18 @@ export default {
         arrayGlobal.push(value);
       }
       return arrayGlobal
+    },
+    confirmCustomFields: function (arrayCustom) {
+      let tempCustom = {...customGlobalFields};
+      // Remove all global fields that already exist from import
+      arrayCustom.forEach(item => {
+        delete tempCustom[item.key]
+      })
+      // Add remaining global fields
+      for (const [key, value] of Object.entries(tempCustom)) {
+        arrayCustom.push(value);
+      }
+      return arrayCustom
     }
    },
   computed: {
@@ -104,6 +116,7 @@ export default {
           isGlobalField ? newTemp.globalFields.push(fieldObj) : newTemp.customFields.push(fieldObj);
         }
         newTemp.globalFields = this.confirmGlobalFields(newTemp.globalFields)
+        newTemp.customFields = this.confirmCustomFields(newTemp.customFields)
 
         this.field = newTemp;
       }
