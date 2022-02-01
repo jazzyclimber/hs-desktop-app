@@ -23,7 +23,6 @@ export default new Vuex.Store({
       state.currentField = payload
     },
     updateOpenFile (state, payload) {
-      console.log('updateOpenFile', payload)
       state.openFile = payload.openFile
     }
   },

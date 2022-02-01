@@ -1,13 +1,13 @@
 <template>
   <div class="home">
     <div class="sidebar">
-      <MenuTree v-if="this.tree[0] != null" :localTree="tree" :level="1"/>
+      <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :level="1"/>
     </div>
     <main>
       <UploadFile />
       <div class="field-container">
-        <NewDisplay v-if="openFile" :componentKey="componentKey"/>
-        <FieldEditor v-on:update-component-key="componentKey++"  />
+        <NewDisplay  />
+        <FieldEditor  />
       </div>
     </main>
   </div>
@@ -15,6 +15,7 @@
 
 <script>
 // @ is an alias to /src
+import { mapGetters } from 'vuex'
 import UploadFile from '@/components/UploadFile.vue'
 import MenuTree from "@/components/MenuTree"
 // import DisplayFile from "@/components/displayFile/DisplayFile"
@@ -22,11 +23,6 @@ import NewDisplay from "@/components/displayFile/NewDisplay"
 import FieldEditor from "@/components/editFields/FieldEditor"
 export default {
   name: 'Home',
-  data() {
-    return {
-      componentKey:0
-    }
-  },
   components: {
     UploadFile,
     MenuTree,
@@ -34,12 +30,10 @@ export default {
     FieldEditor
   },
    computed: {
-    tree: function () {
-      return [this.$store.getters.tree];
-    },
-    openFile: function () {
-      return this.$store.getters.openFile
-    }
+     ...mapGetters(["tree"]),
+     workingTree(){
+       return [this.tree]
+     }
   }
 }
 </script>

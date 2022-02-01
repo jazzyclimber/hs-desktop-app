@@ -1,19 +1,17 @@
 <template>
   <div class="field-editor-container">
-    <label v-for="(item, i) in currentField" :key="item.field.key" >
+    <label v-for="(item, i) in workingField" :key="item.field.key" >
       <span>{{item.field.key}}</span>
       <Toggle
         v-if="item.type == 'boolean'"
-        :keyName="item.field.key"
-        :index="i"
-        v-model="currentField[i].field.value"
-        v-on:toggle-change="toggleEmitter"
+        v-model="workingField[i].field.value"
+        @input="emitter"
       />
       <input
         v-if="item.type == 'text'"
         type="text"
-        v-model="currentField[i].field.value"
-        @input="textEmitter"
+        v-model="workingField[i].field.value"
+        @input="emitter"
       />
     </label>
   </div>
@@ -23,25 +21,12 @@
 import Toggle from "./inputs/toggle"
 export default {
   name: "TextField",
-  data () {
-    return {
-      booleans: ["required", "locked", "allow_new_line", "show_emoji_picker"],
-    }
-  },
   props: {
-    value: Object
+    field: Array
   },
   computed: {
-   currentField: {
-      get() {
-        var temp = this.value
-        var newTemp = []
-        for (const [key, value] of Object.entries(temp)) {
-          newTemp.push({ type: this.setFieldType(key), key: key, field: { key: key, value: value } })
-        }
-        this.currentField = newTemp
-        return newTemp
-      }
+    workingField: function() {
+      return this.field
     }
   },
   methods: {
@@ -52,17 +37,11 @@ export default {
         return "text"
       }
     },
-    toggleEmitter (value) {
-      this.currentField[value.index].field = value.field
-      this.emitter();
-    },
-    textEmitter (value) {
-      var old = this.currentField
-      var newObj = {}
-      old.map(item => {
-        newObj[item.field.key] = item.field.value
-      })
-      this.$emit('emit-current-field', newObj);
+    emitter(){
+      //Need this as oppose to a watcher because otherwise
+      // watcher will fire on every field update
+      // even if its not from an input value change.
+      this.$emit('field-change', this.field)
     }
   },
   components: {

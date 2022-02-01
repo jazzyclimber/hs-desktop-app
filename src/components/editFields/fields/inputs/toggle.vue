@@ -3,7 +3,7 @@
         <span v-if="isActive" class="toggle__label">On</span>
         <span v-if="!isActive" class="toggle__label">Off</span>
 
-        <input type="checkbox" :id="keyName" v-model="toggleValue" @change="emitter">
+        <input type="checkbox" v-model="toggleValue" @change="$emit('input', toggleValue)">
         <span class="toggle__switch"></span>
     </label>
 </template>
@@ -18,21 +18,13 @@ export default {
   },
   props: {
     value: Boolean,
-    keyName: String,
-    index: Number
-  },
-  methods: {
-    emitter: function (value) {
-      var payload = { index: this.index, field: { } }
-      var key = this.keyName;
-      payload.field.key = key
-      payload.field.value = this.toggleValue
-      this.$emit("toggle-change", payload)
-    }
   },
   watch: {
-    initState: function () {
-      this.toggleValue = this.initState
+    initState: {
+      immediate: true,
+      handler: function () {
+        this.toggleValue = this.initState
+      }
     }
   },
   computed: {

@@ -5,12 +5,13 @@
     v-if="openFile"
   >
     <div class="field-display-container">
-      <ThirdVisualizer :level="1" v-model="workingFile"  v-if="workingFile" :key="componentKey" />
+      <ThirdVisualizer :level="1" :list="workingFile"  v-if="workingFile" :key="componentKey" />
     </div>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import ThirdVisualizer from "./ThirdVisualizer"
 export default {
   name: "NewDisplay",
@@ -30,23 +31,22 @@ export default {
     }
   },
   watch: {
-    openFile: function(newData, oldData) {
-      this.workingFile = newData;
+    openFile: {
+      deep: true,
+      handler: function(newData, oldData) {
+        this.workingFile = newData;
+      }
     },
     workingFile:{
       deep:true,
       handler: function(newData, oldData) {
+        console.log('workingFile UPdate')
         this.$store.commit('updateOpenFile', { openFile: newData })
       }
     }
   },
   computed: {
-    openFile: function() {
-        return this.$store.getters.openFile
-    },
-    currentField: function () {
-      return this.$store.getters.currentField
-    }
+    ...mapGetters(['openFile', 'currentField'])
   },
   mounted () {
     this.navHeight = this.calcHeight();

@@ -3,73 +3,84 @@
     :style="'max-height: calc(100vh - ' + navHeight + 'px);'"
     v-if="currentField"
   >
-    <TextField v-model="currentField" v-on:emit-current-field="handleEmit"  />
+    <TextField :field="field" v-on:field-change="handleEmit" />
 
   </form>
 </template>
 
 <script>
 import TextField from "./fields/newText.vue"
-
+import {mapGetters} from "vuex"
 export default {
   name: "FieldEditor",
   data () {
     return {
       navHeight: null,
-      openFile: null,
+      field: null,
+      booleans: ["required", "locked", "allow_new_line", "show_emoji_picker"],
     }
   },
   updated() {
   },
    methods: {
-    handleEmit(val) {
-      let openFile = this.file
-      let searching = true;
-      let cf = this.currentField
+    handleEmit(newData) {
+
+      // Still need to set new File here
+      let newField = {};
+      let openFile = this.openFile;
+      let cf = this.currentField;
+      console.log('changing', openFile)
+
+      newData.forEach((item) => {
+        newField[item.field.key] = item.field.value;
+      })
 
       function findField(arr) {
         arr.forEach((item, i) => {
-          if (item == cf) {
-            arr[i] = val
+          if (item === cf) {
+            // arr[i] = payload;
+            arr.splice(i, 1, newField);
           } else if (item.children) {
-            findField(item.children)
+            findField(item.children);
           }
         });
       }
 
       findField(openFile);
-      this.$store.commit('updateCurrentField', val)
-      this.$store.commit('updateOpenFile', { openFile: openFile })
-      this.$emit('update-component-key', null)
+      this.$store.commit("updateCurrentField", newField);
+      this.$store.commit("updateOpenFile", {openFile: openFile});
+
     },
     calcHeight: function () {
       var navBar = document.querySelector('.nav-bar');
       return navBar.offsetHeight;
-    }
+    },
+    setFieldType: function (key) {
+      if (this.booleans.includes(key)) {
+        return "boolean";
+      } else {
+        return "text";
+      }
+    },
    },
   computed: {
-   file: {
-      get: function () {
-        return this.$store.getters.openFile
-      },
-      // set: function(value) {
-      //   console.log('SETTER CALLED FROM EDITOR')
-      //   this.$store.commit('updateOpenFile', { openFile: value })
-      // }
-    },
-    currentField: {
-      get () {
-       return this.$store.getters.currentField;
-      },
-      // set (value) {
-      //   this.$store.commit('updateCurrentField', value);
-      // }
-    }
+    ...mapGetters(["openFile", "currentField"])
   },
   watch: {
-    mounted () {
+    currentField: function (newData, oldData) {
+      var newTemp = [];
+      for (const [key, value] of Object.entries(newData)) {
+        newTemp.push({
+          type: this.setFieldType(key),
+          key: key,
+          field: { key: key, value: value },
+        });
+      }
+      this.field = newTemp;
+    },
+  },
+  mounted () {
     this.navHeight = this.calcHeight();
-    }
   },
   components: {
     TextField
