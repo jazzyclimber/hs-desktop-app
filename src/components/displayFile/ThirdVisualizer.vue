@@ -94,15 +94,7 @@ import ThirdVisualizer from "./ThirdVisualizer"
   .field-item .card-content {
     position: relative;
   }
-  .field-item .action-bar {
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: white;
-    padding: 10px 20px;
-    opacity: 0;
-  }
+
   .field-item .card-content:hover .action-bar {
     opacity: 1;
   }
@@ -141,6 +133,13 @@ import ThirdVisualizer from "./ThirdVisualizer"
 
 <style scoped>
   .action-bar {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    padding: 10px;
+    opacity: 0;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

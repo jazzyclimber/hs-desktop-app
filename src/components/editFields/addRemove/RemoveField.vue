@@ -11,7 +11,7 @@ export default {
   },
   methods: {
     removeField() {
-      this.$store.commit('removeFieldFromOpenFile', this.field)
+      this.$store.dispatch('removeField', this.field)
     }
   }
 }

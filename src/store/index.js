@@ -57,6 +57,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    removeField({commit}, payload) {
+      commit('updateCurrentField', null)
+      commit('removeFieldFromOpenFile', payload)
+    }
   },
   modules: {
   }

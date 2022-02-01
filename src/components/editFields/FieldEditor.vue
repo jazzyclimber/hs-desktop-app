@@ -1,7 +1,7 @@
 <template>
   <form class="field-editor"
     :style="'max-height: calc(100vh - ' + navHeight + 'px);'"
-    v-if="currentField"
+    v-if="currentField !== null"
   >
     <TextField :field="field" v-on:field-change="handleEmit" />
 
@@ -19,7 +19,8 @@ export default {
       navHeight: null,
       field: null,
       booleans: ["required", "locked", "allow_new_line", "show_emoji_picker"],
-      globalFields: ["help_text", "inline_help_text", "locked", "required", "visibility", "display_width"]
+      globalFields: ["help_text", "inline_help_text", "locked", "required", "visibility", "display_width"],
+      requiredCustomFields: ["name", "label", "id"]
     }
   },
   updated() {
@@ -87,24 +88,25 @@ export default {
   },
   watch: {
     currentField: function (newData, oldData) {
-      var newTemp = {
-        customFields: [],
-        globalFields: []
-      };
+      if (newData !== null) {
+        var newTemp = {
+          customFields: [],
+          globalFields: []
+        };
 
-      for (const [key, value] of Object.entries(newData)) {
-        var isGlobalField = this.checkIfGlobalField(key)
-        var fieldObj = {
-          type: this.setFieldType(key),
-          key: key,
-          field: { key: key, value: value },
+        for (const [key, value] of Object.entries(newData)) {
+          var isGlobalField = this.checkIfGlobalField(key)
+          var fieldObj = {
+            type: this.setFieldType(key),
+            key: key,
+            field: { key: key, value: value },
+          }
+          isGlobalField ? newTemp.globalFields.push(fieldObj) : newTemp.customFields.push(fieldObj);
         }
-        isGlobalField ? newTemp.globalFields.push(fieldObj) : newTemp.customFields.push(fieldObj);
+        newTemp.globalFields = this.confirmGlobalFields(newTemp.globalFields)
+
+        this.field = newTemp;
       }
-
-      newTemp.globalFields = this.confirmGlobalFields(newTemp.globalFields)
-
-      this.field = newTemp;
     },
   },
   mounted () {
