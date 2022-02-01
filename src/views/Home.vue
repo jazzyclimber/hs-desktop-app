@@ -74,7 +74,7 @@ export default {
     max-width: 500px;
     background-color: #f7f7f7;
     max-height: 100vh;
-    padding: 100px 30px;
+    padding: 50px 30px 100px;
     overflow: auto;
     min-height: 100%;
   }

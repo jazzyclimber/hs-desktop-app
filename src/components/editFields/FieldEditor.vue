@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { globalFields } from "./helpers/globalFields"
 import TextField from "./fields/newText.vue"
 import {mapGetters} from "vuex"
 export default {
@@ -18,12 +19,15 @@ export default {
       navHeight: null,
       field: null,
       booleans: ["required", "locked", "allow_new_line", "show_emoji_picker"],
+      globalFields: ["help_text", "inline_help_text", "locked", "required", "visibility", "display_width"]
     }
   },
   updated() {
   },
    methods: {
     handleEmit(newData) {
+
+      newData = newData.customFields.concat(newData.globalFields);
 
       // Still need to set new File here
       let newField = {};
@@ -55,6 +59,9 @@ export default {
       var navBar = document.querySelector('.nav-bar');
       return navBar.offsetHeight;
     },
+    checkIfGlobalField: function (key){
+      return this.globalFields.includes(key)
+    },
     setFieldType: function (key) {
       if (this.booleans.includes(key)) {
         return "boolean";
@@ -62,20 +69,41 @@ export default {
         return "text";
       }
     },
+    confirmGlobalFields: function (arrayGlobal) {
+      let tempGlobal = {...globalFields};
+      // Remove all global fields that already exist from import
+      arrayGlobal.forEach(item => {
+        delete tempGlobal[item.key]
+      })
+      // Add remaining global fields
+      for (const [key, value] of Object.entries(tempGlobal)) {
+        arrayGlobal.push(value);
+      }
+      return arrayGlobal
+    }
    },
   computed: {
     ...mapGetters(["openFile", "currentField"])
   },
   watch: {
     currentField: function (newData, oldData) {
-      var newTemp = [];
+      var newTemp = {
+        customFields: [],
+        globalFields: []
+      };
+
       for (const [key, value] of Object.entries(newData)) {
-        newTemp.push({
+        var isGlobalField = this.checkIfGlobalField(key)
+        var fieldObj = {
           type: this.setFieldType(key),
           key: key,
           field: { key: key, value: value },
-        });
+        }
+        isGlobalField ? newTemp.globalFields.push(fieldObj) : newTemp.customFields.push(fieldObj);
       }
+
+      newTemp.globalFields = this.confirmGlobalFields(newTemp.globalFields)
+
       this.field = newTemp;
     },
   },
@@ -87,6 +115,7 @@ export default {
   }
 }
 </script>
+
 <style>
   .field-editor  {
     text-align: left;
