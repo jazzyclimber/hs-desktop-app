@@ -8,7 +8,7 @@
     <h3>Custom Fields</h3>
     <label v-for="(item) in workingCustom" :key="item.field.key" >
       <div class="field-wrap" v-if="item.field.key !== 'type' ">
-        <span class="label">{{item.field.key}}</span>
+        <span class="label">{{item.field.key.replace(/_/g, " ").toUpperCase()}}</span>
         <Toggle
           v-if="item.type == 'boolean'"
           v-model="item.field.value"
@@ -50,14 +50,6 @@ export default {
       }
     }
   },
-  // computed: {
-  //   workingCustom: function() {
-  //     return this.field.customFields
-  //   },
-  //   workingGlobal: function() {
-  //     return this.field.globalFields
-  //   }
-  // },
   methods: {
     setFieldType: function (key) {
       if (this.booleans.includes(key)) {

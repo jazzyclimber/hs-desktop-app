@@ -24,6 +24,25 @@ export default new Vuex.Store({
     },
     updateOpenFile (state, payload) {
       state.openFile = payload.openFile
+    },
+    addFieldToOpenFile(state, payload) {
+      state.openFile.unshift(payload)
+    },
+    removeFieldFromOpenFile(state, payload) {
+      let df = payload
+
+      function findField(arr) {
+        arr.forEach((item, i) => {
+          if (item === df) {
+            // arr[i] = payload;
+            arr.splice(i, 1);
+          } else if (item.children) {
+            findField(item.children);
+          }
+        });
+      }
+
+      findField(state.openFile)
     }
   },
   getters: {

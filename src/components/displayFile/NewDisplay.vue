@@ -4,6 +4,7 @@
     :style="'max-height: calc(100vh - ' + navHeight + 'px);'"
     v-if="openFile"
   >
+  <AddField />
     <div class="field-display-container">
       <ThirdVisualizer :level="1" :list="workingFile"  v-if="workingFile" :key="componentKey" />
     </div>
@@ -12,6 +13,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import AddField from "../editFields/addRemove/AddField.vue"
 import ThirdVisualizer from "./ThirdVisualizer"
 export default {
   name: "NewDisplay",
@@ -53,7 +55,8 @@ export default {
     this.workingFile = this.$store.getters.openFile
   },
    components: {
-    ThirdVisualizer
+    ThirdVisualizer,
+    AddField
   }
 }
 </script>

@@ -21,6 +21,7 @@
           <span>Type: {{item.type}}</span>
           <div class="action-bar">
             <button @click="updateCurrentField(item)">Edit</button>
+            <RemoveField :field="item" />
           </div>
         </div>
         <ThirdVisualizer :level="level + 1" v-if="item.children" :list="item.children"  />
@@ -31,6 +32,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import RemoveField from "../editFields/addRemove/RemoveField.vue"
 import ThirdVisualizer from "./ThirdVisualizer"
   export default {
     name: "ThirdVisualizer",
@@ -67,7 +69,8 @@ import ThirdVisualizer from "./ThirdVisualizer"
     },
     components: {
       draggable,
-      ThirdVisualizer
+      ThirdVisualizer,
+      RemoveField
     }
   }
 </script>
@@ -134,4 +137,13 @@ import ThirdVisualizer from "./ThirdVisualizer"
 .list-group-item i {
   cursor: pointer;
 }
+</style>
+
+<style scoped>
+  .action-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
+  }
 </style>
