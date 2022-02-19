@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="field-options-bar">
     <button @click="modalActive = true">Add Field</button>
     <div v-if="modalActive" class="modal field-modal" @click="modalActive = false"></div>
       <div class="modal-inner" v-if="modalActive">
@@ -69,6 +69,12 @@ export default {
     flex-direction: row;
     z-index: 100;
   }
+  .field-options-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
   .modal-inner {
     background-color: white;
     border-radius: 5px;
@@ -79,7 +85,7 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 150;
+    z-index: 9999999;
   }
   .field-choice-container {
     display: flex;
