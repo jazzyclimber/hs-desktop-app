@@ -11,6 +11,13 @@
           v-model="item.field.value"
           @input="emitter"
         />
+        <v-jsoneditor
+          v-model="item.field.value"
+          v-else-if="item.type == 'object'"
+          :plus="false"
+          height="200px"
+          :options="jsonOptions"
+        />
         <input
           v-else
           type="text"
@@ -24,11 +31,14 @@
 
 <script>
 import Toggle from "./inputs/toggle"
+import VJsoneditor from "v-jsoneditor"
+import {jsonOptions} from "@/helpers/jsonEditConfig.js"
 export default {
   name: "GlobalFields",
   data() {
     return {
-      workingGlobal: null
+      workingGlobal: null,
+      jsonOptions: jsonOptions,
     }
   },
   props: {
@@ -57,7 +67,8 @@ export default {
     // }
   },
   components: {
-    Toggle
+    Toggle,
+    VJsoneditor
   }
 }
 </script>
