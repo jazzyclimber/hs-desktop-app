@@ -77,8 +77,8 @@ app.on('ready', async () => {
 // Opens a dialog for user to select File
 ipcMain.on("openDialog", (event, args) => {
   const options = {
-    title: 'open file',
-    buttonLabel: 'select file',
+    title: 'Open Directory',
+    buttonLabel: 'Select Directory',
     properties: ['openDirectory']
    }
    const filepath = dialog.showOpenDialogSync(options)
@@ -99,6 +99,20 @@ ipcMain.on("readFile", (event, file) => {
     }
     win.webContents.send('openFile', payload)
   })
+})
+
+ipcMain.on("saveFile", (event, file) => {
+  console.log('saveFile:', file)
+  let payload = JSON.stringify(file.file);
+
+  let callback = (err) => {
+    if (err) {console.log("error on save", err)}
+    else {
+      console.log('File Saved Successfully');
+    }
+  }
+  let filePath = path.resolve(file.path.toString())
+  fs.writeFile(filePath, payload, callback);
 })
 
 // Exit cleanly on request from parent process in development mode.

@@ -8,7 +8,8 @@ export default new Vuex.Store({
     cwd: null,
     tree: null,
     openFile: null,
-    currentField: null
+    currentField: null,
+    currentFilePath: null,
   },
   mutations: {
     changeCurrentDirectory (state, payload) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     addFieldToOpenFile(state, payload) {
       state.openFile.unshift(payload)
+    },
+    updateCurrentFilePath(state, payload) {
+      state.currentFilePath = payload
     },
     removeFieldFromOpenFile(state, payload) {
       let df = payload
@@ -54,6 +58,9 @@ export default new Vuex.Store({
     },
     openFile (state) {
       return state.openFile
+    },
+    currentFilePath (state) {
+      return state.currentFilePath;
     }
   },
   actions: {
