@@ -7,13 +7,14 @@
     </div>
     <h3>Custom Fields</h3>
     <label v-for="(item) in workingCustom" :key="item.field.key" >
-      <div class="field-wrap" v-if="item.field.key !== 'type' ">
+      <div class="field-wrap" v-if="item.field.key !== 'type' && item.type !== 'ignore' ">
         <span class="label">{{item.field.key.replace(/_/g, " ").toUpperCase()}}</span>
         <Toggle
           v-if="item.type == 'boolean'"
           v-model="item.field.value"
           @input="emitter"
         />
+        <v-jsoneditor v-model="item.field.value" v-else-if="item.type == 'object'"  :plus="false" height="200px" :options="jsonOptions" />
         <input
           v-if="item.type == 'text'"
           type="text"
@@ -29,12 +30,15 @@
 <script>
 import Toggle from "./inputs/toggle"
 import GlobalFields from './globalFields.vue'
+import VJsoneditor from 'v-jsoneditor'
+import {jsonOptions} from "@/helpers/jsonEditConfig.js"
 export default {
   name: "TextField",
   data() {
     return {
       workingCustom: null,
       workingGlobal: null,
+      jsonOptions: jsonOptions,
     }
   },
   props: {
@@ -52,11 +56,15 @@ export default {
   },
   methods: {
     setFieldType: function (key) {
+      console.log(key);
       if (this.booleans.includes(key)) {
         return "boolean"
       } else {
         return "text"
       }
+    },
+    onError() {
+      console.log('error')
     },
     emitter(){
       //Need this as oppose to a watcher because otherwise
@@ -67,14 +75,21 @@ export default {
   },
   components: {
     Toggle,
-    GlobalFields
+    GlobalFields,
+    VJsoneditor
   }
 }
 </script>
 
 <style >
+  .field-editor label {
+    margin-bottom: 20px;
+    display: block;
+  }
   .field-wrap .label {
     display: block;
+    font-size: 13px;
+    font-weight: 700;
   }
   .field-editor-container .header h2 {
     margin-top: 0;
@@ -83,5 +98,17 @@ export default {
   .field-editor-container h3 {
     margin-bottom: 5px;
     margin-top: 30px;
+  }
+  .field-editor input[type="text"] {
+    padding: 5px;
+    width: 100%;
+    max-width: 300px;
+  }
+  .field-editor :is(input, textarea) {
+    color: #333333!important;
+  }
+  .field-editor .field-wrap {
+    margin-bottom: 10px;
+    display: block
   }
 </style>
