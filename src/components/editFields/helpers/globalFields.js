@@ -32,7 +32,7 @@ const globalFields = {
     }
   },
   visibility: {
-    type: "text-object",
+    type: "object",
     key: "visibility",
     field: {
       key: "visibility",
