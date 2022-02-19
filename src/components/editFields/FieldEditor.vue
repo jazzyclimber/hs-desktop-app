@@ -56,16 +56,16 @@ export default {
       this.$store.commit("updateOpenFile", {openFile: openFile});
 
     },
-    calcHeight: function () {
-      var navBar = document.querySelector('.nav-bar');
-      return navBar.offsetHeight;
-    },
     checkIfGlobalField: function (key){
       return this.globalFields.includes(key)
     },
-    setFieldType: function (key) {
+    setFieldType: function (key, value) {
       if (this.booleans.includes(key)) {
         return "boolean";
+      } else if (key == "children") {
+        return "ignore"
+      } else if (typeof value === "object"){
+         return "object"
       } else {
         return "text";
       }
@@ -109,7 +109,7 @@ export default {
         for (const [key, value] of Object.entries(newData)) {
           var isGlobalField = this.checkIfGlobalField(key)
           var fieldObj = {
-            type: this.setFieldType(key),
+            type: this.setFieldType(key,value),
             key: key,
             field: { key: key, value: value },
           }
@@ -122,9 +122,7 @@ export default {
       }
     },
   },
-  mounted () {
-    this.navHeight = this.calcHeight();
-  },
+
   components: {
     TextField
   }
