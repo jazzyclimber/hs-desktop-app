@@ -1,19 +1,20 @@
 <template>
   <div
     class="field-display-wrapper"
-    :style="'max-height: calc(100vh - ' + navHeight + 'px);'"
     v-if="openFile"
   >
+  <SaveFile />
   <AddField />
-    <div class="field-display-container">
-      <ThirdVisualizer :level="1" :list="workingFile"  v-if="workingFile" :key="componentKey" />
-    </div>
+  <div class="field-display-container">
+    <ThirdVisualizer :level="1" :list="workingFile"  v-if="workingFile" :key="componentKey" />
+  </div>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 import AddField from "../editFields/addRemove/AddField.vue"
+import SaveFile from "../editFields/save/Save.vue"
 import ThirdVisualizer from "./ThirdVisualizer"
 export default {
   name: "NewDisplay",
@@ -24,12 +25,6 @@ export default {
     return {
       navHeight: null,
       workingFile: null
-    }
-  },
-  methods: {
-    calcHeight: function () {
-      var navBar = document.querySelector('.nav-bar');
-      return navBar.offsetHeight;
     }
   },
   watch: {
@@ -50,13 +45,10 @@ export default {
   computed: {
     ...mapGetters(['openFile', 'currentField'])
   },
-  mounted () {
-    this.navHeight = this.calcHeight();
-    this.workingFile = this.$store.getters.openFile
-  },
    components: {
     ThirdVisualizer,
-    AddField
+    AddField,
+    SaveFile
   }
 }
 </script>
@@ -64,11 +56,11 @@ export default {
 <style>
   .field-display-wrapper {
     flex: 1 1 auto;
-    overflow: auto;
     padding: 50px 0;
   }
   .field-display-container {
     max-width: 500px;
+    min-width: 300px;
     margin: 0 auto;
     width: 100%;
     overflow: auto;
