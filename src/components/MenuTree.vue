@@ -1,8 +1,8 @@
 <template>
 <div :class="'menu-wrapper'">
   <ul v-for="(item, i) in localTree" :key="'l-'+ level + '-' + i">
-    <li v-if="item.children">{{item.name}}</li>
-    <li :class="'file'" v-else @click="readFile(item.path)">{{item.name}}</li>
+    <li v-if="item.children && item.name.includes('.module')">{{item.name}}</li>
+    <li :class="'file'" v-else-if="item.name == 'fields.json'" @click="readFile(item.path)">{{item.name}}</li>
     <MenuTree v-if="item.children" :localTree="item.children" :level="nextLevel" />
   </ul>
   </div>
@@ -19,6 +19,7 @@ export default {
   methods: {
     readFile (path) {
       window.ipc.send('readFile', path);
+      this.$store.commit("updateCurrentFilePath", path)
     }
   },
   computed: {
@@ -47,6 +48,9 @@ export default {
   }
   li:hover {
     color: blue;
+  }
+  .menu-wrapper {
+    min-width: 300px;
   }
 
 </style>
