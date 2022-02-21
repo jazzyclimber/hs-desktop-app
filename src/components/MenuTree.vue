@@ -20,6 +20,7 @@ export default {
     readFile (path) {
       window.ipc.send('readFile', path);
       this.$store.commit("updateCurrentFilePath", path)
+      this.$store.commit("updateCurrentField", null);
     }
   },
   computed: {
