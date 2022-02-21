@@ -12,9 +12,9 @@
       >
     <transition-group type="transition" :name="!drag ? 'flip-list' : null">
       <div class="field-item"
-        v-for="item in realValue"
+        v-for="(item, index) in realValue"
         v-bind:class="{'has-children': item.children}"
-        :key="item.name + '-' + level"
+        :key="level + '-' + index"
       >
         <div class="card-content">
           <span>Label: {{item.label}}</span>
@@ -108,12 +108,6 @@ import ThirdVisualizer from "./ThirdVisualizer"
   padding: 10px 20px;
   background-color: #d9fced;
   border: 1px solid #88c2a1;
-}
-.flip-list-move {
-  transition: transform 0.5s;
-}
-.no-move {
-  transition: transform 0s;
 }
 .ghost {
   opacity: 0.5;
