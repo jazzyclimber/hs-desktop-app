@@ -3,7 +3,7 @@
     <button @click="modalActive = true">Add Field</button>
     <div v-if="modalActive" class="modal field-modal" @click="modalActive = false"></div>
       <div class="modal-inner" v-if="modalActive">
-        <label for="field-search">Search</label>
+        <label for="field-search" class="field-search-text">Search</label>
         <input type="text" name="field-search" v-model="searchTerm">
         <div class="field-choice-container" >
           <article class="field-type" @click="emitter(item)" v-for="item in filteredFields">
@@ -69,6 +69,12 @@ export default {
     flex-direction: row;
     z-index: 100;
   }
+  .field-name {
+    text-transform: capitalize;
+  }
+  .field-search-text {
+    margin-right: 15px;
+  }
   .field-options-bar {
     display: flex;
     flex-direction: row;
@@ -84,6 +90,7 @@ export default {
     position: fixed;
     top: 50%;
     left: 50%;
+    text-align: center;
     transform: translate(-50%, -50%);
     z-index: 9999999;
   }
@@ -94,6 +101,7 @@ export default {
     justify-content: center;
     flex-wrap: wrap;
     gap: 15px;
+    margin: 15px 0;
   }
   .field-type {
     flex: 0 0 calc(25% - 15px);
