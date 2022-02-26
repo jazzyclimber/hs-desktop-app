@@ -18,7 +18,7 @@ export default {
     return {
       navHeight: null,
       field: null,
-      booleans: ["required", "locked", "allow_new_line", "show_emoji_picker"],
+      booleans: ["required", "locked", "allow_new_line", "show_emoji_picker", "expanded"],
       globalFields: ["help_text", "inline_help_text", "locked", "required", "visibility", "display_width"],
       requiredCustomFields: ["name", "label", "id"]
     }
@@ -100,6 +100,7 @@ export default {
   },
   watch: {
     currentField: function (newData, oldData) {
+      // Split current field into chunks for display
       if (newData !== null) {
         var newTemp = {
           customFields: [],
