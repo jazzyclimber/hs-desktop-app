@@ -29,6 +29,13 @@ const fieldTypes = {
     "type" : "text",
     "default" : ""
   },
+  group: {
+      "type": "group",
+      "name": "typography",
+      "label": "Typography",
+      "expanded": false,
+      "children": []
+  }
 
 }
 
