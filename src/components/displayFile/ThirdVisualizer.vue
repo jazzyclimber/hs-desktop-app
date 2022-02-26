@@ -13,7 +13,7 @@
     <transition-group type="transition" :name="!drag ? 'flip-list' : null">
       <div class="field-item"
         v-for="(item, index) in realValue"
-        v-bind:class="{'has-children': item.children}"
+        v-bind:class="{'has-children': item.children, 'group': item.type === 'group'}"
         :key="level + '-' + index"
       >
         <div class="card-content">
@@ -75,12 +75,16 @@ import ThirdVisualizer from "./ThirdVisualizer"
   }
 </script>
 
-<style>
+<style scoped>
   .field-item {
     width: 100%;
     padding: 20px;
     border: 1px solid black;
     text-align: left;
+    background-color: white;
+  }
+  .field-item.group {
+    background-color: #fff9ec;
   }
   .field-item.has-children {
     padding-bottom: 0;
