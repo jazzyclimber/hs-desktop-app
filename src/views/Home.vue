@@ -117,6 +117,9 @@ export default {
   border: 1px solid #ccc;
   height: 100vh;
 }
+.multipane > div {
+    z-index: initial;
+}
 .pane::-webkit-scrollbar {
   background: transparent;        /* color of the tracking area */
   width: 5px;
