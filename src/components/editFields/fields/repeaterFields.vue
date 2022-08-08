@@ -12,21 +12,27 @@ NOTE:: Boolean should NOT be included with emitted data
 <template>
   <div class="global-fields-container">
     <div class="header">
-        <h3>Global Fields</h3>
+        <h3>Repeater Options</h3>
     </div>
-    <label v-for="(item) in workingRepeater" :key="item.field.key" >
-      <div class="field-wrap" v-if="item.field.key !== 'type' ">
-        <span class="label">{{item.field.key.replace(/_/g, " ").toUpperCase()}}</span>
+    <label for="enable-repeater">
+      <div class="field-wrap">
+        <span class="label">Enable Repeater</span>
         <Toggle
-          v-model="item.field.value"
+          v-model="isEnabled"
           @input="emitter"
         />
+      </div>
+    </label>
+    <label v-for="(item) in workingRepeater" :key="item.field.key" >
+      <div class="field-wrap" v-if="item.field.key !== 'type' ">
+        <span class="label">{{item.key.toUpperCase()}}</span>
         <v-jsoneditor
           v-model="item.field.value"
-          v-if="item.type == 'object'"
+          v-if="isEnabled"
           :plus="false"
           height="200px"
           :options="jsonOptions"
+          @input="emitter"
         />
       </div>
     </label>
@@ -37,10 +43,12 @@ NOTE:: Boolean should NOT be included with emitted data
 import Toggle from "./inputs/toggle"
 import VJsoneditor from "v-jsoneditor"
 import {jsonOptions} from "@/helpers/jsonEditConfig.js"
+import { globalRepeaterFields } from "../helpers/globalFields"
 export default {
   name: "RepeaterFields",
   data() {
     return {
+      isEnabled: false,
       workingRepeater: null,
       jsonOptions: jsonOptions,
     }
@@ -49,21 +57,46 @@ export default {
     value: Array
   },
   methods: {
-    emitter() {
+     confirmRepeaterFields: function(arrayRepeater) {
+      let tempGlobal =  JSON.parse(JSON.stringify({...globalRepeaterFields}));
+
+
+       arrayRepeater.forEach(item => {
+        delete tempGlobal[item.key]
+      })
+
+      // Add remaining global fields
+      for (const [key, value] of Object.entries(tempGlobal)) {
+        arrayRepeater.push(value);
+      }
+      return arrayRepeater
+    },
+    clearWorkingRepeater: function() {
+        let tempReset = JSON.parse(JSON.stringify({...globalRepeaterFields}));
+        tempReset.field.value = null;
+        this.workingRepeater = tempReset;
+    },
+    setIsEnabled(e) {
+      this.isEnabled = e;
+    },
+    emitter(e) {
       //Need this as oppose to a watcher because otherwise
       // watcher will fire on every field update
       // even if its not from an input value change.
-      this.$emit('input', this.workingRepeater)
+      this.isEnabled = e;
+      this.isEnabled  ? this.workingRepeater = this.confirmRepeaterFields(this.workingRepeater) : this.clearWorkingRepeater();
+      this.$emit('repeater-change', this.workingRepeater)
     }
   },
   watch: {
     value: {
       deep: true,
       immediate: true,
-      handler:function(newData){
+      handler:function(newData) {
+        newData.length  ? this.isEnabled = true : this.isEnabled  = false;
         this.workingRepeater = newData
       }
-    }
+    },
   },
   components: {
     Toggle,

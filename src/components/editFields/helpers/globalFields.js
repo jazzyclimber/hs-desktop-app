@@ -80,7 +80,23 @@ const customGlobalFields = {
   },
 }
 
+const globalRepeaterFields = {
+  occurrence: {
+    type: "object",
+    key: "occurrence",
+    field: {
+      key: "occurrence",
+      value: {
+        "min": 1,
+        "max": null,
+        "sorting_label_field": null,
+        "default": 1
+      }
+    }
+  }
+}
 module.exports = {
   globalFields,
-  customGlobalFields
+  customGlobalFields,
+  globalRepeaterFields
 }
