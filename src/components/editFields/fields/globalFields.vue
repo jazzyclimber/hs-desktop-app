@@ -49,7 +49,7 @@ export default {
       //Need this as oppose to a watcher because otherwise
       // watcher will fire on every field update
       // even if its not from an input value change.
-      this.$emit('input', this.workingCustom)
+      this.$emit('input', this.workingGlobal)
     }
   },
   watch: {
