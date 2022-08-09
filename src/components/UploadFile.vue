@@ -2,7 +2,7 @@
 <template>
   <div class="nav-bar">
     <div :class="'upload'">
-      <button @click="addFile()">Open Dialog</button>
+      <button @click="addFile()">Open Modules Directory</button>
     </div>
   </div>
 </template>
