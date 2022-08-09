@@ -1,7 +1,7 @@
 <template>
-<div :class="'menu-wrapper'">
+<div :class="(level == 1) ? 'top-level':'level'+level " class="menu-wrapper">
   <ul v-for="(item, i) in localTree" :key="'l-'+ level + '-' + i">
-    <li v-if="item.children && item.name.includes('.module')">{{item.name}}</li>
+    <li v-if="item.children && item.name.includes('.module')" class="module" :data-name="item.name">{{item.name}}</li>
     <li :class="'file'" v-else-if="item.name == 'fields.json'" @click="readFile(item.path)">{{item.name}}</li>
     <MenuTree v-if="item.children" :localTree="item.children" :level="nextLevel" />
   </ul>
@@ -21,7 +21,13 @@ export default {
       window.ipc.send('readFile', path);
       this.$store.commit("updateCurrentFilePath", path)
       this.$store.commit("updateCurrentField", null);
+    },
+    formattedTree: function() {
+      let formatted = [];
     }
+  },
+  created() {
+    this.formattedTree();
   },
   computed: {
     nextLevel: function () {

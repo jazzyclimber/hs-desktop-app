@@ -3,11 +3,11 @@
     <button @click="modalActive = true">Add Field</button>
     <div v-if="modalActive" class="modal field-modal" @click="modalActive = false"></div>
       <div class="modal-inner" v-if="modalActive">
-        <label for="field-search">Search</label>
+        <label for="field-search" class="field-search-text">Search</label>
         <input type="text" name="field-search" v-model="searchTerm">
         <div class="field-choice-container" >
           <article class="field-type" @click="emitter(item)" v-for="item in filteredFields">
-            <h3 class="field-name">{{item}}</h3>
+            <h3 class="field-name">{{item | formatText}}</h3>
           </article>
         </div>
         <button @click="modalActive = false">Cancel</button>
@@ -31,22 +31,35 @@ export default {
       this.searchTerm = null
     },
     emitter(field) {
+      console.log("emitted field",this.fieldTypes[field])
       this.$store.commit('addFieldToOpenFile', this.fieldTypes[field]);
       this.modalActive = false
       this.resetSearch()
+    }
+  },
+  filters: {
+    formatText(text) {
+      text = text.split("_");
+      text.map(item =>{
+        item.capitalize;
+      });
+      text = text.join(" ");
+      return text;
     }
   },
   computed: {
     filteredFields() {
       var fields;
       if (this.searchTerm !== null && this.searchTerm !== "") {
+        // If using search
         fields = Object.keys(this.fieldTypes).filter(item => {
           return item.includes(this.searchTerm);
         })
       } else {
-        console.log(this.fieldTypes)
+        // If not using search
         fields = Object.keys(this.fieldTypes)
       }
+
       return fields
     }
   },
@@ -69,6 +82,12 @@ export default {
     flex-direction: row;
     z-index: 100;
   }
+  .field-name {
+    text-transform: capitalize;
+  }
+  .field-search-text {
+    margin-right: 15px;
+  }
   .field-options-bar {
     display: flex;
     flex-direction: row;
@@ -81,9 +100,13 @@ export default {
     padding: 20px;
     width: 100%;
     max-width: 900px;
+    max-height: 400px;
+    height: 400px;
+    overflow: auto;
     position: fixed;
     top: 50%;
     left: 50%;
+    text-align: center;
     transform: translate(-50%, -50%);
     z-index: 9999999;
   }
@@ -94,6 +117,7 @@ export default {
     justify-content: center;
     flex-wrap: wrap;
     gap: 15px;
+    margin: 15px 0;
   }
   .field-type {
     flex: 0 0 calc(25% - 15px);

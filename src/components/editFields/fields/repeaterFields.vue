@@ -25,7 +25,7 @@ NOTE:: Boolean should NOT be included with emitted data
     </label>
     <label v-for="(item) in workingRepeater" :key="item.field.key" >
       <div class="field-wrap" v-if="item.field.key !== 'type' ">
-        <span class="label">{{item.key.toUpperCase()}}</span>
+        <span class="label" v-if="isEnabled">{{item.key.toUpperCase()}}</span>
         <v-jsoneditor
           v-model="item.field.value"
           v-if="isEnabled"

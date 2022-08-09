@@ -23,18 +23,18 @@ export default {
     initState: {
       immediate: true,
       handler: function () {
-        this.toggleValue = this.initState
+        this.toggleValue = this.initState;
       }
     }
   },
   computed: {
     isActive () {
-      return this.toggleValue
+      return this.toggleValue;
     },
     initState: {
       get () {
-      return this.value
-    }
+        return this.value;
+      }
     }
   }
 }

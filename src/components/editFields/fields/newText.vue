@@ -23,13 +23,21 @@
         />
       </div>
     </label>
-    <GlobalFields v-model="workingGlobal" @input="emitter" />
+    <GlobalFields
+      v-model="workingGlobal"
+      @input="emitter"
+    />
+    <RepeaterFields
+      v-model="workingRepeater"
+      @repeater-change="repeaterSet"
+    />
   </div>
 </template>
 
 <script>
 import Toggle from "./inputs/toggle"
 import GlobalFields from './globalFields.vue'
+import RepeaterFields from './repeaterFields.vue'
 import VJsoneditor from 'v-jsoneditor'
 import {jsonOptions} from "@/helpers/jsonEditConfig.js"
 export default {
@@ -38,6 +46,7 @@ export default {
     return {
       workingCustom: null,
       workingGlobal: null,
+      workingRepeater: null,
       jsonOptions: jsonOptions,
     }
   },
@@ -51,12 +60,12 @@ export default {
       handler: function (newData) {
         this.workingCustom = newData.customFields
         this.workingGlobal = newData.globalFields
+        this.workingRepeater = newData.repeatFields
       }
     }
   },
   methods: {
     setFieldType: function (key) {
-      console.log(key);
       if (this.booleans.includes(key)) {
         return "boolean"
       } else {
@@ -66,16 +75,26 @@ export default {
     onError() {
       console.log('error')
     },
+    repeaterSet(newData) {
+      this.workingRepeater = newData;
+      this.emitter();
+    },
     emitter(){
       //Need this as oppose to a watcher because otherwise
       // watcher will fire on every field update
       // even if its not from an input value change.
-      this.$emit('field-change', this.field)
+      let newField = {
+        customFields: this.workingCustom,
+        globalFields: this.workingGlobal,
+        repeatFields: this.workingRepeater
+      }
+      this.$emit('field-change', newField)
     }
   },
   components: {
     Toggle,
     GlobalFields,
+    RepeaterFields,
     VJsoneditor
   }
 }

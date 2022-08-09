@@ -37,9 +37,9 @@ const globalFields = {
     field: {
       key: "visibility",
       value: {
-        controlling_field: "",
-        controlling_value_regex: "",
-        operator: ""
+        controlling_field: null,
+        controlling_value_regex: null,
+        operator: null
       },
     },
   },

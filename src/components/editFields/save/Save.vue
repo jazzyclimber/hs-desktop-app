@@ -12,7 +12,6 @@ export default {
   },
   methods: {
     saveFile() {
-      console.log(this.openFile)
       window.ipc.send('saveFile', {
         file: this.openFile,
         path: this.currentFilePath

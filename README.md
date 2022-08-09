@@ -1,28 +1,11 @@
 # hs-desktop-app
 
-## Project setup
-```
-npm install
-```
-You may also need to run 
-```
-vue add electron-builder
-```
+## To Run
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+** must currently be using node version 14
 
-### Compiles and minifies for production
-```
-npm run build
-```
+`nvm use 14` or `nvm install 14`
 
-### Lints and fixes files
-```
-npm run lint
-```
+then 
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+`npm run electron:serve`

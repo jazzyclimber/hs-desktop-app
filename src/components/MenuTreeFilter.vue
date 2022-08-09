@@ -32,5 +32,18 @@ export default {
 </script>
 
 <style >
+.filter-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+  margin-top: 10px;
+}
+.filter-wrapper label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+}
 
 </style>

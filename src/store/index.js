@@ -12,18 +12,17 @@ export default new Vuex.Store({
     currentFilePath: null,
   },
   mutations: {
-    changeCurrentDirectory (state, payload) {
+    changeCurrentDirectory(state, payload) {
       state.cwd = payload.cwd;
       state.tree = payload.tree;
     },
-    changeTree (state, payload) {
+    changeTree(state, payload) {
       state.tree = payload
     },
-    updateCurrentField (state, payload) {
-      console.log('UPDATE CURRENT FIELD')
+    updateCurrentField(state, payload) {
       state.currentField = payload
     },
-    updateOpenFile (state, payload) {
+    updateOpenFile(state, payload) {
       state.openFile = payload.openFile
     },
     addFieldToOpenFile(state, payload) {
@@ -50,25 +49,26 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    tree (state) {
+    tree(state) {
       return state.tree
     },
-    currentField (state) {
+    currentField(state) {
       return state.currentField
     },
-    openFile (state) {
+    openFile(state) {
       return state.openFile
     },
-    currentFilePath (state) {
+    currentFilePath(state) {
       return state.currentFilePath;
     }
   },
   actions: {
-    removeField({commit}, payload) {
+    removeField({
+      commit
+    }, payload) {
       commit('updateCurrentField', null)
       commit('removeFieldFromOpenFile', payload)
     }
   },
-  modules: {
-  }
+  modules: {}
 })

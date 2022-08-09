@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { globalFields, customGlobalFields } from "./helpers/globalFields"
+import { globalFields, customGlobalFields} from "./helpers/globalFields"
 import TextField from "./fields/newText.vue"
 import {mapGetters} from "vuex"
 export default {
@@ -20,6 +20,7 @@ export default {
       field: null,
       booleans: ["required", "locked", "allow_new_line", "show_emoji_picker", "expanded"],
       globalFields: ["help_text", "inline_help_text", "locked", "required", "visibility", "display_width"],
+      repeatFields: ["occurrence"],
       requiredCustomFields: ["name", "label", "id"]
     }
   },
@@ -27,23 +28,30 @@ export default {
   },
    methods: {
     handleEmit(newData) {
-
-      newData = newData.customFields.concat(newData.globalFields);
+      newData = newData.customFields.concat(newData.globalFields, newData.repeatFields);
 
       // Still need to set new File here
       let newField = {};
       let openFile = this.openFile;
       let cf = this.currentField;
-      console.log('changing', openFile)
 
+      // Loop through newData and create new field to match Field Structure
       newData.forEach((item) => {
-        newField[item.field.key] = item.field.value;
+        if (item?.field?.value == null || item?.field?.value == undefined) {
+          console.log(item);
+          console.log("err, FieldEditor.vue", item)
+        } else {
+          newField[item.field.key] = item.field.value;
+        }
       })
 
+
+      // Find the correct field to modify in JSON file
       function findField(arr) {
         arr.forEach((item, i) => {
+
+          // If it is the correct field then replace it.
           if (item === cf) {
-            // arr[i] = payload;
             arr.splice(i, 1, newField);
           } else if (item.children) {
             findField(item.children);
@@ -58,6 +66,9 @@ export default {
     },
     checkIfGlobalField: function (key){
       return this.globalFields.includes(key)
+    },
+    checkIfRepeaterField: function(key) {
+      return this.repeatFields.includes(key);
     },
     setFieldType: function (key, value) {
       if (this.booleans.includes(key)) {
@@ -104,17 +115,20 @@ export default {
       if (newData !== null) {
         var newTemp = {
           customFields: [],
-          globalFields: []
+          globalFields: [],
+          repeatFields: [],
         };
 
         for (const [key, value] of Object.entries(newData)) {
-          var isGlobalField = this.checkIfGlobalField(key)
+          var isGlobalField = this.checkIfGlobalField(key);
+          var isRepeatField = this.checkIfRepeaterField(key);
           var fieldObj = {
             type: this.setFieldType(key,value),
             key: key,
             field: { key: key, value: value },
           }
-          isGlobalField ? newTemp.globalFields.push(fieldObj) : newTemp.customFields.push(fieldObj);
+          // if global add to global, if repeat add to repeat, else add to custom
+          isGlobalField ? newTemp.globalFields.push(fieldObj) : isRepeatField ? newTemp.repeatFields.push(fieldObj) : newTemp.customFields.push(fieldObj);
         }
         newTemp.globalFields = this.confirmGlobalFields(newTemp.globalFields)
         newTemp.customFields = this.confirmCustomFields(newTemp.customFields)

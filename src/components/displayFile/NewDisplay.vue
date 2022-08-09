@@ -37,7 +37,6 @@ export default {
     workingFile:{
       deep:true,
       handler: function(newData, oldData) {
-        console.log('workingFile UPdate')
         this.$store.commit('updateOpenFile', { openFile: newData })
       }
     }

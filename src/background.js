@@ -1,8 +1,18 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain, dialog } from 'electron'
-import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
-import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+import {
+  app,
+  protocol,
+  BrowserWindow,
+  ipcMain,
+  dialog
+} from 'electron'
+import {
+  createProtocol
+} from 'vue-cli-plugin-electron-builder/lib'
+import installExtension, {
+  VUEJS_DEVTOOLS
+} from 'electron-devtools-installer'
 import path from "path"
 const dirTree = require("directory-tree");
 const fs = require('fs');
@@ -13,11 +23,15 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 let win;
 
 // Scheme must be registered before the app is ready
-protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } }
-])
+protocol.registerSchemesAsPrivileged([{
+  scheme: 'app',
+  privileges: {
+    secure: true,
+    standard: true
+  }
+}])
 
-async function createWindow () {
+async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     width: 1500,
@@ -80,12 +94,14 @@ ipcMain.on("openDialog", (event, args) => {
     title: 'Open Directory',
     buttonLabel: 'Select Directory',
     properties: ['openDirectory']
-   }
-   const filepath = dialog.showOpenDialogSync(options)
-   console.log("open return value: \n", filepath)
+  }
+  const filepath = dialog.showOpenDialogSync(options)
 
-   const tree = dirTree(filepath[0]);
-   win.webContents.send("newDirectory", { cwd: filepath[0], tree: tree })
+  const tree = dirTree(filepath[0]);
+  win.webContents.send("newDirectory", {
+    cwd: filepath[0],
+    tree: tree
+  })
 });
 
 ipcMain.on("readFile", (event, file) => {
@@ -102,12 +118,12 @@ ipcMain.on("readFile", (event, file) => {
 })
 
 ipcMain.on("saveFile", (event, file) => {
-  console.log('saveFile:', file)
   let payload = JSON.stringify(file.file);
 
   let callback = (err) => {
-    if (err) {console.log("error on save", err)}
-    else {
+    if (err) {
+      console.log("error on save", err)
+    } else {
       console.log('File Saved Successfully');
     }
   }
