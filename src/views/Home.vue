@@ -3,6 +3,7 @@
   <multipane class="custom-resizer" layout="vertical">
   <div class="pane sidebar" :style="{ flexGrow:0}">
     <UploadFile />
+    <MenuTreeFilter v-if="workingTree[0] != null" />
     <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :level="1"/>
   </div>
   <multipane-resizer></multipane-resizer>
@@ -24,6 +25,7 @@ import { mapGetters } from 'vuex'
 import { Multipane, MultipaneResizer } from 'vue-multipane';
 import UploadFile from '@/components/UploadFile.vue'
 import MenuTree from "@/components/MenuTree"
+import MenuTreeFilter from "@/components/MenuTreeFilter"
 // import DisplayFile from "@/components/displayFile/DisplayFile"
 import NewDisplay from "@/components/displayFile/NewDisplay"
 import FieldEditor from "@/components/editFields/FieldEditor"
@@ -32,6 +34,7 @@ export default {
   components: {
     UploadFile,
     MenuTree,
+    MenuTreeFilter,
     NewDisplay,
     FieldEditor,
     Multipane,
