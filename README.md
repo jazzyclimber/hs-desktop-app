@@ -2,9 +2,9 @@
 
 ## To Run
 
-** must currently be using node version 14
+** must currently be using node version 14 or 16
 
-`nvm use 14` or `nvm install 14`
+`nvm use 16` or `nvm install 16`
 
 then 
 
