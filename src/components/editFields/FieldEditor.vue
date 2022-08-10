@@ -37,7 +37,7 @@ export default {
 
       // Loop through newData and create new field to match Field Structure
       newData.forEach((item) => {
-        if (item?.field?.value == null || item?.field?.value == undefined) {
+        if ( item?.field?.value == undefined) {
           console.log(item);
           console.log("err, FieldEditor.vue", item)
         } else {
@@ -71,11 +71,13 @@ export default {
       return this.repeatFields.includes(key);
     },
     setFieldType: function (key, value) {
+
+      console.log(key, typeof value);
       if (this.booleans.includes(key)) {
         return "boolean";
       } else if (key == "children") {
         return "ignore"
-      } else if (typeof value === "object"){
+      } else if (typeof value === "object" && value != null){
          return "object"
       } else {
         return "text";
