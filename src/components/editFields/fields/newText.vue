@@ -14,7 +14,7 @@
           v-model="item.field.value"
           @input="emitter"
         />
-        <v-jsoneditor v-model="item.field.value" v-else-if="item.type == 'object'"  :plus="false" height="200px" :options="jsonOptions" />
+        <v-jsoneditor v-model="item.field.value" v-else-if="item.type == 'object'" @input="emitter" :plus="false" height="200px" :options="jsonOptions" />
         <input
           v-if="item.type == 'text'"
           type="text"
