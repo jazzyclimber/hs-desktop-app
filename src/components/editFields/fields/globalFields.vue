@@ -16,6 +16,7 @@
           v-else-if="item.type == 'object'"
           :plus="false"
           height="200px"
+          @input="emitter"
           :options="jsonOptions"
         />
         <input
