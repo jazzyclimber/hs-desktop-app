@@ -39,7 +39,8 @@ const globalFields = {
       value: {
         controlling_field: null,
         controlling_value_regex: null,
-        operator: null
+        operator: null,
+        hidden_subfields: null
       },
     },
   },
@@ -95,8 +96,20 @@ const globalRepeaterFields = {
     }
   }
 }
+
+const extraFields = {
+  alignment_direction: {
+    type: "text",
+    key: "alignment_direction",
+    field: {
+      key: "alignment_direction",
+      value:""
+    }
+  }
+}
 module.exports = {
   globalFields,
   customGlobalFields,
-  globalRepeaterFields
+  globalRepeaterFields,
+  extraFields
 }

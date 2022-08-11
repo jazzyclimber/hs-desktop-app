@@ -1,25 +1,26 @@
 const fieldTypes = {
   group: {
     "type": "group",
-    "name": "typography",
-    "label": "Typography",
+    "name": "default",
+    "label": "default",
     "expanded": false,
     "children": []
   },
   alignment: {
-    "name": "img_position",
-    "label": "Position Image",
-    "help_text": "Position the image within it's container.",
+    "name": "default",
+    "label": "default",
+    "help_text": "",
     "required": false,
     "type": "alignment",
+    "alignment_direction": "BOTH",
     "default": {
       "horizontal_align": "CENTER",
       "vertical_align": "TOP",
     }
   },
   background_image: {
-    "name": "bg_image",
-    "label": "Background image",
+    "name": "default",
+    "label": "default",
     "required": false,
     "type": "backgroundimage",
     "default": {
@@ -30,9 +31,9 @@ const fieldTypes = {
 
   },
   gradient: {
-    "name": "bg_gradient",
-    "label": "Background gradient",
-    "help_text": "Sets a gradient behind the content",
+    "name": "default",
+    "label": "default",
+    "help_text": "",
     "required": false,
     "type": "gradient",
     "default": {
@@ -58,8 +59,8 @@ const fieldTypes = {
     }
   },
   icon: {
-    "name": "icon_field",
-    "label": "Icon",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "icon_set": "fontawesome-5.14.0",
@@ -71,8 +72,8 @@ const fieldTypes = {
     }
   },
   spacing: {
-    "name": "img_spacing",
-    "label": "Spacing around image",
+    "name": "",
+    "label": "",
     "required": false,
     "type": "spacing",
     "default": {
@@ -108,7 +109,7 @@ const fieldTypes = {
   },
   blog: {
     "name": "default",
-    "label": "Default Blog",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "blog",
@@ -116,7 +117,7 @@ const fieldTypes = {
   },
   boolean: {
     "name": "default",
-    "label": "Default Boolean",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "boolean",
@@ -126,8 +127,8 @@ const fieldTypes = {
     "default": false
   },
   text_alignment: {
-    "name": "heading_align",
-    "label": "Heading alignment",
+    "name": "default",
+    "label": "Default",
     "required": false,
     "type": "textalignment",
     "default": {
@@ -135,9 +136,9 @@ const fieldTypes = {
     }
   },
   border: {
-    "id": "styles.border",
-    "name": "border",
-    "label": "border",
+    "id": "",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "allow_custom_border_sides": false,
@@ -166,8 +167,8 @@ const fieldTypes = {
     }
   },
   text: {
-    "name": "default_name",
-    "label": "Default Label",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "validation_regex": "",
@@ -177,8 +178,8 @@ const fieldTypes = {
     "default": ""
   },
   choice: {
-    "name": "img_position",
-    "label": "Image Position",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "multiple": "true",
@@ -191,8 +192,8 @@ const fieldTypes = {
     "default": "option_1"
   },
   color: {
-    "name": "bg_color",
-    "label": "Background color",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "color",
@@ -202,16 +203,16 @@ const fieldTypes = {
     }
   },
   cta: {
-    "name": "cta",
-    "label": "CTA",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "cta",
     "default": null
   },
   crm_object: {
-    "name": "crmobject_field",
-    "label": "CRM object",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "object_type": "CONTACT",
@@ -222,8 +223,8 @@ const fieldTypes = {
     }
   },
   crm_object_property: {
-    "name": "crmobjectproperty_field",
-    "label": "CRM object property",
+    "name": "default",
+    "label": "default",
     "required": true,
     "locked": false,
     "object_type": "contact",
@@ -233,32 +234,32 @@ const fieldTypes = {
     }
   },
   date: {
-    "name": "event_start_date",
-    "label": "Event Date",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "date",
     "default": 1577854800000
   },
   date_and_time: {
-    "name": "event_start",
-    "label": "Event Start",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "datetime",
     "default": 1577854800000
   },
   email_address: {
-    "name": "emails",
-    "label": "Email address",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "email",
     "default": null
   },
   embed: {
-    "name": "embed_field",
-    "label": "Embed",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "supported_source_types": ["oembed", "html"],
@@ -269,8 +270,8 @@ const fieldTypes = {
     }
   },
   file: {
-    "name": "file_field",
-    "label": "File",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "file",
@@ -278,8 +279,8 @@ const fieldTypes = {
     "default": null
   },
   follow_up_email: {
-    "name": "followup_email",
-    "label": "Followup email",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "followupemail",
@@ -308,8 +309,8 @@ const fieldTypes = {
     }
   },
   form: {
-    "name": "form",
-    "label": "Form",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "form",
@@ -322,8 +323,8 @@ const fieldTypes = {
     }
   },
   hubdb_row: {
-    "name": "hubdbrow_field",
-    "label": "HubDB row",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "table_name_or_id": "3096859",
@@ -336,16 +337,16 @@ const fieldTypes = {
     }
   },
   hubdb_table: {
-    "name": "recipe_table",
-    "label": "Recipe Table",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "hubdbtable",
     "default": 2010782
   },
   image: {
-    "name": "image_field",
-    "label": "Image",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "responsive": true,
@@ -364,8 +365,8 @@ const fieldTypes = {
     }
   },
   link: {
-    "name": "link",
-    "label": "Link",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "supported_types": ["EXTERNAL", "CONTENT", "FILE", "EMAIL_ADDRESS", "BLOG"],
@@ -384,8 +385,8 @@ const fieldTypes = {
     }
   },
   logo: {
-    "name": "logo",
-    "label": "Logo",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "logo",
@@ -398,16 +399,16 @@ const fieldTypes = {
     }
   },
   menu: {
-    "name": "menu",
-    "label": "Menu",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "menu",
     "default": 12345678911
   },
   number: {
-    "name": "number_field",
-    "label": "Number",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "display": "slider",
@@ -421,26 +422,26 @@ const fieldTypes = {
     "placeholder": "50"
   },
   page: {
-    "name": "page_field",
-    "label": "Page",
-    "help_text": "Pulls data from the selected page.",
+    "name": "default",
+    "label": "default",
+    "help_text": "default",
     "required": false,
     "locked": false,
-    "placeholder": "Page to pull from",
+    "placeholder": "",
     "type": "page",
     "default": null
   },
   rich_text: {
-    "name": "description",
-    "label": "Description",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
-    "type": "richtext",
+    "type": "default",
     "default": null
   },
   simple_menu: {
-    "name": "toc_menu",
-    "label": "Table of Contents",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "simplemenu",
@@ -522,9 +523,9 @@ const fieldTypes = {
     }]
   },
   tag: {
-    "id": "c3395cd3-8e60-7e47-2f1b-b7ccf4d669c9",
-    "name": "blog_tag",
-    "label": "Blog Tag",
+    "id": "",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "tag_value": "SLUG",
@@ -532,8 +533,8 @@ const fieldTypes = {
     "default": null
   },
   url: {
-    "name": "url",
-    "label": "URL",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "supported_types": ["EXTERNAL", "CONTENT", "FILE", "EMAIL_ADDRESS", "BLOG"],
@@ -545,9 +546,9 @@ const fieldTypes = {
     }
   },
   video: {
-    "id": "ca4a319e-5b58-422e-47ac-49ce1b51b507",
-    "name": "videoplayer_field",
-    "label": "Video",
+    "id": "",
+    "name": "default",
+    "label": "default",
     "required": false,
     "locked": false,
     "type": "videoplayer",
