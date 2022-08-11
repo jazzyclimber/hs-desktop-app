@@ -3,8 +3,11 @@
     class="field-display-wrapper"
     v-if="openFile"
   >
-  <SaveFile />
-  <AddField />
+  <h2 class="open-file-heading">{{openFileName}}</h2>
+  <div class="button-container">
+    <SaveFile />
+    <AddField />
+  </div>
   <div class="field-display-container">
     <ThirdVisualizer :level="1" :list="workingFile"  v-if="workingFile" :key="componentKey" />
   </div>
@@ -42,7 +45,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['openFile', 'currentField'])
+    ...mapGetters(['openFile', 'currentField', "openFileName"])
   },
    components: {
     ThirdVisualizer,
@@ -55,7 +58,17 @@ export default {
 <style>
   .field-display-wrapper {
     flex: 1 1 auto;
-    padding: 50px 0;
+    padding: 25px 0;
+  }
+  .button-container {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
   }
   .field-display-container {
     max-width: 500px;
@@ -63,5 +76,11 @@ export default {
     margin: 0 auto;
     width: 100%;
     overflow: auto;
+  }
+  .field-display-wrapper .open-file-heading {
+    margin: 0 auto 15px;
+    width: 100%;
+    text-align: center;
+
   }
 </style>
