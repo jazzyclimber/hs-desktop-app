@@ -8,10 +8,14 @@ export default new Vuex.Store({
     cwd: null,
     tree: null,
     openFile: null,
+    openFileName: null,
     currentField: null,
     currentFilePath: null,
   },
   mutations: {
+    updateOpenFileName(state, payload) {
+      state.openFileName = payload.openFileName;
+    },
     changeCurrentDirectory(state, payload) {
       state.cwd = payload.cwd;
       state.tree = payload.tree;
@@ -51,6 +55,9 @@ export default new Vuex.Store({
   getters: {
     tree(state) {
       return state.tree
+    },
+    openFileName(state) {
+      return state.openFileName;
     },
     currentField(state) {
       return state.currentField
