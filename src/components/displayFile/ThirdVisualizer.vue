@@ -17,8 +17,9 @@
         :key="level + '-' + index"
       >
         <div class="card-content">
-          <span>Label: {{item.label}}</span>
-          <span>Type: {{item.type}}</span>
+          <span class="label">Label: {{item.label | formatText}}</span>
+          <span class="name">Name: {{item.name}}</span>
+          <span class="type">{{item.type | formatText}}</span>
           <div class="action-bar">
             <button @click="updateCurrentField(item)">Edit</button>
             <RemoveField :field="item" />
@@ -45,6 +46,17 @@ import ThirdVisualizer from "./ThirdVisualizer"
       level: Number,
       list: Array,
       value: Array
+    },
+    filters: {
+      formatText(text) {
+        let splitName = text.split(" ");
+        let newSplitName = splitName.map(word => {
+          let newWord = word.split("");
+          newWord.splice(0,1,newWord[0].toUpperCase());
+          return newWord.join("");
+        })
+        return newSplitName.join(" ") ;
+      }
     },
     computed: {
       dragOptions () {
@@ -78,13 +90,27 @@ import ThirdVisualizer from "./ThirdVisualizer"
 <style scoped>
   .field-item {
     width: 100%;
-    padding: 20px;
+    padding: 20px 20px 10px;
     border: 1px solid black;
     text-align: left;
     background-color: white;
   }
   .field-item.group {
     background-color: #fff9ec;
+  }
+  .field-item .label {
+    font-weight: 700;
+  }
+  .field-item .type {
+    font-size: 10px;
+    margin-top: 5px;
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    padding: 2px 15px;
+    font-weight: 600;
+    background-color: #fbe5f6;
+    border-radius: 20px;
   }
   .field-item.has-children {
     padding-bottom: 0;
@@ -97,6 +123,7 @@ import ThirdVisualizer from "./ThirdVisualizer"
   }
   .field-item .card-content {
     position: relative;
+    padding-bottom: 40px;
   }
 
   .field-item .card-content:hover .action-bar {
