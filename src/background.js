@@ -17,7 +17,9 @@ import path from "path"
 const dirTree = require("directory-tree");
 const fs = require('fs');
 const DevTools = false;
-const isDevelopment = process.env.NODE_ENV !== 'production'
+const build = true;
+let preloadPath = build ? __dirname: "./public";
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -44,7 +46,8 @@ async function createWindow() {
       nodeIntegration: false, // is default value after Electron v5
       contextIsolation: true, // protect against prototype pollution
       enableRemoteModule: false, // turn off remote
-      preload: path.resolve("./public", "preload.js")
+
+      preload: path.resolve(preloadPath, "preload.js")
     }
   })
 
