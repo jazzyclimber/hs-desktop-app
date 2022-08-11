@@ -19,8 +19,11 @@ export default {
   methods: {
     readFile (path) {
       window.ipc.send('readFile', path);
+
+      let splitPath = path.split("/");
       this.$store.commit("updateCurrentFilePath", path)
       this.$store.commit("updateCurrentField", null);
+      this.$store.commit("updateOpenFileName",{openFileName: splitPath[splitPath.length - 2].replace('.module', "")});
     },
     formattedTree: function() {
       let formatted = [];
