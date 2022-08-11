@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { globalFields, customGlobalFields} from "./helpers/globalFields"
+import { globalFields, customGlobalFields, extraFields} from "./helpers/globalFields"
 import TextField from "./fields/newText.vue"
 import {mapGetters} from "vuex"
 export default {
@@ -21,7 +21,8 @@ export default {
       booleans: ["required", "locked", "allow_new_line", "show_emoji_picker", "expanded"],
       globalFields: ["help_text", "inline_help_text", "locked", "required", "visibility", "display_width"],
       repeatFields: ["occurrence"],
-      requiredCustomFields: ["name", "label", "id"]
+      requiredCustomFields: ["name", "label", "id"],
+      allFields: {...globalFields, ...customGlobalFields, ...extraFields}
     }
   },
   updated() {
@@ -70,18 +71,33 @@ export default {
     checkIfRepeaterField: function(key) {
       return this.repeatFields.includes(key);
     },
+
     setFieldType: function (key, value) {
 
-      console.log(key, typeof value);
-      if (this.booleans.includes(key)) {
-        return "boolean";
-      } else if (key == "children") {
+      // console.log(key, typeof value);
+      // if (this.booleans.includes(key)) {
+      //   return "boolean";
+      // } else if (key == "children") {
+      //   return "ignore"
+      // } else if (typeof value === "object" && value != null){
+      //    return "object"
+      // } else {
+      //   return "text";
+      // }
+      console.log(key, this.allFields[key])
+      if (key == "children") {
         return "ignore"
       } else if (typeof value === "object" && value != null){
          return "object"
+      } else if (this.allFields[key]) {
+        return this.allFields[key].type
       } else {
-        return "text";
+        return "text"
       }
+
+
+
+
     },
     confirmGlobalFields: function (arrayGlobal) {
       let tempGlobal = {...globalFields};
@@ -113,6 +129,7 @@ export default {
   },
   watch: {
     currentField: function (newData, oldData) {
+
       // Split current field into chunks for display
       if (newData !== null) {
         var newTemp = {
@@ -129,6 +146,8 @@ export default {
             key: key,
             field: { key: key, value: value },
           }
+
+
           // if global add to global, if repeat add to repeat, else add to custom
           isGlobalField ? newTemp.globalFields.push(fieldObj) : isRepeatField ? newTemp.repeatFields.push(fieldObj) : newTemp.customFields.push(fieldObj);
         }
