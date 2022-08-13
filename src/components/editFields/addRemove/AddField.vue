@@ -17,6 +17,8 @@
 </template>
 <script>
 import {fieldTypes} from "../helpers/fieldTypes"
+import _ from "lodash"
+
 export default {
   name: "AddField",
   data(){
@@ -32,7 +34,13 @@ export default {
     },
     emitter(field) {
       console.log("emitted field",this.fieldTypes[field])
-      this.$store.commit('addFieldToOpenFile', this.fieldTypes[field]);
+      console.log('field', field);
+
+      // const newField = JSON.parse(JSON.stringify(fieldTypes[field]));
+      const newField = _.cloneDeep(fieldTypes[field]);
+      console.log('newField', newField);
+
+      this.$store.commit('addFieldToOpenFile', newField);
       this.modalActive = false
       this.resetSearch()
     }
@@ -49,7 +57,7 @@ export default {
   },
   computed: {
     filteredFields() {
-      var fields;
+      let fields;
       if (this.searchTerm !== null && this.searchTerm !== "") {
         // If using search
         fields = Object.keys(this.fieldTypes).filter(item => {
@@ -64,7 +72,7 @@ export default {
     }
   },
   created() {
-    this.fieldTypes = fieldTypes
+    this.fieldTypes = _.cloneDeep(fieldTypes);
   }
 }
 </script>
