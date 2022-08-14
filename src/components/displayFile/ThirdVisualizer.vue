@@ -35,6 +35,7 @@
 import draggable from "vuedraggable";
 import RemoveField from "../editFields/addRemove/RemoveField.vue"
 import ThirdVisualizer from "./ThirdVisualizer"
+import {mapGetters} from 'vuex'
   export default {
     name: "ThirdVisualizer",
     data () {
@@ -59,12 +60,17 @@ import ThirdVisualizer from "./ThirdVisualizer"
       }
     },
     computed: {
+      ...mapGetters(['unsavedEdits']),
       dragOptions () {
         return {
           animation: 200,
           group: "description",
           disabled: false,
-          ghostClass: "ghost"
+          ghostClass: "ghost",
+          move: event=> {
+            !this.unsavedEdits ? this.$store.commit('updateUnsavedEdits', {unsavedEdits: true}) : null;
+            return true;
+          }
         };
       },
       realValue() {

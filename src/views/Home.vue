@@ -2,9 +2,10 @@
   <div class="home">
   <multipane class="custom-resizer" layout="vertical">
   <div class="pane sidebar" :style="{ flexGrow:0}">
-    <UploadFile />
-    <MenuTreeFilter v-if="workingTree[0] != null" />
-    <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :level="1"/>
+    <UploadFile  />
+    <MenuTreeFilter v-if="workingTree[0] != null"  />
+    <UnsavedEditsModal v-if="showUnsavedModal" v-on:close-unsaved-edits-modal="handleCloseUnsavedEditsModal" />
+    <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :level="1" v-on:unsaved-edits="handleUnsavedEdits" />
   </div>
   <multipane-resizer></multipane-resizer>
   <div class="pane field-display-wrapper" :style="{ flexGrow: 0 }">
@@ -26,11 +27,17 @@ import { Multipane, MultipaneResizer } from 'vue-multipane';
 import UploadFile from '@/components/UploadFile.vue'
 import MenuTree from "@/components/MenuTree"
 import MenuTreeFilter from "@/components/MenuTreeFilter"
-// import DisplayFile from "@/components/displayFile/DisplayFile"
+import UnsavedEditsModal from "@/components/editFields/save/UnsavedEditsModal"
+
 import NewDisplay from "@/components/displayFile/NewDisplay"
 import FieldEditor from "@/components/editFields/FieldEditor"
 export default {
   name: 'Home',
+  data() {
+    return {
+      showUnsavedModal: false
+    }
+  },
   components: {
     UploadFile,
     MenuTree,
@@ -38,10 +45,24 @@ export default {
     NewDisplay,
     FieldEditor,
     Multipane,
-    MultipaneResizer
+    MultipaneResizer,
+    UnsavedEditsModal
+  },
+  methods: {
+    handleUnsavedEdits(data) {
+      this.showUnsavedModal = true;
+    },
+    handleCloseUnsavedEditsModal() {
+      this.showUnsavedModal = false;
+    }
+  },
+  watch: {
+    unsavedEdits: function(unsaved) {
+      unsaved ? null : this.showUnsavedModal = false;
+    }
   },
    computed: {
-     ...mapGetters(["tree"]),
+     ...mapGetters(["tree", "unsavedEdits"]),
      workingTree(){
        return [this.tree]
      }

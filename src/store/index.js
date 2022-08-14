@@ -8,6 +8,7 @@ export default new Vuex.Store({
     cwd: null,
     tree: null,
     openFile: null,
+    unsavedEdits: false,
     openFileName: null,
     currentField: null,
     currentFilePath: null,
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     changeCurrentDirectory(state, payload) {
       state.cwd = payload.cwd;
       state.tree = payload.tree;
+    },
+    updateUnsavedEdits(state, payload) {
+      state.unsavedEdits = payload.unsavedEdits
     },
     changeTree(state, payload) {
       state.tree = payload
@@ -54,16 +58,19 @@ export default new Vuex.Store({
   },
   getters: {
     tree(state) {
-      return state.tree
+      return state.tree;
+    },
+    unsavedEdits(state) {
+      return state.unsavedEdits;
     },
     openFileName(state) {
       return state.openFileName;
     },
     currentField(state) {
-      return state.currentField
+      return state.currentField;
     },
     openFile(state) {
-      return state.openFile
+      return state.openFile;
     },
     currentFilePath(state) {
       return state.currentFilePath;

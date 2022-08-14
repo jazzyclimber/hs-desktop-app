@@ -18,7 +18,7 @@
 <script>
 import {fieldTypes} from "../helpers/fieldTypes"
 import _ from "lodash"
-
+import {mapGetters} from 'vuex'
 export default {
   name: "AddField",
   data(){
@@ -35,12 +35,16 @@ export default {
     updateCurrentField(currentField) {
       this.$store.commit('updateCurrentField', currentField);
     },
+    updateUnsavedEdits() {
+      this.$store.commit('updateUnsavedEdits', {unsavedEdits: true});
+    },
     emitter(field) {
       const newField = _.cloneDeep(fieldTypes[field]);
 
       this.$store.commit('addFieldToOpenFile', newField);
       this.updateCurrentField(newField);
-      this.modalActive = false
+      this.modalActive = false;
+      this.updateUnsavedEdits();
       this.resetSearch()
     }
   },
@@ -55,6 +59,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['unsavedEdits']),
     filteredFields() {
       let fields;
       if (this.searchTerm !== null && this.searchTerm !== "") {

@@ -39,7 +39,6 @@ export default {
       // Loop through newData and create new field to match Field Structure
       newData.forEach((item) => {
         if ( item?.field?.value == undefined) {
-          console.log(item);
           console.log("err, FieldEditor.vue", item)
         } else {
           newField[item.field.key] = item.field.value;
@@ -61,7 +60,12 @@ export default {
       }
 
       findField(openFile);
+
+
+      !this.unsavedEdits ? this.$store.commit("updateUnsavedEdits", {unsavedEdits: true}) : null;
+      // Updates the field that is currently being edited (right pane)
       this.$store.commit("updateCurrentField", newField);
+      // updates the file with the new field information.
       this.$store.commit("updateOpenFile", {openFile: openFile});
 
     },
@@ -84,7 +88,6 @@ export default {
       // } else {
       //   return "text";
       // }
-      console.log(key, this.allFields[key])
       if (key == "children") {
         return "ignore"
       } else if (typeof value === "object" && value != null){
@@ -125,7 +128,7 @@ export default {
     }
    },
   computed: {
-    ...mapGetters(["openFile", "currentField"])
+    ...mapGetters(["openFile", "currentField", "unsavedEdits"])
   },
   watch: {
     currentField: function (newData, oldData) {
