@@ -32,15 +32,14 @@ export default {
     resetSearch() {
       this.searchTerm = null
     },
+    updateCurrentField(currentField) {
+      this.$store.commit('updateCurrentField', currentField);
+    },
     emitter(field) {
-      console.log("emitted field",this.fieldTypes[field])
-      console.log('field', field);
-
-      // const newField = JSON.parse(JSON.stringify(fieldTypes[field]));
       const newField = _.cloneDeep(fieldTypes[field]);
-      console.log('newField', newField);
 
       this.$store.commit('addFieldToOpenFile', newField);
+      this.updateCurrentField(newField);
       this.modalActive = false
       this.resetSearch()
     }
