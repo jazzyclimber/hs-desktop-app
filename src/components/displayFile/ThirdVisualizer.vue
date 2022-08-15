@@ -14,6 +14,7 @@
       <div class="field-item"
         v-for="(item, index) in realValue"
         v-bind:class="{'has-children': item.children, 'group': item.type === 'group'}"
+        :data-label="item.label"
         :key="level + '-' + index"
       >
         <div class="card-content">

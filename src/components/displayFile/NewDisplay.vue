@@ -6,6 +6,7 @@
   <h2 class="open-file-heading">{{openFileName}}</h2>
   <div class="button-container">
     <SaveFile />
+    <FilterDisplay />
     <AddField />
   </div>
   <div class="field-display-container">
@@ -19,6 +20,7 @@ import {mapGetters} from 'vuex'
 import AddField from "../editFields/addRemove/AddField.vue"
 import SaveFile from "../editFields/save/Save.vue"
 import ThirdVisualizer from "./ThirdVisualizer"
+import FilterDisplay from "./FilterDisplay"
 export default {
   name: "NewDisplay",
   props: {
@@ -50,7 +52,8 @@ export default {
    components: {
     ThirdVisualizer,
     AddField,
-    SaveFile
+    SaveFile,
+    FilterDisplay
   }
 }
 </script>
@@ -62,6 +65,7 @@ export default {
   }
   .button-container {
     max-width: 500px;
+    min-width: 400px;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
@@ -69,10 +73,11 @@ export default {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    gap: 10px;
   }
   .field-display-container {
     max-width: 500px;
-    min-width: 300px;
+    min-width: 400px;
     margin: 0 auto;
     width: 100%;
     overflow: auto;
