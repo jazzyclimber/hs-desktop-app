@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     filterNodes() {
-      const nodes = document.querySelectorAll(".field-display-container .field-item");
+      const nodes = Array.from().document.querySelectorAll(".field-display-container .field-item");
         if (this.filter == "" || this.filter == undefined) {
           nodes.forEach(item=> {
             item.style.display = "block";
@@ -23,8 +23,14 @@ export default {
         } else {
           nodes.forEach(item => {
             const name = item.getAttribute("data-label");
-            name.toLowerCase().includes(this.filter.toLowerCase()) ? item.style.display = "block" : item.style.display = "none";
+            name.toLowerCase().includes(this.filter.toLowerCase()) ? showParentTree(item) : item.style.display = "none";
           })
+        }
+
+        function showParentTree(child){
+          child.style.display = 'block';
+          const parentField = child.parentElement.closest('.field-item');
+          parentField ? showParentTree(parentField) : null
         }
     }
   }
