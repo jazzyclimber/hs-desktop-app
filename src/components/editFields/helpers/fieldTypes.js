@@ -436,7 +436,7 @@ const fieldTypes = {
     "label": "default",
     "required": false,
     "locked": false,
-    "type": "default",
+    "type": "richtext",
     "default": null
   },
   simple_menu: {
