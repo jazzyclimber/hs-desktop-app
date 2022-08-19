@@ -15,7 +15,8 @@ export default {
   },
   methods: {
     filterNodes() {
-      const nodes = Array.from().document.querySelectorAll(".field-display-container .field-item");
+      const nodes = document.querySelectorAll(".field-display-container .field-item");
+      console.log('running', nodes);
         if (this.filter == "" || this.filter == undefined) {
           nodes.forEach(item=> {
             item.style.display = "block";
