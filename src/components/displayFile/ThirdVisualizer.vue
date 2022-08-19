@@ -18,9 +18,13 @@
         :key="level + '-' + index"
       >
         <div class="card-content">
-          <span class="label">Label: {{item.label | formatText}}</span>
-          <span class="name">Name: {{item.name}}</span>
-          <span class="type">{{item.type | formatText}}</span>
+          <span class="label">{{item.label}}</span>
+          <span class="meta"><strong>Name:</strong> {{item.name}}</span>
+          <span v-if="item.id != null && item.id != undefined && item.id != '' && item.id" class="meta"><strong>ID:</strong> {{item.id}}</span>
+          <div class="tag-container">
+            <span class="tag">{{item.type | formatText}}</span>
+            <span class="tag" v-if="item.occurrence">Repeater</span>
+          </div>
           <div class="action-bar">
             <button @click="updateCurrentField(item)">Edit</button>
             <RemoveField :field="item" />
@@ -102,18 +106,29 @@ import {mapGetters} from 'vuex'
     text-align: left;
     background-color: white;
   }
+  .field-item .meta {
+    font-size: 14px;
+  }
+  .filed-item .meta strong {
+    color: #308630;
+  }
   .field-item.group {
     background-color: #fff9ec;
   }
   .field-item .label {
-    font-weight: 700;
+    font-weight: 800;
+    text-transform: uppercase;
   }
-  .field-item .type {
-    font-size: 10px;
-    margin-top: 5px;
+  .field-item .tag-container {
     position: absolute;
     left: 0;
     bottom: 10px;
+    margin-top: 5px;
+  }
+  .field-item .tag {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 10px;
     padding: 2px 15px;
     font-weight: 600;
     background-color: #fbe5f6;
