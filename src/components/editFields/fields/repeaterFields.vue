@@ -41,6 +41,7 @@ NOTE:: Boolean should NOT be included with emitted data
 
 <script>
 import Toggle from "./inputs/toggle"
+import _ from "lodash"
 import VJsoneditor from "v-jsoneditor"
 import {jsonOptions} from "@/helpers/jsonEditConfig.js"
 import { globalRepeaterFields } from "../helpers/globalFields"
@@ -72,7 +73,7 @@ export default {
       return arrayRepeater
     },
     clearWorkingRepeater: function() {
-        let tempReset = JSON.parse(JSON.stringify({...globalRepeaterFields}));
+        let tempReset = _.cloneDeep(globalRepeaterFields.occurrence);
         tempReset.field.value = null;
         this.workingRepeater = tempReset;
     },
@@ -84,7 +85,9 @@ export default {
       // watcher will fire on every field update
       // even if its not from an input value change.
       this.isEnabled = e;
+      console.log('isEnabled',e)
       this.isEnabled  ? this.workingRepeater = this.confirmRepeaterFields(this.workingRepeater) : this.clearWorkingRepeater();
+      console.log('made it passed');
       this.$emit('repeater-change', this.workingRepeater)
     }
   },
