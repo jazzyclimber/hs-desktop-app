@@ -5,14 +5,23 @@
 </template>
 
 <script>
+
 export default {
   mounted () {
     window.ipc.receive("newDirectory", (payload) => {
-      this.$store.commit("changeCurrentDirectory", {
-        cwd: payload.cwd,
-        tree: payload.tree
-      })
+      if (payload.usage == "changeCurrentDirectory") {
+        this.$store.commit("changeCurrentDirectory", {
+          cwd: payload.cwd,
+          tree: payload.tree
+        })
+      } else if (payload.usage == "changeGlobalPartialsDirectory") {
+        this.$store.commit("changeGlobalPartialsDirectory", {
+          tree: payload.tree,
+          dirPath: payload.cwd
+        })
+      }
     })
+
     window.ipc.receive("openFile", (payload) => {
       this.$store.commit("updateOpenFile", {
         openFile: payload.file

@@ -94,16 +94,23 @@ app.on('ready', async () => {
 })
 
 // Opens a dialog for user to select File
+// expects an arg called "type" which will
+// be returned in the response and will
+// ultimately tell the app what to do with
+// the returned directory.
 ipcMain.on("openDialog", (event, args) => {
+
   const options = {
     title: 'Open Directory',
     buttonLabel: 'Select Directory',
     properties: ['openDirectory']
   }
+
   const filepath = dialog.showOpenDialogSync(options)
 
   const tree = dirTree(filepath[0]);
   win.webContents.send("newDirectory", {
+    usage: args.usage,
     cwd: filepath[0],
     tree: tree
   })
