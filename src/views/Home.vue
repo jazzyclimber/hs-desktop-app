@@ -2,7 +2,10 @@
   <div class="home">
   <multipane class="custom-resizer" layout="vertical">
   <div class="pane sidebar" :style="{ flexGrow:0}">
-    <UploadFile  />
+    <div class="btn-container">
+      <UploadFile btn-text="Open Modules Directory" directory-usage="changeCurrentDirectory" />
+      <UploadFile btn-text="Set Global Partials" directory-usage="changeGlobalPartialsDirectory" />
+    </div>
     <MenuTreeFilter v-if="workingTree[0] != null"  />
     <UnsavedEditsModal v-if="showUnsavedModal" v-on:close-unsaved-edits-modal="handleCloseUnsavedEditsModal" />
     <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :level="1" v-on:unsaved-edits="handleUnsavedEdits" />
