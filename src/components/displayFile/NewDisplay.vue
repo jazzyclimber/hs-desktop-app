@@ -7,7 +7,10 @@
   <div class="button-container">
     <SaveFile />
     <FilterDisplay />
-    <AddField />
+    <div class="btn-group--right">
+      <AddField />
+      <AddGlobalPartial />
+    </div>
   </div>
   <div class="field-display-container">
     <ThirdVisualizer :level="1" :list="workingFile"  v-if="workingFile" :key="componentKey" />
@@ -18,6 +21,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import AddField from "../editFields/addRemove/AddField.vue"
+import AddGlobalPartial from "@/components/editFields/addRemove/AddGlobalPartial.vue"
 import SaveFile from "../editFields/save/Save.vue"
 import ThirdVisualizer from "./ThirdVisualizer"
 import FilterDisplay from "./FilterDisplay"
@@ -52,17 +56,19 @@ export default {
    components: {
     ThirdVisualizer,
     AddField,
+    AddGlobalPartial,
     SaveFile,
     FilterDisplay
   }
 }
 </script>
 
-<style>
+<style >
   .field-display-wrapper {
     flex: 1 1 auto;
     padding: 25px 0;
   }
+
   .button-container {
     max-width: 500px;
     min-width: 400px;
@@ -74,6 +80,13 @@ export default {
     justify-content: space-between;
     margin-bottom: 10px;
     gap: 10px;
+  }
+
+  .button-container .btn-group--right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
   }
   .field-display-container {
     max-width: 500px;
