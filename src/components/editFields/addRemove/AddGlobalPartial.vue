@@ -3,9 +3,13 @@
     <button @click="modalActive = true"><img src="@/assets/hsglobe.svg" alt="Add Global Partial" width="15"></button>
     <div v-if="modalActive" class="modal field-modal" @click="modalActive = false"></div>
       <div class="modal-inner" v-if="modalActive">
-        <label for="field-search" class="field-search-text">Search</label>
-        <input type="text" name="field-search" v-model="searchTerm">
-        {{globalPartials}}
+        <!--<label for="field-search" class="field-search-text">Search</label>
+        <input type="text" name="field-search" v-model="searchTerm"> -->
+        <div class="field-choice-container" >
+          <article class="field-type" @click="emitter(item)" v-for="item in fileTree">
+            <h3 class="field-name">{{item.name | formatText}}</h3>
+          </article>
+        </div>
         <button @click="modalActive = false">Cancel</button>
       </div>
 
@@ -13,6 +17,7 @@
 </template>
 <script>
 import _ from "lodash"
+import {partials} from "@/components/editFields/helpers/fieldTypes"
 import {mapGetters} from 'vuex'
 export default {
   name: "addGlobalPartial",
@@ -21,28 +26,61 @@ export default {
       modalActive: false,
       fieldTypes: null,
       searchTerm: null,
+      fileTree: null
     }
   },
   watch: {
-    globalPartials: {
+    globalPartialsTree: {
       deep: true,
+      immediate: true,
       handler: function(newData, oldData) {
-        console.log("test");
+        let flattenedTree = [];
+
+        // flatten the tree
+        function flatten(array) {
+          array.forEach(item => {
+            item.children ? flatten(item.children) :  item.path.includes('.json')? flattenedTree.push(item): null;
+          } );
+        }
+
+        flatten(newData.children);
+        this.fileTree = flattenedTree;
       }
     }
   },
+  filters: {
+      formatText(text) {
+        text = text.replace('.json', "")
+        return text;
+      }
+    },
   methods: {
     resetSearch() {
       this.searchTerm = null
+    },
+    updateUnsavedEdits() {
+      this.$store.commit('updateUnsavedEdits', {unsavedEdits: true});
+    },
+    emitter(fileMeta) {
+      const partial = _.cloneDeep(partials.globalPartial);
+
+      partial.filePath = fileMeta.path;
+      partial.fileName = fileMeta.name;
+      partial.label = fileMeta.name;
+
+      this.$store.commit('addFieldToOpenFile', partial);
+      this.updateUnsavedEdits();
+      this.modalActive = false
+      // const config = {
+      //   path: fileMeta.path,
+      //   usage: 'addGlobalPartialToOpenFile'
+      // }
+      // window.ipc.send('readFile', config);
     }
 
   },
   computed: {
-    ...mapGetters(['globalPartials']),
-    partials() {
-      console.log('partial')
-      return "This"
-    }
+    ...mapGetters(['globalPartialsTree','unsavedEdits']),
    }
 }
 </script>
