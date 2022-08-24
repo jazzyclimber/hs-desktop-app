@@ -15,6 +15,7 @@ export default {
           tree: payload.tree
         })
       } else if (payload.usage == "changeGlobalPartialsDirectory") {
+        console.log('this is hitting')
         this.$store.commit("changeGlobalPartialsDirectory", {
           tree: payload.tree,
           dirPath: payload.cwd
@@ -23,9 +24,14 @@ export default {
     })
 
     window.ipc.receive("openFile", (payload) => {
-      this.$store.commit("updateOpenFile", {
-        openFile: payload.file
-      })
+
+      if (payload.usage == 'updateOpenFile'){
+        this.$store.commit("updateOpenFile", {
+          openFile: payload.file
+        })
+      } else if (payload.usage == "addGlobalPartialToOpenFile") {
+        console.log("file", payload.file);
+      }
     })
   }
 }
