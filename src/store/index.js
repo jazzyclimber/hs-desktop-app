@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     cwd: null,
-    globalPartials: {},
+    globalPartialsTree: null,
+    globalParitalsDir: null,
     tree: null,
     openFile: null,
     unsavedEdits: false,
@@ -19,8 +20,8 @@ export default new Vuex.Store({
       state.openFileName = payload.openFileName;
     },
     changeGlobalPartialsDirectory(state, payload) {
-      state.globalPartials.tree = payload.tree;
-      state.globalPartials.dirPath = payload.dirPath;
+      state.globalPartialsTree = payload.tree;
+      state.globalPartialsDir = payload.dirPath;
     },
     changeCurrentDirectory(state, payload) {
       state.cwd = payload.cwd;
@@ -68,8 +69,8 @@ export default new Vuex.Store({
     unsavedEdits(state) {
       return state.unsavedEdits;
     },
-    globalPartials(state){
-      return state.globalPartials;
+    globalPartialsTree(state){
+      return state.globalPartialsTree;
     },
     openFileName(state) {
       return state.openFileName;
