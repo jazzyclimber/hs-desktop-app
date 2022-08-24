@@ -18,7 +18,7 @@ export default {
       window.ipc.send('saveFile', {
         file: this.openFile,
         path: this.currentFilePath
-        });
+      });
 
       // In its current state this isnt quite right.
       // It is possible that the save fails and this still is updated
