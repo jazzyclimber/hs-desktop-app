@@ -27,7 +27,11 @@ export default {
       this.$emit('unsaved-edits', path);
     },
     readFile (path) {
-      window.ipc.send('readFile', path);
+      const config = {
+        path: path,
+        usage: 'updateOpenFile'
+      }
+      window.ipc.send('readFile', config);
 
       let splitPath = path.split("/");
       this.$store.commit("updateCurrentFilePath", path)
