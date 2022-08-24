@@ -568,9 +568,18 @@ const fieldTypes = {
       "hide_control": false
     }
   }
+}
 
+const partials = {
+  globalPartial: {
+    type: "globalPartial",
+    filePath: null,
+    fileName: null,
+    label: null,
+  }
 }
 
 module.exports = {
-  fieldTypes
+  fieldTypes,
+  partials
 }
