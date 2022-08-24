@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: "RemoveField",
   props: {
@@ -11,8 +12,15 @@ export default {
   },
   methods: {
     removeField() {
-      this.$store.dispatch('removeField', this.field)
+      this.$store.dispatch('removeField', this.field),
+      this.updateUnsavedEdits();
+    },
+    updateUnsavedEdits() {
+      this.$store.commit('updateUnsavedEdits', {unsavedEdits: true});
     }
+  },
+  computed: {
+    ...mapGetters(['unsavedEdits'])
   }
 }
 </script>
