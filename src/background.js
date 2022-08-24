@@ -14,6 +14,7 @@ import installExtension, {
   VUEJS_DEVTOOLS
 } from 'electron-devtools-installer'
 import path from "path"
+import _ from 'lodash'
 const dirTree = require("directory-tree");
 const fs = require('fs');
 const DevTools = false;
@@ -116,22 +117,50 @@ ipcMain.on("openDialog", (event, args) => {
   })
 });
 
-ipcMain.on("readFile", (event, file) => {
-  fs.readFile(file, 'utf8', (err, data) => {
+ipcMain.on("readFile", (event, config) => {
+  fs.readFile(config.path, 'utf8', (err, data) => {
     if (err) {
       console.error(err)
       return
     }
     const payload = {
-      file: JSON.parse(data)
+      file: JSON.parse(data),
+      usage: config.usage
     }
     win.webContents.send('openFile', payload)
   })
 })
 
 ipcMain.on("saveFile", (event, file) => {
-  let payload = JSON.stringify(file.file);
 
+  console.log("saveFile")
+
+  function addGlobalPartials(array) {
+
+      let modArray = array.flatMap((field, i) => {
+          if (field.type == 'globalPartial') {
+            // console.log(field);
+            let readPartial = fs.readFileSync(field.filePath, 'utf-8')
+            readPartial = JSON.parse(readPartial);
+            console.log('readPartial',readPartial)
+            return readPartial
+          } else if (field.type == "group") {
+              let obj = field
+              obj.children = addGlobalPartials(field.children);
+              return obj
+          } else {
+              return field
+          }
+      })
+
+      return modArray
+  }
+
+  let finalFile = addGlobalPartials(file.file);
+
+  console.log("finalFile", finalFile);
+
+  let payload = JSON.stringify(finalFile);
   let callback = (err) => {
     if (err) {
       console.log("error on save", err)
