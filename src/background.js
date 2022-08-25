@@ -15,6 +15,7 @@ import installExtension, {
 } from 'electron-devtools-installer'
 import path from "path"
 import _ from 'lodash'
+import {identifyReplaceGlobalPartials} from "@/helpers/identifyGlobalPartials"
 const dirTree = require("directory-tree");
 const fs = require('fs');
 const DevTools = false;
@@ -94,6 +95,10 @@ app.on('ready', async () => {
   createWindow()
 })
 
+// Shoud likely change these to be an actual
+// interface with the app itself. This seems hacky.
+let openDir, partialsDir;
+
 // Opens a dialog for user to select File
 // expects an arg called "type" which will
 // be returned in the response and will
@@ -110,6 +115,13 @@ ipcMain.on("openDialog", (event, args) => {
   const filepath = dialog.showOpenDialogSync(options)
 
   const tree = dirTree(filepath[0]);
+
+  if (args.usage == 'changeCurrentDirectory') {
+    openDir = filepath[0];
+  } else if (args.usage == 'changeGlobalPartialsDirectory'){
+    partialsDir = filepath[0];
+  }
+
   win.webContents.send("newDirectory", {
     usage: args.usage,
     cwd: filepath[0],
@@ -127,6 +139,17 @@ ipcMain.on("readFile", (event, config) => {
       file: JSON.parse(data),
       usage: config.usage
     }
+
+    if (config.usage == "updateOpenFile") {
+      const args = {
+        file: JSON.parse(data),
+        openDir: openDir,
+        partialsDir: partialsDir,
+        path: config.path
+      }
+
+      identifyReplaceGlobalPartials(args);
+    }
     win.webContents.send('openFile', payload)
   })
 })
@@ -142,7 +165,6 @@ ipcMain.on("saveFile", (event, file) => {
             // console.log(field);
             let readPartial = fs.readFileSync(field.filePath, 'utf-8')
             readPartial = JSON.parse(readPartial);
-            console.log('readPartial',readPartial)
             return readPartial
           } else if (field.type == "group") {
               let obj = field
@@ -157,8 +179,6 @@ ipcMain.on("saveFile", (event, file) => {
   }
 
   let finalFile = addGlobalPartials(file.file);
-
-  console.log("finalFile", finalFile);
 
   let payload = JSON.stringify(finalFile);
   let callback = (err) => {
