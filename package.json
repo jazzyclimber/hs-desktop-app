@@ -1,5 +1,5 @@
 {
-   "name": "hs-desktop-app",
+   "name": "hubpsot-copilot",
    "version": "0.1.0",
    "description": "Assist HubSpot developers in module creation while developing on local machines",
    "author": "BJ Szyjakowski",
@@ -51,6 +51,13 @@
    "vue": {
       "css": {
          "extract": false
+      },
+      "pluginOptions": {
+         "electronBuilder": {
+            "builderOptions": {
+               "productName": "HubSpot Copilot"
+            }
+         }
       }
    }
 }
