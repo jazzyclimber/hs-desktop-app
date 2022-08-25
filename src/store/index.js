@@ -69,6 +69,9 @@ export default new Vuex.Store({
     unsavedEdits(state) {
       return state.unsavedEdits;
     },
+    cwd(state){
+      return state.cwd;
+    },
     globalPartialsTree(state){
       return state.globalPartialsTree;
     },

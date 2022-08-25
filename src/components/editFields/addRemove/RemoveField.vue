@@ -12,15 +12,29 @@ export default {
   },
   methods: {
     removeField() {
+      console.log('RemoveField', this.field);
       this.$store.dispatch('removeField', this.field),
       this.updateUnsavedEdits();
+      if (this.field.type == 'globalPartial') {
+
+         const config = {
+          path: this.field.filePath,
+          name: this.field.fileName,
+          cwd: this.cwd,
+          openFileName: this.openFileName,
+          usage: 'createModifySrcMap',
+          action: 'remove'
+        }
+
+        window.ipc.send('helperTask', config);
+      }
     },
     updateUnsavedEdits() {
       this.$store.commit('updateUnsavedEdits', {unsavedEdits: true});
     }
   },
   computed: {
-    ...mapGetters(['unsavedEdits'])
+    ...mapGetters(['unsavedEdits', 'openFileName', 'cwd'])
   }
 }
 </script>

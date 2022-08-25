@@ -71,16 +71,22 @@ export default {
       this.$store.commit('addFieldToOpenFile', partial);
       this.updateUnsavedEdits();
       this.modalActive = false
-      // const config = {
-      //   path: fileMeta.path,
-      //   usage: 'addGlobalPartialToOpenFile'
-      // }
-      // window.ipc.send('readFile', config);
+
+
+      const config = {
+        path: fileMeta.path,
+        name: fileMeta.name,
+        cwd: this.cwd,
+        openFileName: this.openFileName,
+        usage: 'createModifySrcMap',
+        action: 'add'
+      }
+      window.ipc.send('helperTask', config);
     }
 
   },
   computed: {
-    ...mapGetters(['globalPartialsTree','unsavedEdits']),
+    ...mapGetters(['globalPartialsTree','unsavedEdits', 'cwd', 'openFileName']),
    }
 }
 </script>

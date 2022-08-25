@@ -16,6 +16,7 @@ import installExtension, {
 import path from "path"
 import _ from 'lodash'
 import {identifyReplaceGlobalPartials} from "@/helpers/identifyGlobalPartials"
+import HelperTask from "@/ipcMainTasks/onHelperTasks"
 const dirTree = require("directory-tree");
 const fs = require('fs');
 const DevTools = false;
@@ -94,6 +95,9 @@ app.on('ready', async () => {
   }
   createWindow()
 })
+
+
+HelperTask
 
 // Shoud likely change these to be an actual
 // interface with the app itself. This seems hacky.
@@ -191,6 +195,7 @@ ipcMain.on("saveFile", (event, file) => {
   let filePath = path.resolve(file.path.toString())
   fs.writeFile(filePath, payload, callback);
 })
+
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {

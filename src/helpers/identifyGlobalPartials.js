@@ -59,7 +59,7 @@ function mapFile(config) {
   const temp = config.fieldsArray.flatMap( (field, i) => {
     if (_.isEqual(field, config.curPartialArray[0]) && _.isEqual(config.fieldsArray[i + config.curPartialArray.length - 1 ], config.curPartialArray[config.curPartialArray.length - 1])){
       // check to see if the last item in this array matches the partial file.
-      console.log('First Item Found!!!!!')
+      // console.log('First Item Found!!!!!')
       let tempPartial = _.cloneDeep(partials.globalPartial);
       tempPartial.filePath = path.join(config.partialsDir, config.partialFile);
       tempPartial.fileName = config.partialFile;
@@ -68,7 +68,7 @@ function mapFile(config) {
       ignoreLength > 0 ? ignoreFields = true : null;
       return tempPartial
     } else if (ignoreFields) {
-      console.log("ignoreLength", ignoreLength)
+      // console.log("ignoreLength", ignoreLength)
       if (i == ignoreLength) {
         ignoreFields = false
         return []
