@@ -148,7 +148,7 @@ ipcMain.on("readFile", (event, config) => {
         path: config.path
       }
 
-      identifyReplaceGlobalPartials(args);
+      payload.file = identifyReplaceGlobalPartials(args);
     }
     win.webContents.send('openFile', payload)
   })
