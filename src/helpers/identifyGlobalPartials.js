@@ -16,7 +16,7 @@ function identifyReplaceGlobalPartials(config) {
     if (srcMapKey && config.partialsDir) {
       console.log("SrcMap Found, Matching Key Found");
 
-      readAndReduceOpenFile(srcMapKey, config.file, config.partialsDir);
+      return readAndReduceOpenFile(srcMapKey, config.file, config.partialsDir);
     } else {
       console.log("SrcMap Found, or no Partials Dir Set,  but no matching key found!");
       return config.file
@@ -31,7 +31,9 @@ function identifyReplaceGlobalPartials(config) {
 
 function readAndReduceOpenFile(globalPartialsArray, openFile, partialsDir) {
 
-  let modFile = openFile
+  let modFile = openFile;
+
+  console.log(globalPartialsArray);
 
   globalPartialsArray.forEach( partialFile => {
 
@@ -49,15 +51,14 @@ function readAndReduceOpenFile(globalPartialsArray, openFile, partialsDir) {
     modFile = mapFile(args);
   })
 
-  console.log(modFile);
+  return modFile
 }
 
 function mapFile(config) {
   let ignoreFields = false;
   let ignoreLength = null
   const temp = config.fieldsArray.flatMap( (field, i) => {
-    console.log(_.isEqual(config.fieldsArray[i + config.curPartialArray.length - 1 ], config.curPartialArray[-1]))
-    if (_.isEqual(field, config.curPartialArray[0]) && _.isEqual(config.fieldsArray[i + config.curPartialArray.length - 2 ], config.curPartialArray[-1])){
+    if (_.isEqual(field, config.curPartialArray[0]) && _.isEqual(config.fieldsArray[i + config.curPartialArray.length - 1 ], config.curPartialArray[config.curPartialArray.length - 1])){
       // check to see if the last item in this array matches the partial file.
       console.log('First Item Found!!!!!')
       let tempPartial = _.cloneDeep(partials.globalPartial);
