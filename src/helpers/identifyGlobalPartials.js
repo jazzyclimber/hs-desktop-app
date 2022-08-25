@@ -2,13 +2,16 @@ const fs =  require('fs')
 const path = require('path');
 const _ = require('lodash');
 const {partials} = require('@/components/editFields/helpers/fieldTypes');
+const {FindSrcMap} = require('@/helpers/findSrcMap');
 
 function identifyReplaceGlobalPartials(config) {
-  const srcMap = findSrcMap(config.openDir);
-  if (srcMap) {
+
+  let srcMap = FindSrcMap(config.openDir);
+
+  if (srcMap.srcMapData) {
     // Now we must read file and find what needs to be manipulated back
     // To Global Files
-    const readSrcMap = JSON.parse(srcMap);
+    const readSrcMap = srcMap.srcMapData;
     const currentFileDir = path.parse(config.path).dir;
     const currentFileDirName = path.parse(currentFileDir).base;
     const srcMapKey = readSrcMap[currentFileDirName]
@@ -33,11 +36,7 @@ function readAndReduceOpenFile(globalPartialsArray, openFile, partialsDir) {
 
   let modFile = openFile;
 
-  console.log(globalPartialsArray);
-
   globalPartialsArray.forEach( partialFile => {
-
-    console.log(partialsDir)
 
     const curPartial = JSON.parse(readFile(path.join(partialsDir, partialFile)));
 
@@ -94,19 +93,6 @@ function mapFile(config) {
 
   // console.log(temp);
   return temp
-}
-
-
-function findSrcMap(openDir) {
-  const srcmapPath = path.join(openDir , "COPILOT.srcmap.json");
-  // console.log(srcmapPath);
-  if (fs.existsSync(srcmapPath)) {
-    console.log('Source Map Exists');
-    return readFile(srcmapPath)
-  } else {
-    console.log('Source Map Not Found');
-    return undefined;
-  }
 }
 
 function readFile(path) {
