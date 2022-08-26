@@ -15,7 +15,7 @@ export default {
       this.$store.commit('updateUnsavedEdits', {unsavedEdits: false});
     },
     discardEdits() {
-      window.ipc.send('readFile', this.currentFilePath);
+      window.ipc.send('readFile', {path: this.currentFilePath});
 
       this.$store.commit("updateCurrentField", null);
       this.updateUnsavedEdits();
