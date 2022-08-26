@@ -64,7 +64,7 @@ function mapFile(config) {
       tempPartial.filePath = path.join(config.partialsDir, config.partialFile);
       tempPartial.fileName = config.partialFile;
       tempPartial.label = config.partialFile;
-      ignoreLength = i + config.curPartialArray.length - 1;
+      ignoreLength = i + config.curPartialArray.length - 2;
       ignoreLength > 0 ? ignoreFields = true : null;
       return tempPartial
     } else if (ignoreFields) {
