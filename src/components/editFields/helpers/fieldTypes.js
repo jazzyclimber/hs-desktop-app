@@ -574,6 +574,7 @@ const partials = {
   globalPartial: {
     type: "globalPartial",
     filePath: null,
+    relFilePath: null,
     fileName: null,
     label: null,
   }

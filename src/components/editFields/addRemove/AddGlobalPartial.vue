@@ -18,6 +18,8 @@
 <script>
 import _ from "lodash"
 import {partials} from "@/components/editFields/helpers/fieldTypes"
+import path from 'path'
+import pathParse from 'path-parse';
 import {mapGetters} from 'vuex'
 export default {
   name: "addGlobalPartial",
@@ -36,14 +38,27 @@ export default {
       handler: function(newData, oldData) {
         let flattenedTree = [];
 
-        // flatten the tree
-        function flatten(array) {
-          array.forEach(item => {
-            item.children ? flatten(item.children) :  item.path.includes('.json')? flattenedTree.push(item): null;
-          } );
+        const flatten = array => {
+          const globalPartialDir = this.globalPartialsDir;
+          array.forEach(item =>  {
+            if (item.children) {
+              flatten(item.children)
+            } else {
+              if (item.path.includes('.json')) {
+                const fileObj = pathParse(item.path);
+                if (fileObj.dir == globalPartialDir) {
+                  item.relativePath = fileObj.base
+                } else {
+                  item.relativePath = item.path.replace(globalPartialDir, "");
+                }
+                flattenedTree.push(item)
+              }
+            }
+          });
+
         }
 
-        flatten(newData.children);
+        flatten(newData.children)
         this.fileTree = flattenedTree;
       }
     }
@@ -67,6 +82,7 @@ export default {
       partial.filePath = fileMeta.path;
       partial.fileName = fileMeta.name;
       partial.label = fileMeta.name;
+      partial.relativePath = fileMeta.relativePath;
 
       this.$store.commit('addFieldToOpenFile', partial);
       this.updateUnsavedEdits();
@@ -77,6 +93,7 @@ export default {
         path: fileMeta.path,
         name: fileMeta.name,
         cwd: this.cwd,
+        relativePath: fileMeta.relativePath,
         openFileName: this.openFileName,
         usage: 'createModifySrcMap',
         action: 'add'
@@ -86,7 +103,8 @@ export default {
 
   },
   computed: {
-    ...mapGetters(['globalPartialsTree','unsavedEdits', 'cwd', 'openFileName']),
+    ...mapGetters(['globalPartialsTree','unsavedEdits', 'cwd', 'openFileName', 'globalPartialsDir']),
+
    }
 }
 </script>

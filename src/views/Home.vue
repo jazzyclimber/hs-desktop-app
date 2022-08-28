@@ -6,9 +6,10 @@
       <UploadFile btn-text="Open Modules Directory" directory-usage="changeCurrentDirectory" />
       <UploadFile btn-text="Set Global Partials" directory-usage="changeGlobalPartialsDirectory" />
     </div>
+    <Select :options="selectOptions" v-if="globalPartialsTree && tree" v-on:select-change="handleSelectChange" />
     <MenuTreeFilter v-if="workingTree[0] != null"  />
     <UnsavedEditsModal v-if="showUnsavedModal" v-on:close-unsaved-edits-modal="handleCloseUnsavedEditsModal" />
-    <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :level="1" v-on:unsaved-edits="handleUnsavedEdits" />
+    <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :type="treeType" :level="1" v-on:unsaved-edits="handleUnsavedEdits" />
   </div>
   <multipane-resizer></multipane-resizer>
   <div class="pane field-display-wrapper" :style="{ flexGrow: 0 }">
@@ -31,14 +32,28 @@ import UploadFile from '@/components/UploadFile.vue'
 import MenuTree from "@/components/MenuTree"
 import MenuTreeFilter from "@/components/MenuTreeFilter"
 import UnsavedEditsModal from "@/components/editFields/save/UnsavedEditsModal"
-
+import Select from "@/components/inputs/Select"
 import NewDisplay from "@/components/displayFile/NewDisplay"
+import _ from "lodash"
 import FieldEditor from "@/components/editFields/FieldEditor"
 export default {
   name: 'Home',
   data() {
     return {
-      showUnsavedModal: false
+      showUnsavedModal: false,
+      workingTree: [],
+      treeType: 'modules',
+      selectOptions: [
+        {
+          label: "Modules",
+          value: "modules"
+        },
+        {
+          label: "Global Partials",
+          value: "global-partials"
+        },
+
+      ]
     }
   },
   components: {
@@ -46,6 +61,7 @@ export default {
     MenuTree,
     MenuTreeFilter,
     NewDisplay,
+    Select,
     FieldEditor,
     Multipane,
     MultipaneResizer,
@@ -57,17 +73,39 @@ export default {
     },
     handleCloseUnsavedEditsModal() {
       this.showUnsavedModal = false;
+    },
+    handleSelectChange(data) {
+      const target = data.target.value;
+      this.treeType = target;
+
+      if (target == 'modules') {
+        console.log([this.moduleTree[0]])
+        this.workingTree = [this.moduleTree[0]];
+      } else if (target == 'global-partials') {
+        console.log('hit')
+        this.workingTree = _.deep([this.GPTree[0]]);
+      }
     }
   },
   watch: {
     unsavedEdits: function(unsaved) {
       unsaved ? null : this.showUnsavedModal = false;
+    },
+    moduleTree: {
+      deep: true,
+      handler: function(newData, oldData) {
+        console.log('fired', newData);
+        this.workingTree.push(newData[0]);
+      }
     }
   },
    computed: {
-     ...mapGetters(["tree", "unsavedEdits"]),
-     workingTree(){
+     ...mapGetters(["tree", "unsavedEdits", "globalPartialsTree"]),
+     moduleTree(){
        return [this.tree]
+     },
+     GPTree() {
+      return [this.globalPartialsTree]
      }
   }
 }

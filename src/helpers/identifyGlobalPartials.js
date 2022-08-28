@@ -37,8 +37,12 @@ function readAndReduceOpenFile(globalPartialsArray, openFile, partialsDir) {
   let modFile = openFile;
 
   globalPartialsArray.forEach( partialFile => {
+    const proposedPartialPath = path.join(partialsDir, partialFile);
+
 
     const curPartial = JSON.parse(readFile(path.join(partialsDir, partialFile)));
+
+
 
     const args = {
       curPartialArray: curPartial,

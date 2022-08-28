@@ -11,18 +11,18 @@ const createModifySrcMap = (args) => {
     // Check to see if module exists in srcMapData
     if (srcMapData[args.openFileName + '.module'] && !srcMapData[args.openFileName + '.module'].includes(args.name)){
       //Add new partial filename to array
-      srcMapData[args.openFileName + '.module'].push(args.name);
+      srcMapData[args.openFileName + '.module'].push(args.relativePath);
       saveFile(srcMapData, srcMap.srcMapPath)
     } else if (!srcMapData[args.openFileName + '.module']){
       // add module to srcMap file
-      srcMapData[args.openFileName + '.module'] = [args.name];
+      srcMapData[args.openFileName + '.module'] = [args.relativePath];
       saveFile(srcMapData, srcMap.srcMapPath)
     }
   } else {
     console.log('Must build new src map');
     writeFile(srcMap.srcMapPath);
     let data = {}
-    data[args.openFileName + '.module'] = [args.name]
+    data[args.openFileName + '.module'] = [args.relativePath]
     saveFile(data, srcMap.srcMapPath);
   }
 

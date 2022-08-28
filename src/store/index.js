@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     cwd: null,
     globalPartialsTree: null,
-    globalParitalsDir: null,
+    globalPartialsDir: null,
     tree: null,
     openFile: null,
     unsavedEdits: false,
@@ -71,6 +71,9 @@ export default new Vuex.Store({
     },
     cwd(state){
       return state.cwd;
+    },
+    globalPartialsDir(state) {
+      return state.globalPartialsDir;
     },
     globalPartialsTree(state){
       return state.globalPartialsTree;
