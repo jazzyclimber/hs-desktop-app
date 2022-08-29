@@ -38,7 +38,7 @@ export default {
 
       // Loop through newData and create new field to match Field Structure
       newData.forEach((item) => {
-        if ( item?.field?.value == undefined) {
+        if ( item.field.value == undefined) {
           console.log("err, FieldEditor.vue", item)
         } else {
           newField[item.field.key] = item.field.value;

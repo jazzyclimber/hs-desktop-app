@@ -38,11 +38,7 @@ function readAndReduceOpenFile(globalPartialsArray, openFile, partialsDir) {
 
   globalPartialsArray.forEach( partialFile => {
     const proposedPartialPath = path.join(partialsDir, partialFile);
-
-
     const curPartial = JSON.parse(readFile(path.join(partialsDir, partialFile)));
-
-
 
     const args = {
       curPartialArray: curPartial,
@@ -65,10 +61,12 @@ function mapFile(config) {
       // check to see if the last item in this array matches the partial file.
       // console.log('First Item Found!!!!!')
       let tempPartial = _.cloneDeep(partials.globalPartial);
+      // needed to keep labels consistent when identifying partials
+      const nameArray = config.partialFile.split(path.sep);
       tempPartial.filePath = path.join(config.partialsDir, config.partialFile);
       tempPartial.fileName = config.partialFile;
-      tempPartial.label = config.partialFile;
-      ignoreLength = i + config.curPartialArray.length - 2;
+      tempPartial.label = nameArray[nameArray.length - 1];
+      ignoreLength = i + config.curPartialArray.length - 1;
       ignoreLength > 0 ? ignoreFields = true : null;
       return tempPartial
     } else if (ignoreFields) {

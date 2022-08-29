@@ -10,10 +10,12 @@ export default new Vuex.Store({
     globalPartialsDir: null,
     tree: null,
     openFile: null,
+    openFileUnedited: null,
     unsavedEdits: false,
     openFileName: null,
     currentField: null,
     currentFilePath: null,
+    displayMode: null,
   },
   mutations: {
     updateOpenFileName(state, payload) {
@@ -27,6 +29,9 @@ export default new Vuex.Store({
       state.cwd = payload.cwd;
       state.tree = payload.tree;
     },
+    updateOpenFileUnedited(state, payload) {
+      state.openFileUnedited = payload.openFileUnedited
+    },
     updateUnsavedEdits(state, payload) {
       state.unsavedEdits = payload.unsavedEdits
     },
@@ -35,6 +40,9 @@ export default new Vuex.Store({
     },
     updateCurrentField(state, payload) {
       state.currentField = payload
+    },
+    updateDisplayMode(state, payload) {
+      state.displayMode = payload
     },
     updateOpenFile(state, payload) {
       state.openFile = payload.openFile
@@ -65,6 +73,12 @@ export default new Vuex.Store({
   getters: {
     tree(state) {
       return state.tree;
+    },
+    displayMode(state) {
+      return state.displayMode;
+    },
+    openFileUnedited(state) {
+      return state.openFileUnedited
     },
     unsavedEdits(state) {
       return state.unsavedEdits;

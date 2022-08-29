@@ -8,7 +8,7 @@ let saveFile = function(data, filePath) {
     if (err) {
       console.log("error on save", err)
     } else {
-      console.log('File Saved Successfully');
+      console.log('File Saved Successfully', filePath);
     }
   }
   let formattedFilePath = path.resolve(filePath.toString())

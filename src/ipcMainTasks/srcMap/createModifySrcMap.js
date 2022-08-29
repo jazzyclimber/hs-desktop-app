@@ -7,7 +7,6 @@ const createModifySrcMap = (args) => {
 
   if (srcMap.srcMapData) {
     let srcMapData = srcMap.srcMapData;
-    console.log('dataFound!')
     // Check to see if module exists in srcMapData
     if (srcMapData[args.openFileName + '.module'] && !srcMapData[args.openFileName + '.module'].includes(args.name)){
       //Add new partial filename to array

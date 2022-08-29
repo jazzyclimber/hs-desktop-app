@@ -19,7 +19,7 @@ export default {
 
          const config = {
           path: this.field.filePath,
-          name: this.field.fileName,
+          name: this.field.relativePath,
           cwd: this.cwd,
           openFileName: this.openFileName,
           usage: 'createModifySrcMap',

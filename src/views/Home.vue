@@ -77,13 +77,13 @@ export default {
     handleSelectChange(data) {
       const target = data.target.value;
       this.treeType = target;
-
+      this.$store.commit('updateDisplayMode', target)
       if (target == 'modules') {
         console.log([this.moduleTree[0]])
         this.workingTree = [this.moduleTree[0]];
       } else if (target == 'global-partials') {
         console.log('hit')
-        this.workingTree = _.deep([this.GPTree[0]]);
+        this.workingTree = _.cloneDeep([this.GPTree[0]]);
       }
     }
   },

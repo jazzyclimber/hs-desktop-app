@@ -5,7 +5,7 @@
 </template>
 
 <script>
-
+import _ from "lodash"
 export default {
   mounted () {
     window.ipc.receive("newDirectory", (payload) => {
@@ -24,14 +24,12 @@ export default {
     })
 
     window.ipc.receive("openFile", (payload) => {
-
-      if (payload.usage == 'updateOpenFile'){
         this.$store.commit("updateOpenFile", {
           openFile: payload.file
         })
-      } else if (payload.usage == "addGlobalPartialToOpenFile") {
-        console.log("file", payload.file);
-      }
+        this.$store.commit("updateOpenFileUnedited", {
+          openFileUnedited: _.cloneDeep(payload.file)
+        })
     })
   }
 }

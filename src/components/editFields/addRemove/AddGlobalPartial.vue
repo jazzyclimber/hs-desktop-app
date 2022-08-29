@@ -47,7 +47,7 @@ export default {
               if (item.path.includes('.json')) {
                 const fileObj = pathParse(item.path);
                 if (fileObj.dir == globalPartialDir) {
-                  item.relativePath = fileObj.base
+                  item.relativePath = path.sep + fileObj.base
                 } else {
                   item.relativePath = item.path.replace(globalPartialDir, "");
                 }

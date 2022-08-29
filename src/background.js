@@ -139,6 +139,8 @@ ipcMain.on("readFile", (event, config) => {
       console.error(err)
       return
     }
+
+    console.log('readFile!!!!!!')
     const payload = {
       file: JSON.parse(data),
       usage: config.usage
