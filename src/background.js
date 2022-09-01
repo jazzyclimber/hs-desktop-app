@@ -135,10 +135,7 @@ ipcMain.on("openDialog", (event, args) => {
 
 
 ipcMain.on('openSaveDialog', (event, args) => {
-  console.log("win",win)
-console.log('running')
 if(args.usage == 'createGlobalParital'){
-  console.log(args);
 
   const options = {
     title: "Add New Global Field Parital",
@@ -151,7 +148,7 @@ if(args.usage == 'createGlobalParital'){
     // create a blank file
     fs.writeFileSync(data.filePath, JSON.stringify([]))
 
-    console.log('Created New File!?', data)
+    console.log('Created New File!', data)
     const tree = dirTree(args.defaultPath);
 
     // update the Tree
@@ -160,6 +157,8 @@ if(args.usage == 'createGlobalParital'){
       cwd: args.defaultPath,
       tree: tree
     })
+
+    console.log('file tree changed!');
 
   })
   .catch(err => {

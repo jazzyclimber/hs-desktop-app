@@ -3,12 +3,9 @@ const fs =  require('fs');
 const dirTree = require("directory-tree");
 
 const OpenSaveDialog = function(win) {
-  console.log("win", win)
     ipcMain.on('openSaveDialog', (event, args) => {
-      console.log("win",win)
     console.log('running')
     if(args.usage == 'createGlobalParital'){
-      console.log(args);
 
       const options = {
         title: "Add New Global Field Parital",
