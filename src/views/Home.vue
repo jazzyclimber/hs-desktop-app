@@ -6,7 +6,10 @@
       <UploadFile btn-text="Open Modules Directory" directory-usage="changeCurrentDirectory" />
       <UploadFile btn-text="Set Global Partials" directory-usage="changeGlobalPartialsDirectory" />
     </div>
-    <Select :options="selectOptions" v-if="globalPartialsTree && tree" v-on:select-change="handleSelectChange" />
+    <div class="row-wrapper">
+      <Select :options="selectOptions" v-if="globalPartialsTree && tree" v-on:select-change="handleSelectChange" orientation="horizontal" label="Mode"/>
+      <CreateJSONFile v-if="globalPartialsTree && displayMode == 'global-partials'"/>
+    </div>
     <MenuTreeFilter v-if="workingTree[0] != null"  />
     <UnsavedEditsModal v-if="showUnsavedModal" v-on:close-unsaved-edits-modal="handleCloseUnsavedEditsModal" />
     <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :type="treeType" :level="1" v-on:unsaved-edits="handleUnsavedEdits" />
@@ -36,6 +39,7 @@ import Select from "@/components/inputs/Select"
 import NewDisplay from "@/components/displayFile/NewDisplay"
 import _ from "lodash"
 import FieldEditor from "@/components/editFields/FieldEditor"
+import CreateJSONFile from "@/components/addJSONFile"
 export default {
   name: 'Home',
   data() {
@@ -65,6 +69,7 @@ export default {
     FieldEditor,
     Multipane,
     MultipaneResizer,
+    CreateJSONFile,
     UnsavedEditsModal
   },
   methods: {
@@ -97,10 +102,17 @@ export default {
         console.log('fired', newData);
         this.workingTree.push(newData[0]);
       }
+    },
+    GPTree: {
+      deep: true,
+      handler: function(newData, oldData) {
+        console.log('fired', newData);
+        this.displayMode == "global-partials" ? this.workingTree = newData : null;
+      }
     }
   },
    computed: {
-     ...mapGetters(["tree", "unsavedEdits", "globalPartialsTree"]),
+     ...mapGetters(["tree", "unsavedEdits", "globalPartialsTree", "displayMode"]),
      moduleTree(){
        return [this.tree]
      },
@@ -122,6 +134,14 @@ export default {
   }
   .field-editor-wrapper {
     background-color: #f2f2f2;
+  }
+  .row-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
   }
   main {
     max-height: 100vh;

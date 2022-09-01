@@ -1,0 +1,23 @@
+<template>
+  <button class="create-file" @click="handleClick">New Partial</button>
+</template>
+
+<script>
+import {mapGetters} from "vuex"
+export default {
+  name: "CreateJSONFile",
+  methods: {
+    handleClick(evt) {
+      console.log('click')
+      const config = {
+        usage: "createGlobalParital",
+        defaultPath: this.globalPartialsDir,
+      }
+      window.ipc.send('openSaveDialog', config)
+    }
+  },
+  computed: {
+    ...mapGetters(["globalPartialsDir"])
+  }
+}
+</script>
