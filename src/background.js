@@ -116,21 +116,28 @@ ipcMain.on("openDialog", (event, args) => {
     properties: ['openDirectory']
   }
 
-  const filepath = dialog.showOpenDialogSync(options)
+  dialog.showOpenDialog(options)
+  .then(data => {
+    if (!data.canceled) {
+      const tree = dirTree(data.filePaths[0]);
 
-  const tree = dirTree(filepath[0]);
+      if (args.usage == 'changeCurrentDirectory') {
+        openDir = data.filePaths[0];
+      } else if (args.usage == 'changeGlobalPartialsDirectory'){
+        partialsDir = data.filePaths[0];
+      }
 
-  if (args.usage == 'changeCurrentDirectory') {
-    openDir = filepath[0];
-  } else if (args.usage == 'changeGlobalPartialsDirectory'){
-    partialsDir = filepath[0];
-  }
-
-  win.webContents.send("newDirectory", {
-    usage: args.usage,
-    cwd: filepath[0],
-    tree: tree
+      win.webContents.send("newDirectory", {
+        usage: args.usage,
+        cwd: data.filePaths[0],
+        tree: tree
+      })
+    }
   })
+  .catch(err => {
+    console.log('err', err)
+  })
+
 });
 
 
@@ -146,19 +153,22 @@ if(args.usage == 'createGlobalParital'){
   dialog.showSaveDialog(options)
   .then(data => {
     // create a blank file
-    fs.writeFileSync(data.filePath, JSON.stringify([]))
+    if (!data.canceled) {
 
-    console.log('Created New File!', data)
-    const tree = dirTree(args.defaultPath);
+      fs.writeFileSync(data.filePath, JSON.stringify([]))
 
-    // update the Tree
-    win.webContents.send("newDirectory", {
-      usage: "changeGlobalPartialsDirectory",
-      cwd: args.defaultPath,
-      tree: tree
-    })
+      console.log('Created New File!', data)
+      const tree = dirTree(args.defaultPath);
 
-    console.log('file tree changed!');
+      // update the Tree
+      win.webContents.send("newDirectory", {
+        usage: "changeGlobalPartialsDirectory",
+        cwd: args.defaultPath,
+        tree: tree
+      })
+
+      console.log('file tree changed!');
+    }
 
   })
   .catch(err => {
