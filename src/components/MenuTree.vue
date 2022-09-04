@@ -12,6 +12,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import osp from "path"
 import MenuTree from "./MenuTree"
 export default {
   name: "MenuTree",
@@ -30,13 +31,14 @@ export default {
       this.$emit('unsaved-edits', path);
     },
     readFile (path) {
+      console.log("path", osp )
       const config = {
         path: path,
         usage: 'updateOpenFile'
       }
       window.ipc.send('readFile', config);
 
-      let splitPath = path.split("/");
+      let splitPath = path.split(osp.sep);
       this.$store.commit("updateCurrentFilePath", path)
       this.$store.commit("updateCurrentField", null);
       if (this.type == 'global-partials') {
