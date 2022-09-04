@@ -5,10 +5,11 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
+import path from 'path'
 export default {
   name: "SaveFile",
   computed: {
-    ...mapGetters(['openFile', 'currentFilePath', "unsavedEdits" ])
+    ...mapGetters(['openFile', 'currentFilePath', "unsavedEdits", "displayMode", "globalPartialsDir", "cwd", "tree", "openFileUnedited" ])
   },
   methods: {
     updateUnsavedEdits() {
@@ -18,8 +19,19 @@ export default {
       window.ipc.send('saveFile', {
         file: this.openFile,
         path: this.currentFilePath
-        });
+      });
 
+      if (this.displayMode == "global-partials") {
+        const relPath = this.currentFilePath.replace(this.globalPartialsDir, "");
+        window.ipc.send('helperTask', {
+          editedFile: this.openFile,
+          originalFile: this.openFileUnedited,
+          relPath: relPath,
+          cwd: this.cwd,
+          tree: this.tree,
+          usage: "updateGlobalDependants"
+        })
+      }
       // In its current state this isnt quite right.
       // It is possible that the save fails and this still is updated
       // Must change the window.ipc.send to use handle(), invoke(), and promises.

@@ -13,20 +13,20 @@
     <transition-group type="transition" :name="!drag ? 'flip-list' : null">
       <div class="field-item"
         v-for="(item, index) in realValue"
-        v-bind:class="{'has-children': item.children, 'group': item.type === 'group'}"
+        v-bind:class="{'has-children': item.children, 'group': item.type === 'group', 'global-partial': item.type === 'globalPartial'}"
         :data-label="item.label"
         :key="level + '-' + index"
       >
-        <div class="card-content">
+        <div class="card-content" >
           <span class="label">{{item.label}}</span>
-          <span class="meta"><strong>Name:</strong> {{item.name}}</span>
+          <span class="meta" v-if="item.name"><strong>Name:</strong> {{item.name}}</span>
           <span v-if="item.id != null && item.id != undefined && item.id != '' && item.id" class="meta"><strong>ID:</strong> {{item.id}}</span>
           <div class="tag-container">
             <span class="tag">{{item.type | formatText}}</span>
             <span class="tag" v-if="item.occurrence">Repeater</span>
           </div>
           <div class="action-bar">
-            <button @click="updateCurrentField(item)">Edit</button>
+            <button @click="updateCurrentField(item)" v-if="item.type != 'globalPartial'">Edit</button>
             <RemoveField :field="item" />
           </div>
         </div>
@@ -114,6 +114,9 @@ import {mapGetters} from 'vuex'
   }
   .field-item.group {
     background-color: #fff9ec;
+  }
+  .field-item.global-partial {
+    background-color: #e1fff8;
   }
   .field-item .label {
     font-weight: 800;

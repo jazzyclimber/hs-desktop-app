@@ -14,6 +14,9 @@ import installExtension, {
   VUEJS_DEVTOOLS
 } from 'electron-devtools-installer'
 import path from "path"
+import _ from 'lodash'
+import {identifyReplaceGlobalPartials} from "@/helpers/identifyGlobalPartials"
+import HelperTask from "@/ipcMainTasks/onHelperTasks"
 const dirTree = require("directory-tree");
 const fs = require('fs');
 const DevTools = false;
@@ -93,38 +96,143 @@ app.on('ready', async () => {
   createWindow()
 })
 
+
+HelperTask
+
+// Shoud likely change these to be an actual
+// interface with the app itself. This seems hacky.
+let openDir, partialsDir;
+
 // Opens a dialog for user to select File
+// expects an arg called "type" which will
+// be returned in the response and will
+// ultimately tell the app what to do with
+// the returned directory.
 ipcMain.on("openDialog", (event, args) => {
+
   const options = {
     title: 'Open Directory',
     buttonLabel: 'Select Directory',
     properties: ['openDirectory']
   }
-  const filepath = dialog.showOpenDialogSync(options)
 
-  const tree = dirTree(filepath[0]);
-  win.webContents.send("newDirectory", {
-    cwd: filepath[0],
-    tree: tree
+  dialog.showOpenDialog(options)
+  .then(data => {
+    if (!data.canceled) {
+      const tree = dirTree(data.filePaths[0]);
+
+      if (args.usage == 'changeCurrentDirectory') {
+        openDir = data.filePaths[0];
+      } else if (args.usage == 'changeGlobalPartialsDirectory'){
+        partialsDir = data.filePaths[0];
+      }
+
+      win.webContents.send("newDirectory", {
+        usage: args.usage,
+        cwd: data.filePaths[0],
+        tree: tree
+      })
+    }
   })
+  .catch(err => {
+    console.log('err', err)
+  })
+
 });
 
-ipcMain.on("readFile", (event, file) => {
-  fs.readFile(file, 'utf8', (err, data) => {
+
+ipcMain.on('openSaveDialog', (event, args) => {
+if(args.usage == 'createGlobalParital'){
+
+  const options = {
+    title: "Add New Global Field Parital",
+    buttonLabel: "Create File",
+    defaultPath: args.defaultPath
+  }
+
+  dialog.showSaveDialog(options)
+  .then(data => {
+    // create a blank file
+    if (!data.canceled) {
+
+      fs.writeFileSync(data.filePath, JSON.stringify([]))
+
+      console.log('Created New File!', data)
+      const tree = dirTree(args.defaultPath);
+
+      // update the Tree
+      win.webContents.send("newDirectory", {
+        usage: "changeGlobalPartialsDirectory",
+        cwd: args.defaultPath,
+        tree: tree
+      })
+
+      console.log('file tree changed!');
+    }
+
+  })
+  .catch(err => {
+    console.log('err', err);
+  } )
+}
+});
+
+
+
+ipcMain.on("readFile", (event, config) => {
+  fs.readFile(config.path, 'utf8', (err, data) => {
     if (err) {
       console.error(err)
       return
     }
+
+    console.log('readFile!!!!!!')
     const payload = {
-      file: JSON.parse(data)
+      file: JSON.parse(data),
+      usage: config.usage
+    }
+
+    if (config.usage == "updateOpenFile") {
+      const args = {
+        file: JSON.parse(data),
+        openDir: openDir,
+        partialsDir: partialsDir,
+        path: config.path
+      }
+
+      payload.file = identifyReplaceGlobalPartials(args);
     }
     win.webContents.send('openFile', payload)
   })
 })
 
 ipcMain.on("saveFile", (event, file) => {
-  let payload = JSON.stringify(file.file);
 
+  console.log("saveFile")
+
+  function addGlobalPartials(array) {
+
+      let modArray = array.flatMap((field, i) => {
+          if (field.type == 'globalPartial') {
+            // console.log(field);
+            let readPartial = fs.readFileSync(field.filePath, 'utf-8')
+            readPartial = JSON.parse(readPartial);
+            return readPartial
+          } else if (field.type == "group") {
+              let obj = field
+              obj.children = addGlobalPartials(field.children);
+              return obj
+          } else {
+              return field
+          }
+      })
+
+      return modArray
+  }
+
+  let finalFile = addGlobalPartials(file.file);
+
+  let payload = JSON.stringify(finalFile);
   let callback = (err) => {
     if (err) {
       console.log("error on save", err)
@@ -135,6 +243,7 @@ ipcMain.on("saveFile", (event, file) => {
   let filePath = path.resolve(file.path.toString())
   fs.writeFile(filePath, payload, callback);
 })
+
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {

@@ -3,7 +3,7 @@ node_modules
 /dist
 /hs-desktop-app-dist
 /electron_dist 
-
+*.zip
 
 # local env files
 .env.local

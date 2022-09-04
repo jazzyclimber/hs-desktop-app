@@ -2,10 +2,17 @@
   <div class="home">
   <multipane class="custom-resizer" layout="vertical">
   <div class="pane sidebar" :style="{ flexGrow:0}">
-    <UploadFile  />
+    <div class="btn-container">
+      <UploadFile btn-text="Open Modules Directory" directory-usage="changeCurrentDirectory" />
+      <UploadFile btn-text="Set Global Partials" directory-usage="changeGlobalPartialsDirectory" />
+    </div>
+    <div class="row-wrapper">
+      <Select :options="selectOptions" v-if="globalPartialsTree && tree" v-on:select-change="handleSelectChange" orientation="horizontal" label="Mode"/>
+      <CreateJSONFile v-if="globalPartialsTree && displayMode == 'global-partials'"/>
+    </div>
     <MenuTreeFilter v-if="workingTree[0] != null"  />
     <UnsavedEditsModal v-if="showUnsavedModal" v-on:close-unsaved-edits-modal="handleCloseUnsavedEditsModal" />
-    <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :level="1" v-on:unsaved-edits="handleUnsavedEdits" />
+    <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :type="treeType" :level="1" v-on:unsaved-edits="handleUnsavedEdits" />
   </div>
   <multipane-resizer></multipane-resizer>
   <div class="pane field-display-wrapper" :style="{ flexGrow: 0 }">
@@ -28,14 +35,29 @@ import UploadFile from '@/components/UploadFile.vue'
 import MenuTree from "@/components/MenuTree"
 import MenuTreeFilter from "@/components/MenuTreeFilter"
 import UnsavedEditsModal from "@/components/editFields/save/UnsavedEditsModal"
-
+import Select from "@/components/inputs/Select"
 import NewDisplay from "@/components/displayFile/NewDisplay"
+import _ from "lodash"
 import FieldEditor from "@/components/editFields/FieldEditor"
+import CreateJSONFile from "@/components/addJSONFile"
 export default {
   name: 'Home',
   data() {
     return {
-      showUnsavedModal: false
+      showUnsavedModal: false,
+      workingTree: [],
+      treeType: 'modules',
+      selectOptions: [
+        {
+          label: "Modules",
+          value: "modules"
+        },
+        {
+          label: "Global Partials",
+          value: "global-partials"
+        },
+
+      ]
     }
   },
   components: {
@@ -43,9 +65,11 @@ export default {
     MenuTree,
     MenuTreeFilter,
     NewDisplay,
+    Select,
     FieldEditor,
     Multipane,
     MultipaneResizer,
+    CreateJSONFile,
     UnsavedEditsModal
   },
   methods: {
@@ -54,17 +78,46 @@ export default {
     },
     handleCloseUnsavedEditsModal() {
       this.showUnsavedModal = false;
+    },
+    handleSelectChange(data) {
+      const target = data.target.value;
+      this.treeType = target;
+      this.$store.commit('updateDisplayMode', target)
+      if (target == 'modules') {
+        console.log([this.moduleTree[0]])
+        this.workingTree = [this.moduleTree[0]];
+      } else if (target == 'global-partials') {
+        console.log('hit')
+        this.workingTree = _.cloneDeep([this.GPTree[0]]);
+      }
     }
   },
   watch: {
     unsavedEdits: function(unsaved) {
       unsaved ? null : this.showUnsavedModal = false;
+    },
+    moduleTree: {
+      deep: true,
+      handler: function(newData, oldData) {
+        console.log('fired', newData);
+        this.workingTree.push(newData[0]);
+      }
+    },
+    GPTree: {
+      deep: true,
+      handler: function(newData, oldData) {
+        console.log('fired', newData);
+        this.displayMode == "global-partials" ? this.workingTree = newData : null;
+      }
     }
   },
    computed: {
-     ...mapGetters(["tree", "unsavedEdits"]),
-     workingTree(){
+     ...mapGetters(["tree", "unsavedEdits", "globalPartialsTree", "displayMode"]),
+     moduleTree(){
        return [this.tree]
+     },
+     GPTree() {
+      return [this.globalPartialsTree]
      }
   }
 }
@@ -81,6 +134,14 @@ export default {
   }
   .field-editor-wrapper {
     background-color: #f2f2f2;
+  }
+  .row-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
   }
   main {
     max-height: 100vh;
