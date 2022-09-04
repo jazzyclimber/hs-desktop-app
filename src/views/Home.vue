@@ -1,7 +1,7 @@
 <template>
   <div class="home">
   <multipane class="custom-resizer" layout="vertical">
-  <div class="pane sidebar" :style="{ flexGrow:0}">
+  <div class="pane sidebar bg-blue-200" :style="{ flexGrow:0}">
     <div class="btn-container">
       <UploadFile btn-text="Open Modules Directory" directory-usage="changeCurrentDirectory" />
       <UploadFile btn-text="Set Global Partials" directory-usage="changeGlobalPartialsDirectory" />
