@@ -2,7 +2,7 @@
   <div class="display-filter-wrapper">
     <label for="menu-tree-filter" class="uppercase">Filter</label>
     <input
-      class="border-2 border-indigo-500 rounded font-sans text-sm p-1"
+      class=""
       type="text"
       v-model="filter"
       @input="filterNodes">

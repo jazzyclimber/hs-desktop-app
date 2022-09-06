@@ -54,7 +54,8 @@ export default {
 }
 .toggle__label {
   @apply text-sm font-bold uppercase;
-  min-width: 30px;
+  min-width: 25px;
+  font-size: 11px;
 }
 .toggle__button .toggle__switch {
     display:inline-block;

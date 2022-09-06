@@ -13,8 +13,8 @@
     @apply font-sans;
   }
 
-  .jsoneditor,input,textarea {
-    @apply text-sm border-2 border-indigo-500 rounded font-sans;
+  .jsoneditor,input,textarea, select {
+    @apply text-sm border border-indigo-100 rounded font-sans p-1 w-full shadow-sm outline-none focus:ring-indigo-500 focus:ring-2 ;
   }
 
 }

@@ -100,7 +100,10 @@ import {mapGetters} from 'vuex'
 
 <style lang="postcss" scoped>
   .field-item {
-    @apply w-full p-7 pb-2 text-left bg-white border border-purple-600;
+    @apply w-full p-7 pb-2 text-left bg-white border border-purple-100;
+  }
+  .field-item .field-item {
+    @apply shadow-md;
   }
   .field-item + .field-item {
     @apply border-t-0;

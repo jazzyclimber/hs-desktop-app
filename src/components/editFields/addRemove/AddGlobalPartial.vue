@@ -10,7 +10,7 @@
             <h3 class="field-name">{{item.name | formatText}}</h3>
           </article>
         </div>
-        <button @click="modalActive = false">Cancel</button>
+        <button class="btn-primary" @click="modalActive = false">Cancel</button>
       </div>
 
   </div>

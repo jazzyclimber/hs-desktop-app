@@ -40,7 +40,11 @@ export default {
       newData.forEach((item) => {
         if ( item.field.value == undefined && item.field.value != null) {
           console.log("err, FieldEditor.vue", item)
-        } else {
+        } else if (item.key == "occurrence" && item.field.value == null) {
+          console.log('removed occurrence');
+        }
+        else {
+          console.log(item)
           newField[item.field.key] = item.field.value;
         }
       })

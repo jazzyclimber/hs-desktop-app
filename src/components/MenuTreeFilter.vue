@@ -1,7 +1,7 @@
 <template>
   <div class="filter-wrapper mb-3">
     <label for="menu-tree-filter">Filter</label>
-    <input type="text" v-model="filter" @input="filterNodes" class="border-indigo-500 border-2 rounded font-sans text-sm p-1 flex-grow ">
+    <input type="text" v-model="filter" @input="filterNodes" class="flex-grow ">
   </div>
 </template>
 

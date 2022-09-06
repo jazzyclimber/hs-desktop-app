@@ -1,7 +1,7 @@
 <template>
 <div class="select-wrapper w-full" :class="orientation">
   <label class="label" :class="labelClass">{{label}}</label>
-  <select name="" id="" @change="emitter" class="border-2 border-indigo-500 rounded font-sans text-sm p-1 flex-grow" :class="selectClass">
+  <select name="" id="" @change="emitter" class="flex-grow" :class="selectClass">
     <option v-for="option in options" :value="option.value">{{option.label}}</option>
   </select>
 </div>

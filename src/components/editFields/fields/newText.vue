@@ -15,10 +15,18 @@
           @input="emitter"
         />
         <v-jsoneditor v-model="item.field.value" v-else-if="item.type == 'object'" @input="emitter" :plus="false" height="200px" :options="jsonOptions" />
+        <textarea
+          v-else-if="currentField.type == 'richtext' && item.key =='default'"
+          name=""
+          id=""
+          cols="40"
+          rows="10"
+          v-model="item.field.value"
+          ></textarea>
+
         <input
-          v-if="item.type == 'text'"
+          v-else
           type="text"
-          class="border-2 rounded border-indigo-500 text-sm p-1 font-sans"
           v-model="item.field.value"
           @input="emitter"
         />
@@ -36,6 +44,7 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex"
 import Toggle from "./inputs/toggle"
 import GlobalFields from './globalFields.vue'
 import RepeaterFields from './repeaterFields.vue'
@@ -64,6 +73,9 @@ export default {
         this.workingRepeater = newData.repeatFields
       }
     }
+  },
+  computed: {
+    ...mapGetters(['currentField'])
   },
   methods: {
     setFieldType: function (key) {
@@ -122,7 +134,6 @@ export default {
   .field-editor input[type="text"] {
     padding: 5px;
     width: 100%;
-    max-width: 300px;
   }
   .field-editor :is(input, textarea) {
     color: #333333!important;
