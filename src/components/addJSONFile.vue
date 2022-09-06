@@ -1,5 +1,5 @@
 <template>
-  <button class="create-file" @click="handleClick">New Partial</button>
+  <button class="create-file btn-primary text-sm py-1.5 px-4" @click="handleClick">+</button>
 </template>
 
 <script>

@@ -2,13 +2,13 @@
   <div class="field-editor-container">
     <div class="header" v-for="(item) in workingCustom" :key="item.field.key + '-heading'">
       <div v-if="item.field.key == 'label'">
-        <h2>{{item.field.value}}</h2>
+        <h2 class="font-bold text-xl">{{item.field.value}}</h2>
       </div>
     </div>
-    <h3>Custom Fields</h3>
+    <h3 class="font-extrabold">Custom Fields</h3>
     <label v-for="(item) in workingCustom" :key="item.field.key" >
       <div class="field-wrap" v-if="item.field.key !== 'type' && item.type !== 'ignore' ">
-        <span class="label">{{item.field.key.replace(/_/g, " ").toUpperCase()}}</span>
+        <span class="label mb-1">{{item.field.key.replace(/_/g, " ").toUpperCase()}}</span>
         <Toggle
           v-if="item.type == 'boolean'"
           v-model="item.field.value"
@@ -18,6 +18,7 @@
         <input
           v-if="item.type == 'text'"
           type="text"
+          class="border-2 rounded border-indigo-500 text-sm p-1 font-sans"
           v-model="item.field.value"
           @input="emitter"
         />
@@ -100,8 +101,8 @@ export default {
 }
 </script>
 
-<style >
-  .field-editor label {
+<style lang="postcss">
+  .field-editor label:not(.toggle__button) {
     margin-bottom: 20px;
     display: block;
   }

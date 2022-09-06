@@ -1,6 +1,6 @@
 <template>
   <div class="btn-discard-container">
-  <button class="btn-discard" :class="{'hide': !unsavedEdits}" @click="discardEdits()">Discard Edits</button>
+  <button class="btn-discard text-white text-xs font-bold font-sans bg-gradient-to-br from-red-500 to-red-700 py-2 px-2" :class="{'hide': !unsavedEdits}" @click="discardEdits()">Discard Edits</button>
   </div>
 </template>
 <script>

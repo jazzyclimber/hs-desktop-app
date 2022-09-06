@@ -1,7 +1,11 @@
 <template>
   <div class="display-filter-wrapper">
-    <label for="menu-tree-filter">Filter</label>
-    <input type="text" v-model="filter" @input="filterNodes">
+    <label for="menu-tree-filter" class="uppercase">Filter</label>
+    <input
+      class="border-2 border-indigo-500 rounded font-sans text-sm p-1"
+      type="text"
+      v-model="filter"
+      @input="filterNodes">
   </div>
 </template>
 
@@ -37,7 +41,7 @@ export default {
 }
 </script>
 
-<style >
+<style lang="postcss" >
 .display-filter-wrapper {
   display: flex;
   flex-direction: row;
@@ -49,9 +53,8 @@ export default {
   margin-bottom: 10px;
 }
 .display-filter-wrapper label {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: bold;
+  @apply inline-block font-bold;
+  font-size: 11px;
 }
 
 </style>

@@ -3,3 +3,25 @@
 @tailwind components;
 
 @tailwind utilities;
+
+@layer base {
+  html,body {
+    @apply font-sans;
+  }
+  p, ul, span, label,
+  h1,h2,h3,h4,h5,h6 {
+    @apply font-sans;
+  }
+
+  .jsoneditor,input,textarea {
+    @apply text-sm border-2 border-indigo-500 rounded font-sans;
+  }
+
+}
+
+@layer components{
+  .btn-primary {
+    @apply bg-gradient-to-r from-indigo-500 to-purple-500 py-2 px-4 rounded-sm text-xs text-white font-bold font-sans hover:from-indigo-600 hover:to-purple-600 transition-all duration-200 ease-in-out;
+  }
+
+}

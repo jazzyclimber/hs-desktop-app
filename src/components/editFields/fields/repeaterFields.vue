@@ -12,7 +12,7 @@ NOTE:: Boolean should NOT be included with emitted data
 <template>
   <div class="global-fields-container">
     <div class="header">
-        <h3>Repeater Options</h3>
+        <h3 class="font-extrabold">Repeater Options</h3>
     </div>
     <label for="enable-repeater">
       <div class="field-wrap">

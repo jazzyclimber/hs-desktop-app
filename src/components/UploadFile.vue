@@ -1,6 +1,6 @@
 
 <template>
-  <button class="upload" @click="addFile(directoryUsage)">{{ btnText }}</button>
+  <button class="upload btn-primary mr-2" @click="addFile(directoryUsage)">{{ btnText }}</button>
 </template>
 
 <script>
@@ -22,8 +22,3 @@ export default {
 }
 </script>
 
-<style >
-  button.upload{
-    margin-right: 5px;
-  }
-</style>

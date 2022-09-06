@@ -3,7 +3,7 @@
     class="field-display-wrapper"
     v-if="openFile"
   >
-  <h2 class="open-file-heading">{{openFileName}}</h2>
+  <h2 class="font-bold text-center text-3xl mb-3">{{openFileName}}</h2>
   <div class="button-container">
     <SaveFile />
     <FilterDisplay />
@@ -12,7 +12,7 @@
       <AddGlobalPartial />
     </div>
   </div>
-  <div class="field-display-container">
+  <div class="field-display-container shadow-xl">
     <ThirdVisualizer :level="1" :list="workingFile"  v-if="workingFile" :key="componentKey" />
   </div>
   </div>
@@ -63,10 +63,9 @@ export default {
 }
 </script>
 
-<style >
+<style lang="postcss" >
   .field-display-wrapper {
-    flex: 1 1 auto;
-    padding: 25px 0;
+    @apply flex-auto py-6
   }
 
   .button-container {

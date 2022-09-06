@@ -1,12 +1,12 @@
 <template>
   <div class="field-options-bar">
-    <button @click="modalActive = true"><img src="@/assets/hsglobe.svg" alt="Add Global Partial" width="15"></button>
+    <button class="btn-primary px-3" @click="modalActive = true"><img src="@/assets/globe-white.svg" alt="Add Global Partial" width="15"></button>
     <div v-if="modalActive" class="modal field-modal" @click="modalActive = false"></div>
       <div class="modal-inner" v-if="modalActive">
         <!--<label for="field-search" class="field-search-text">Search</label>
         <input type="text" name="field-search" v-model="searchTerm"> -->
         <div class="field-choice-container" >
-          <article class="field-type" @click="emitter(item)" v-for="item in fileTree">
+          <article class="field-type border-2 bg-white border-indigo-200 rounded py-3 hover:border-indigo-500 hover:bg-indigo-500 hover:text-white transition-all duration-200" @click="emitter(item)" v-for="item in fileTree">
             <h3 class="field-name">{{item.name | formatText}}</h3>
           </article>
         </div>
@@ -108,7 +108,7 @@ export default {
    }
 }
 </script>
-<style scoped>
+<style lang="postcss" scoped>
   .modal {
     display: flex;
     background-color: rgba(0,0,0,.7);
@@ -159,12 +159,12 @@ export default {
     gap: 15px;
     margin: 15px 0;
   }
+  .field-choice-container:hover .field-name {
+    @apply transition-all hover:text-white;
+  }
   .field-type {
     flex: 0 0 calc(25% - 15px);
     cursor: pointer;
     transition: background-color .2s ease;
-  }
-  .field-type:hover {
-    background-color: rgb(245,245,245)
   }
 </style>

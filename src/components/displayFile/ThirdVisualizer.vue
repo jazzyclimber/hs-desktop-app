@@ -26,7 +26,7 @@
             <span class="tag" v-if="item.occurrence">Repeater</span>
           </div>
           <div class="action-bar">
-            <button @click="updateCurrentField(item)" v-if="item.type != 'globalPartial'">Edit</button>
+            <button class="btn-primary" @click="updateCurrentField(item)" v-if="item.type != 'globalPartial'">Edit</button>
             <RemoveField :field="item" />
           </div>
         </div>
@@ -98,29 +98,27 @@ import {mapGetters} from 'vuex'
   }
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
   .field-item {
-    width: 100%;
-    padding: 20px 20px 10px;
-    border: 1px solid black;
-    text-align: left;
-    background-color: white;
+    @apply w-full p-7 pb-2 text-left bg-white border border-purple-600;
+  }
+  .field-item + .field-item {
+    @apply border-t-0;
   }
   .field-item .meta {
     font-size: 14px;
   }
-  .filed-item .meta strong {
-    color: #308630;
+  .field-item .meta strong {
+    @apply font-bold;
   }
   .field-item.group {
-    background-color: #fff9ec;
+    @apply bg-orange-50;
   }
   .field-item.global-partial {
-    background-color: #e1fff8;
+    @apply bg-purple-100;
   }
   .field-item .label {
-    font-weight: 800;
-    text-transform: uppercase;
+    @apply font-extrabold uppercase mb-1 text-lg;
   }
   .field-item .tag-container {
     position: absolute;
@@ -129,16 +127,8 @@ import {mapGetters} from 'vuex'
     margin-top: 5px;
   }
   .field-item .tag {
-    display: inline-block;
-    margin-right: 5px;
+    @apply  bg-sky-200 text-black inline-block mr-2 uppercase font-bold font-sans rounded-2xl py-1 px-4;
     font-size: 10px;
-    padding: 2px 15px;
-    font-weight: 600;
-    background-color: #fbe5f6;
-    border-radius: 20px;
-  }
-  .field-item.has-children {
-    padding-bottom: 0;
   }
   .list-group {
     min-height: 20px;
@@ -179,20 +169,17 @@ import {mapGetters} from 'vuex'
 .list-group-item i {
   cursor: pointer;
 }
+.action-bar {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  opacity: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 5px;
+}
 </style>
 
-<style scoped>
-  .action-bar {
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: white;
-    padding: 10px;
-    opacity: 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 5px;
-  }
-</style>

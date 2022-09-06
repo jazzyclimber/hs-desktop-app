@@ -172,10 +172,10 @@ export default {
   .field-editor  {
     text-align: left;
   }
-  .field-editor label > span {
+  .field-editor label:not(.toggle__button) > span {
     display: block;
   }
-  .field-editor label {
+  .field-editor label:not(.toggle__button) {
   display: block;
   margin-bottom: 10px;
   }

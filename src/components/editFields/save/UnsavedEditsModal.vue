@@ -2,14 +2,14 @@
   <div class="unsaved-edits-modal">
   <div class="modal" @click="emitCloseModal"></div>
   <div class="inner">
-    <h2>Warning</h2>
+    <h2 class="font-bold">Warning</h2>
     <p>You have unsaved edits to <strong>{{openFileName}}</strong>.</p>
-    <ul>
+    <ul class="text-lg">
       <li>Save File</li>
       <li>Discard Changes</li>
       <li>Click out of modal to go back and edit</li>
     </ul>
-      <div class="btn-container">
+      <div class="btn-container mt-5">
         <SaveFile />
         <DiscardEdits />
       </div>

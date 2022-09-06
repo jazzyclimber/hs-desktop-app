@@ -1,6 +1,6 @@
 <template>
   <div class="btn-save-container">
-  <button class="btn-save" :class="{'hide': !unsavedEdits}" @click="saveFile()">Save File</button>
+  <button class="btn-save bg-gradient-to-r from-green-500 to-green-600 text-white py-2 px-3 text-xs font-bold font-sans" :class="{'hide': !unsavedEdits}" @click="saveFile()">Save File</button>
   </div>
 </template>
 <script>

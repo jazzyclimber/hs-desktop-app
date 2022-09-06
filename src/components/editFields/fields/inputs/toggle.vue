@@ -1,6 +1,6 @@
 <template>
-    <label>
-        <span v-if="isActive" class="toggle__label">On</span>
+    <label class="toggle__button flex flex-row items-center " :class="{'active': isActive}">
+        <span v-if="isActive" class="toggle__label ">On</span>
         <span v-if="!isActive" class="toggle__label">Off</span>
 
         <input type="checkbox" v-model="toggleValue" @change="$emit('input', toggleValue)">
@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<style >
+<style lang="postcss">
 .toggle__button {
     vertical-align: middle;
     user-select: none;
@@ -52,6 +52,10 @@ export default {
     width: 1px;
     height: 1px;
 }
+.toggle__label {
+  @apply text-sm font-bold uppercase;
+  min-width: 30px;
+}
 .toggle__button .toggle__switch {
     display:inline-block;
     height:12px;
@@ -61,7 +65,11 @@ export default {
     box-shadow: inset 0 0 1px #BFCBD9;
     position:relative;
     margin-left: 10px;
-    transition: all .25s;
+    transition: all .2s ease;
+}
+
+.toggle__button.active .toggle__switch {
+  @apply bg-indigo-300
 }
 
 .toggle__button .toggle__switch::after,
@@ -75,16 +83,24 @@ export default {
     left: 0;
     top: -3px;
     transform: translateX(0);
-    transition: all .25s cubic-bezier(.5, -.6, .5, 1.6);
 }
 
 .toggle__button .toggle__switch::after {
     background: #4D4D4D;
     box-shadow: 0 0 1px #666;
+    transition: all .2s ease;
 }
 .toggle__button .toggle__switch::before {
     background: #4D4D4D;
     box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
     opacity:0;
+    transition: all .2s ease;
+}
+.toggle__button.active .toggle__switch::after {
+  left: calc(100% - 18px);
+}
+.toggle__button.active .toggle__switch::before,
+.toggle__button.active .toggle__switch::after {
+    @apply bg-indigo-500;
 }
 </style>

@@ -1,10 +1,16 @@
 <template>
 <div :class="[level == 1 ? 'top-level':'level'+level, type ? type : '']"  class="menu-wrapper">
-  <ul v-for="(item, i) in localTree" :key="'l-'+ level + '-' + i">
+  <ul v-for="(item, i) in localTree" :key="'l-'+ level + '-' + i" class="list-none" >
 
-    <li v-if="item.children && item.name.includes('.module') && type == 'modules'" class="module" :data-name="item.name">{{item.name}}</li>
-    <li :class="'file'" v-else-if="item.name == 'fields.json' && type == 'modules'" @click="handleClick(item.path)">{{item.name}}</li>
-    <li :class="'file'" v-else-if="item.name.includes('.json') && type == 'global-partials'" style="margin-left: 0;padding-left: 0;" @click="handleClick(item.path)">{{item.name}}</li>
+    <li
+      v-if="item.children && item.name.includes('.module') && type == 'modules'"
+      class="module font-light mt-0.5"
+      :data-name="item.name">{{item.name}}</li>
+    <li
+      class="file font-light hover:text-purple-700 transition-colors cursor-pointer"
+      v-else-if="item.name == 'fields.json' && type == 'modules'"
+      @click="handleClick(item.path)">{{item.name}}</li>
+    <li :class="'file font-light hover:text-purple-700 transition-colors cursor-pointer'" v-else-if="item.name.includes('.json') && type == 'global-partials'" style="margin-left: 0;padding-left: 0;" @click="handleClick(item.path)">{{item.name}}</li>
     <MenuTree v-if="item.children" v-on:unsaved-edits="emitUnsavedEdits" :type="type" :localTree="item.children" :level="nextLevel" />
   </ul>
   </div>
@@ -67,26 +73,11 @@ export default {
 }
 </script>
 
-<style >
-  .menu-wrapper ul {
-    list-style-type: none;
-    text-align: left;
-    padding-left: 5px;
-  }
-  .menu-wrapper.global-partials ul {
-    padding-left: 0;
-  }
-  .menu-wrapper ul ul {
-    padding-left: 10px;
-  }
-  .menu-wrapper li {
-    cursor: pointer;
-  }
-  .menu-wrapper li:hover {
-    color: blue;
-  }
-  .menu-wrapper {
-    min-width: 300px;
-  }
+<style lang="postcss">
+.module +.modules .file {
+  @apply ml-2
+}
+
+
 
 </style>

@@ -1,7 +1,7 @@
 <template>
-<div class="select-wrapper" :class="orientation">
-  <label class="label">{{label}}</label>
-  <select name="" id="" @change="emitter">
+<div class="select-wrapper w-full" :class="orientation">
+  <label class="label" :class="labelClass">{{label}}</label>
+  <select name="" id="" @change="emitter" class="border-2 border-indigo-500 rounded font-sans text-sm p-1 flex-grow" :class="selectClass">
     <option v-for="option in options" :value="option.value">{{option.label}}</option>
   </select>
 </div>
@@ -15,6 +15,8 @@
       options: Array,
       label: String,
       Orientation: String,
+      selectClass: String,
+      labelClass: String
     },
     methods: {
       emitter: function(evt) {
@@ -25,17 +27,13 @@
   }
 </script>
 
-<style>
+<style lang="postcss">
 .select-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 7px;
+  @apply flex flex-row items-center justify-start gap-2;
+  max-width: 317px;
 }
 .select-wrapper label {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: bold;
+  @apply inline-block font-bold uppercase;
+  font-size: 11px;
 }
 </style>

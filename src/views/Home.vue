@@ -1,25 +1,34 @@
 <template>
   <div class="home">
   <multipane class="custom-resizer" layout="vertical">
-  <div class="pane sidebar bg-blue-200" :style="{ flexGrow:0}">
-    <div class="btn-container">
-      <UploadFile btn-text="Open Modules Directory" directory-usage="changeCurrentDirectory" />
-      <UploadFile btn-text="Set Global Partials" directory-usage="changeGlobalPartialsDirectory" />
+  <div class="pane sidebar bg-gradient-to-b from-white to-indigo-50 p-0" style="flexGrow:0">
+    <div class="pt-3 px-3 pb-1 bg-indigo-50">
+      <div class="btn-container flex justify-start flex-wrap gap-1">
+        <UploadFile btn-text="Set Theme Directory" directory-usage="changeCurrentDirectory" />
+        <UploadFile btn-text="Set Global Partials" directory-usage="changeGlobalPartialsDirectory" />
+      </div>
+      <div class="row-wrapper mr-0 w-full">
+        <Select :options="selectOptions" v-if="globalPartialsTree && tree" v-on:select-change="handleSelectChange"
+        Orientation="horizontal"
+        label="Mode"
+        selectClass="width-full"
+        labelClass="pr-2"
+        />
+        <CreateJSONFile v-if="globalPartialsTree && displayMode == 'global-partials'"/>
+      </div>
     </div>
-    <div class="row-wrapper">
-      <Select :options="selectOptions" v-if="globalPartialsTree && tree" v-on:select-change="handleSelectChange" orientation="horizontal" label="Mode"/>
-      <CreateJSONFile v-if="globalPartialsTree && displayMode == 'global-partials'"/>
+    <div class="p-3 pt-1">
+      <MenuTreeFilter v-if="workingTree[0] != null"  />
+      <UnsavedEditsModal v-if="showUnsavedModal" v-on:close-unsaved-edits-modal="handleCloseUnsavedEditsModal" />
+      <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :type="treeType" :level="1" v-on:unsaved-edits="handleUnsavedEdits" />
     </div>
-    <MenuTreeFilter v-if="workingTree[0] != null"  />
-    <UnsavedEditsModal v-if="showUnsavedModal" v-on:close-unsaved-edits-modal="handleCloseUnsavedEditsModal" />
-    <MenuTree v-if="workingTree[0] != null" :localTree="workingTree" :type="treeType" :level="1" v-on:unsaved-edits="handleUnsavedEdits" />
   </div>
   <multipane-resizer></multipane-resizer>
-  <div class="pane field-display-wrapper" :style="{ flexGrow: 0 }">
+  <div class="pane field-display-wrapper bg-gradient-to-b from-white to-indigo-50" style="flexGrow: 0">
     <NewDisplay  />
   </div>
   <multipane-resizer></multipane-resizer>
-  <div class="pane field-editor-wrapper" :style="{ flexGrow: 1 }">
+  <div class="pane field-editor-wrapper bg-gradient-to-b from-white to-indigo-50" style="flexGrow: 1">
     <FieldEditor  />
   </div>
 </multipane>
@@ -123,57 +132,32 @@ export default {
 }
 </script>
 
-<style >
+<style lang="postcss">
   *,*:before,*:after {
     box-sizing: border-box;
   }
-
-  .sidebar {
-    background-color: #f2f2f2;
-    padding-right: 10px;
-  }
-  .field-editor-wrapper {
-    background-color: #f2f2f2;
-  }
   .row-wrapper {
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 5px;
+    @apply flex flex-row my-2 items-center justify-start gap-2;
+    max-width: 316px;
   }
   main {
-    max-height: 100vh;
-    overflow: auto;
-    flex: 1 1 auto;
+    @apply min-h-screen overflow-auto flex-auto;
   }
   .home {
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: 100%;
+    @apply flex flex-row flex-nowrap items-start justify-start h-full;
   }
   .field-container {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: flex-start;
+    @apply flex flex-row items-stretch justify-start
   }
   .field-container > .field-editor {
+    @apply max-h-screen overflow-auto min-h-full;
     flex: 0 1 300px;
     max-width: 500px;
-    background-color: #f7f7f7;
     max-height: 100vh;
     padding: 50px 30px 100px;
-    overflow: auto;
-    min-height: 100%;
   }
   .custom-resizer > .multipane-resizer {
-  margin: 0; left: 0;
-  position: relative;
+    @apply m-0 left-0 relative;
   }
 .custom-resizer > .multipane-resizer:before {
   display: block;
@@ -195,7 +179,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-.custom-resizer > .pane {
+.pane {
   text-align: left;
   padding: 15px;
   overflow: auto;
@@ -211,7 +195,7 @@ export default {
   height: 5px;
 }
 .pane::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,.3);    /* color of the scroll thumb */
+  @apply bg-indigo-100;
   border-radius: 20px;       /* roundness of the scroll thumb */
 }
 </style>

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button @click="removeField"><img src="@/assets/trash.svg" alt="delete" width="12px"></button>
+    <button
+      class="bg-gradient-to-br from-red-500 to-red-700 py-2 px-2"
+      @click="removeField">
+      <img src="@/assets/trash.svg" alt="delete" width="14px">
+    </button>
   </div>
 </template>
 <script>

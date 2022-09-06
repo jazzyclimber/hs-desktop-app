@@ -1,7 +1,7 @@
 <template>
   <div class="global-fields-container">
     <div class="header">
-        <h3>Global Fields</h3>
+        <h3 class="font-extrabold">Global Fields</h3>
     </div>
     <label v-for="(item) in workingGlobal" :key="item.field.key" >
       <div class="field-wrap" v-if="item.field.key !== 'type' ">
