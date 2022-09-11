@@ -94,10 +94,18 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString())
     }
   }
-  // autoupdater -- example https://github.com/iffy/electron-updater-example/blob/master/main.js
-  autoUpdater.checkForUpdatesAndNotify();
   // Create main window
   createWindow()
+  // autoupdater -- example https://github.com/iffy/electron-updater-example/blob/master/main.js
+  autoUpdater.checkForUpdatesAndNotify();
+})
+
+
+autoUpdater.on('update-downloaded', (info) => {
+  win.webContents.send('notification', {
+    msg: "An update has been downloaded and will be applied after closing the app",
+    type: "update"
+  })
 })
 
 

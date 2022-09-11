@@ -1,12 +1,17 @@
 <template>
-  <div id="app">
+  <div id="app relative">
+  <Notification />
     <router-view/>
   </div>
 </template>
 
 <script>
 import _ from "lodash"
+import Notification from "@/components/notification"
 export default {
+  components: {
+    Notification
+  },
   mounted () {
     window.ipc.receive("newDirectory", (payload) => {
       if (payload.usage == "changeCurrentDirectory") {
@@ -31,6 +36,7 @@ export default {
           openFileUnedited: _.cloneDeep(payload.file)
         })
     })
+
   }
 }
 </script>

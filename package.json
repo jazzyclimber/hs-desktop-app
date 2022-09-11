@@ -9,7 +9,7 @@
       "serve": "vue-cli-service serve",
       "build": "vue-cli-service build",
       "lint": "vue-cli-service lint",
-      "electron:build": "vue-cli-service electron:build -- -p always",
+      "electron:build": "vue-cli-service electron:build -p always",
       "electron:publish": "npm run electron:build -- --win nsis --mac",
       "electron:serve": "vue-cli-service electron:serve",
       "release": "electron-builder",
@@ -58,11 +58,7 @@
             },
             "builderOptions": {
                "productName": "HubSpot Copilot",
-               "publish": [{
-                  "provider": "github",
-                  "owner": "jazzyclimber",
-                  "private": false
-               }],
+               "publish": ["github"],
                "dmg": {
                   "sign": false
                },
