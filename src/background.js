@@ -99,7 +99,7 @@ app.on('ready', async () => {
   // autoupdater -- example https://github.com/iffy/electron-updater-example/blob/master/main.js
   autoUpdater.checkForUpdatesAndNotify();
   // Look for updates every 10 mins
-  setInterval(autoUpdater.checkForUpdates, 600000);
+  setInterval(() => autoUpdater.checkForUpdates(), 600000);
 })
 
 
