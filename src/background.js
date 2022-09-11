@@ -13,6 +13,7 @@ import {
 import installExtension, {
   VUEJS_DEVTOOLS
 } from 'electron-devtools-installer'
+import {autoUpdater} from "electron-updater"
 import path from "path"
 import _ from 'lodash'
 import {identifyReplaceGlobalPartials} from "@/helpers/identifyGlobalPartials"
@@ -20,8 +21,8 @@ import HelperTask from "@/ipcMainTasks/onHelperTasks"
 const dirTree = require("directory-tree");
 const fs = require('fs');
 const DevTools = false;
-// const build = true;
-const build = false;
+const build = true;
+// const build = false;
 let preloadPath = build ? __dirname: "./public";
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -93,6 +94,9 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString())
     }
   }
+  // autoupdater -- example https://github.com/iffy/electron-updater-example/blob/master/main.js
+  autoUpdater.checkForUpdatesAndNotify();
+  // Create main window
   createWindow()
 })
 

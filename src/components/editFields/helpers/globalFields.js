@@ -80,6 +80,16 @@ const customGlobalFields = {
     }
   },
 }
+const customGroupFields = {
+  tab: {
+    type: "text",
+    key: "tab",
+    field: {
+      key: "tab",
+      value: ""
+    }
+  }
+}
 
 const globalRepeaterFields = {
   occurrence: {
