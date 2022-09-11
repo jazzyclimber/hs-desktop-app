@@ -1,6 +1,6 @@
 {
    "name": "hubpsot-copilot",
-   "version": "0.1.2",
+   "version": "0.1.3",
    "private": false,
    "repository": "https://github.com/jazzyclimber/hs-desktop-app",
    "description": "Assist HubSpot developers in module creation while developing on local machines",
