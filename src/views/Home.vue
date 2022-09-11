@@ -157,13 +157,14 @@ export default {
     padding: 50px 30px 100px;
   }
   .custom-resizer > .multipane-resizer {
-    @apply m-0 left-0 relative;
+    @apply m-0 left-0 relative h-100vh;
   }
 .custom-resizer > .multipane-resizer:before {
   display: block;
   content: "";
   width: 3px;
   height: 40px;
+  transform: translateY(-50%);
   position: absolute;
   top: 50%;
   left: 50%;
