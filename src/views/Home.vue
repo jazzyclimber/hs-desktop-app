@@ -157,7 +157,7 @@ export default {
     padding: 50px 30px 100px;
   }
   .custom-resizer > .multipane-resizer {
-    @apply m-0 left-0 relative h-100vh;
+    @apply m-0 left-0 relative h-screen;
   }
 .custom-resizer > .multipane-resizer:before {
   display: block;
