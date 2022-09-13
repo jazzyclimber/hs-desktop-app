@@ -44,7 +44,6 @@ export default {
           console.log('removed occurrence');
         }
         else {
-          console.log(item)
           newField[item.field.key] = item.field.value;
         }
       })
@@ -153,13 +152,15 @@ export default {
             key: key,
             field: { key: key, value: value },
           }
-
-
           // if global add to global, if repeat add to repeat, else add to custom
           isGlobalField ? newTemp.globalFields.push(fieldObj) : isRepeatField ? newTemp.repeatFields.push(fieldObj) : newTemp.customFields.push(fieldObj);
         }
         newTemp.globalFields = this.confirmGlobalFields(newTemp.globalFields)
         newTemp.customFields = this.confirmCustomFields(newTemp.customFields)
+
+        if (newData.type == "group" && !newData.tab) {
+          newTemp.customFields.push(extraFields.tab)
+        }
 
         this.field = newTemp;
       }

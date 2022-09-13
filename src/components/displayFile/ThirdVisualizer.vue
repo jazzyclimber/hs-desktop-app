@@ -24,6 +24,7 @@
           <div class="tag-container">
             <span class="tag">{{item.type | formatText}}</span>
             <span class="tag" v-if="item.occurrence">Repeater</span>
+            <span class="tag" v-if="item.tab == 'STYLE'">Style Tab</span>
           </div>
           <div class="action-bar">
             <button class="btn-primary" @click="updateCurrentField(item)" v-if="item.type != 'globalPartial'">Edit</button>

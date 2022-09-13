@@ -80,16 +80,6 @@ const customGlobalFields = {
     }
   },
 }
-const customGroupFields = {
-  tab: {
-    type: "text",
-    key: "tab",
-    field: {
-      key: "tab",
-      value: ""
-    }
-  }
-}
 
 const globalRepeaterFields = {
   occurrence: {
@@ -114,6 +104,14 @@ const extraFields = {
     field: {
       key: "alignment_direction",
       value:""
+    }
+  },
+  tab: {
+    type: "text",
+    key: "tab",
+    field: {
+      key: "tab",
+      value: "CONTENT"
     }
   }
 }
