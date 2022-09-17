@@ -103,7 +103,6 @@ export default {
         repeatFields: this.workingRepeater
       }
       this.$emit('field-change', newField)
-      console.log('emitter fired', newField);
     }
   },
   components: {
