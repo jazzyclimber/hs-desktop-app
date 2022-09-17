@@ -9,6 +9,7 @@
       "serve": "vue-cli-service serve",
       "build": "vue-cli-service build",
       "lint": "vue-cli-service lint",
+      "e:build": "vue-cli-service electron:build",
       "electron:build": "vue-cli-service electron:build -p always",
       "electron:publish": "npm run electron:build -- --win nsis --mac",
       "electron:serve": "vue-cli-service electron:serve",
@@ -47,21 +48,24 @@
       "vue-cli-plugin-tailwind": "~3.0.0",
       "vue-template-compiler": "^2.6.14"
    },
+   "overrides": {
+      "vue-cli-plugin-electron-builder": {
+         "electron-builder": "23.3.3"
+      }
+   },
    "vue": {
       "css": {
          "extract": false
       },
       "pluginOptions": {
          "electronBuilder": {
-            "build": {
-               "afterSign": "scripts/notarize.js"
-            },
             "builderOptions": {
                "productName": "HubSpot Copilot",
                "publish": ["github"],
                "dmg": {
                   "sign": false
                },
+               "afterSign": "scripts/notarize.js",
                "mac": {
                   "hardenedRuntime": true,
                   "gatekeeperAssess": false,
