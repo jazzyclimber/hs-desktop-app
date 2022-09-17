@@ -28,6 +28,10 @@ export default {
       }
     })
 
+    window.ipc.recieve('autoUpdateErr', (payload) => {
+      console.log('autoUpdateErr', payload);
+    })
+
     window.ipc.receive("openFile", (payload) => {
         this.$store.commit("updateOpenFile", {
           openFile: payload.file

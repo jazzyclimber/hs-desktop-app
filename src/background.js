@@ -102,6 +102,10 @@ app.on('ready', async () => {
   setInterval(() => autoUpdater.checkForUpdates(), 300000);
 })
 
+autoUpdater.on('error', (err) => {
+  win.webContents.send('autoUpdateErr', err);
+})
+
 
 autoUpdater.on('update-downloaded', (info) => {
   win.webContents.send('notification', {
