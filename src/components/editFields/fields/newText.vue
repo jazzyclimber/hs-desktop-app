@@ -21,6 +21,7 @@
           id=""
           cols="40"
           rows="10"
+          @input="emitter"
           v-model="item.field.value"
           ></textarea>
 
@@ -102,6 +103,7 @@ export default {
         repeatFields: this.workingRepeater
       }
       this.$emit('field-change', newField)
+      console.log('emitter fired', newField);
     }
   },
   components: {
