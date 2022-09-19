@@ -5,8 +5,6 @@ import {
   protocol,
   BrowserWindow,
   ipcMain,
-  Tray,
-  nativeImage,
   dialog
 } from 'electron'
 import {
@@ -27,7 +25,6 @@ const build = true;
 // const build = false;
 let preloadPath = build ? __dirname: "./public";
 const isDevelopment = process.env.NODE_ENV !== 'production';
-let tray;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -87,16 +84,6 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 
-// Create tray icon
-app.whenReady().then(() => {
-  const icon = nativeImage.createFromPath(path.resolve(path.join(__dirname, "assets", "copilot_icon.png")));
-  tray = new Tray(icon)
-
-  tray.setToolTip('Copilot')
-})
-.catch(err => {
-  console.log("error with tray icon:" ,err)
-})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
