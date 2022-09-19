@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld(
   "ipc", {
       send: (channel, data) => {
           // whitelist channels
-          const validChannels = ["openDialog", "readFile", "saveFile", "helperTask", "updateGlobalDependants", "openSaveDialog"];
+          const validChannels = ["openDialog", "readFile", "saveFile", "helperTask", "updateGlobalDependants", "openSaveDialog", "quitAndUpdate"];
           if (validChannels.includes(channel)) {
               ipcRenderer.send(channel, data);
           }

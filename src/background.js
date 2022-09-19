@@ -130,6 +130,11 @@ autoUpdater.on('update-downloaded', (info) => {
   })
 })
 
+ipcMain.on("quitAndUpdate", (event, args) => {
+  console.log('quitting now');
+  autoUpdater.quitAndInstall();
+})
+
 
 HelperTask
 
