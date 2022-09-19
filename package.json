@@ -70,6 +70,7 @@
                   "hardenedRuntime": true,
                   "gatekeeperAssess": false,
                   "entitlements": "dist_electron/entitlements.mac.plist",
+                  "icon": "build/icons/icon.icns",
                   "entitlementsInherit": "dist_electron/entitlements.mac.plist"
                }
             }

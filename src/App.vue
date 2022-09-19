@@ -28,7 +28,7 @@ export default {
       }
     })
 
-    window.ipc.recieve('autoUpdateErr', (payload) => {
+    window.ipc.receive('autoUpdateErr', (payload) => {
       console.log('autoUpdateErr', payload);
     })
 
