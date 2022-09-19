@@ -3,7 +3,7 @@
   <article v-if="isVisible" class="fixed top-2 right-2 p-3 flex flex-row items-center justify-start gap-3 bg-gradient-to-r from-amber-500 to-orange-600 z-50 max-w-xs leading-tight" >
     <img @click="isVisible = !isVisible" class="cursor-pointer" src="@/assets/close-white.svg" alt="close button" width="20">
     <span class="text-white font-sans text-xs m-0 block">{{msg}}</span>
-    <button class="border border-white py-1 px-5 text-xs text-white" @click="triggerInstall">Quit &amp; install</button>
+    <button class="border border-white py-1 px-5 text-xs text-white" @click="triggerInstall">Install</button>
   </article>
 </transition>
 </template>

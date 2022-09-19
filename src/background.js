@@ -45,6 +45,7 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 1500,
     height: 800,
+    title: "Copilot",
     icon: path.resolve(preloadPath, "icons", "icon.icns"),
     webPreferences: {
 
