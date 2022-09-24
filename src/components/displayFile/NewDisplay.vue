@@ -9,7 +9,7 @@
     <FilterDisplay />
     <div class="btn-group--right">
       <AddField />
-      <AddGlobalPartial />
+      <AddGlobalPartial v-if="globalPartialsDir != null && displayMode == 'modules'" />
     </div>
   </div>
   <div class="field-display-container shadow-xl">
@@ -51,7 +51,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['openFile', 'currentField', "openFileName"])
+    ...mapGetters(['openFile', 'currentField', "openFileName", "globalPartialsDir", "displayMode"])
   },
    components: {
     ThirdVisualizer,

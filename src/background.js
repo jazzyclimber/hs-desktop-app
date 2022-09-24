@@ -21,8 +21,8 @@ import HelperTask from "@/ipcMainTasks/onHelperTasks"
 const dirTree = require("directory-tree");
 const fs = require('fs');
 const DevTools = false;
-const build = true;
-// const build = false;
+// const build = true;
+const build = false;
 let preloadPath = build ? __dirname: "./public";
 const isDevelopment = process.env.NODE_ENV !== 'production';
 

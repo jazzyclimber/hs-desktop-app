@@ -15,7 +15,7 @@ export default new Vuex.Store({
     openFileName: null,
     currentField: null,
     currentFilePath: null,
-    displayMode: null,
+    displayMode: "modules",
   },
   mutations: {
     updateOpenFileName(state, payload) {
