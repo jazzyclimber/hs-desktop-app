@@ -10,7 +10,7 @@
       class="file font-light hover:text-purple-700 transition-colors cursor-pointer"
       v-else-if="item.name == 'fields.json' && type == 'modules'"
       @click="handleClick(item.path)">{{item.name}}</li>
-    <li :class="'file font-light hover:text-purple-700 transition-colors cursor-pointer'" v-else-if="item.name.includes('.json') && type == 'global-partials'" style="margin-left: 0;padding-left: 0;" @click="handleClick(item.path)">{{item.name}}</li>
+    <li :class="'file module font-light hover:text-purple-700 transition-colors cursor-pointer'" v-else-if="item.name.includes('.json') && type == 'global-partials'" :data-name="item.name" style="margin-left: 0;padding-left: 0;" @click="handleClick(item.path)">{{item.name}}</li>
     <MenuTree v-if="item.children" v-on:unsaved-edits="emitUnsavedEdits" :type="type" :localTree="item.children" :level="nextLevel" />
   </ul>
   </div>
