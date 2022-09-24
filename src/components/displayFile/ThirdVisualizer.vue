@@ -26,8 +26,17 @@
             <span class="tag" v-if="item.occurrence">Repeater</span>
             <span class="tag" v-if="item.tab == 'STYLE'">Style Tab</span>
           </div>
-          <div class="action-bar">
-            <button class="btn-primary" @click="updateCurrentField(item)" v-if="item.type != 'globalPartial'">Edit</button>
+          <div class="action-bar items-stretch">
+            <button class="btn-primary py-1 px-2"
+              @click="updateCurrentField(item)"
+              v-if="item.type != 'globalPartial'"
+            >
+              <img src="@/assets/edit.svg" alt="Edit Icon" width="13">
+            </button>
+            <CloneField
+              v-if="item.type != 'globalPartial'"
+              :field="item"
+            />
             <RemoveField :field="item" />
           </div>
         </div>
@@ -41,6 +50,7 @@
 import draggable from "vuedraggable";
 import RemoveField from "../editFields/addRemove/RemoveField.vue"
 import ThirdVisualizer from "./ThirdVisualizer"
+import CloneField from "../editFields/addRemove/CloneField.vue"
 import {mapGetters} from 'vuex'
   export default {
     name: "ThirdVisualizer",
@@ -94,7 +104,8 @@ import {mapGetters} from 'vuex'
     components: {
       draggable,
       ThirdVisualizer,
-      RemoveField
+      RemoveField,
+      CloneField
     }
   }
 </script>
