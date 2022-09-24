@@ -65,7 +65,7 @@ export default {
       if (this.searchTerm !== null && this.searchTerm !== "") {
         // If using search
         fields = Object.keys(this.fieldTypes).filter(item => {
-          return item.includes(this.searchTerm);
+          return item.includes(this.searchTerm.toLowerCase());
         })
       } else {
         // If not using search
