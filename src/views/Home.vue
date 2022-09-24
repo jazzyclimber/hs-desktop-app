@@ -109,7 +109,7 @@ export default {
       deep: true,
       handler: function(newData, oldData) {
         console.log('fired', newData);
-        this.workingTree.push(newData[0]);
+        this.workingTree = newData;
       }
     },
     GPTree: {
