@@ -69,7 +69,7 @@ function mapFile(file, data) {
         ignoreLength = ignoreLength - 1;
         if (ignoreLength == 0) {
           ignoreFields = false;
-          return field;
+          return [];
         } else {
           return []
         }
