@@ -79,6 +79,12 @@
                   "entitlements": "dist_electron/entitlements.mac.plist",
                   "icon": "build/icon.icns",
                   "entitlementsInherit": "dist_electron/entitlements.mac.plist"
+               },
+               "win": {
+                  "icon": "build/copilot-icon.png"
+               },
+               "linux": {
+                  "icon": "build/copilot-icon.png"
                }
             }
          }
