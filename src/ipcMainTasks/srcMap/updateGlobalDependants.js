@@ -7,14 +7,12 @@ const updateGlobalDependants = (args) => {
   let srcMap = FindSrcMap(args.cwd);
 
   if (srcMap.srcMapData) {
-    console.log('this is working')
     const modules = Object.keys(srcMap.srcMapData);
 
     console.log(modules);
 
     modules.forEach(module=> {
       if (srcMap.srcMapData[module].includes(args.relPath)){
-        console.log('This module should be saved');
         const config = {
           module: module,
           tree: args.tree.children,
@@ -47,7 +45,6 @@ function readFile(args) {
 
 
 function mapFile(file, data) {
-console.log('file', file);
   // read field.json file
   const parsedFile = JSON.parse(fs.readFileSync(file.path));
 
@@ -62,14 +59,17 @@ console.log('file', file);
       if (_.isEqual(field, data.oldData[0]) && _.isEqual(array[i + data.oldData.length - 1 ], data.oldData[data.oldData.length - 1])) {
         console.log('partial Found');
         partialIndex = i;
-        ignoreLength = i + data.oldData.length - 1;
+        ignoreLength = data.oldData.length - 1;
         ignoreFields = true;
         partialFound = true;
         return []
       } else if (ignoreFields) {
-        if (i == ignoreLength) {
-          ignoreFields = false
-          return []
+        // Ignore / omit the global partial fields
+        // will be replaced with the new partial.
+        ignoreLength = ignoreLength - 1;
+        if (ignoreLength == 0) {
+          ignoreFields = false;
+          return field;
         } else {
           return []
         }
@@ -82,6 +82,8 @@ console.log('file', file);
         return field
       }
     })
+
+
 
     if (partialFound) {
       temp.splice(partialIndex, 0, data.newData);

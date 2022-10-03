@@ -66,12 +66,14 @@ function mapFile(config) {
       tempPartial.filePath = path.join(config.partialsDir, config.partialFile);
       tempPartial.fileName = config.partialFile;
       tempPartial.label = nameArray[nameArray.length - 1];
-      ignoreLength = i + config.curPartialArray.length - 1;
+      ignoreLength =  config.curPartialArray.length - 1;
       ignoreLength > 0 ? ignoreFields = true : null;
       return tempPartial
     } else if (ignoreFields) {
-      // console.log("ignoreLength", ignoreLength)
-      if (i == ignoreLength) {
+      console.log("ignoreLength", ignoreLength, );
+      console.log('field:', field);
+      ignoreLength = ignoreLength - 1;
+      if (ignoreLength == 0) {
         ignoreFields = false
         return []
       } else {
